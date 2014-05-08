@@ -1,14 +1,53 @@
 <!DOCTYPE html>
+<html>
 <head>
    <meta charset=UTF-8 >
    <meta name=description content="webshop">
    <meta name=keywords content="webshop">
-   <title>Webshop</title>
+   <title>EenmaalAndermaal</title>
    <link rel="stylesheet" type="text/css" href="main.css" />
    <script type="text/javascript" src="js/jquery.min.js"></script>
    <script type="text/javascript" src="js/main.js"></script>
    {JS_PRODUCTEN}
 </head>
-<body>
-TEST
-</body>
+    <body>
+		<div id="header">
+			<div class="wrapper">
+				<div id="upperArea">
+					<div id="banner">
+					
+					</div>
+					<div id="loginBox">
+						<form action="" method="post">
+							<input type="text" name="username" placeholder="Gebruikersnaam" />
+							<input type="password" name="password" placeholder="Wachtwoord" />
+							<input type="Submit" name="submit" value="Inloggen" />
+							<input type="Submit" name="forgot" value="Wachtwoord vergeten" />
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="menu">
+			<div class="wrapper">
+					<ul>
+						<li><a href="#">Home</a></li>
+						<li><a href="#">Rubrieken</a></li>
+						<li><a href="#">Account</a></li>
+						<li class="right noBG"><input type="text" placeholder="Zoek" /></li>
+					</ul>
+				</div>
+			</div>
+		<div id="content">
+			<div class="wrapper">
+				<h1>{TITLE}</h1>
+                                {CONTENT}
+			</div>
+		</div>
+		<div id="footer">
+			<div class="wrapper">
+                            {FOOTER}
+			</div>
+		</div>
+	</body>
+</html>
