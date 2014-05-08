@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<head>
+   <meta charset=UTF-8 >
+   <meta name=description content="webshop">
+   <meta name=keywords content="webshop">
+   <title>Webshop</title>
+   <link rel="stylesheet" type="text/css" href="main.css" />
+   <script type="text/javascript" src="js/jquery.min.js"></script>
+   <script type="text/javascript" src="js/main.js"></script>
+   {JS_PRODUCTEN}
+</head>
+<body>
+	<div id="top">
+		{TOPBAR}
+	</div>
+	<div id="background">
+		<div id="main">
+			<div id="header">
+				<div id="logo">
+					<div id="search">
+						<form method="get" action="producten.html">
+							<input type="text" id="searchfield" name="search" placeholder="Zoek">
+							<input type="submit" value="Zoek">
+						</form>
+					</div>
+				</div>
+				<div id="menu">
+					<div class="menubutton">
+						<a href="home.html">Home</a>
+					</div>
+					<div class="menubutton">
+						<a href="acties.html">Acties</a>
+					</div>
+					<div class="menubutton">
+						<a href="producten.html">Muziek</a>
+						<div class="submenubutton">
+							<a href="producten.html?category=jazz">Jazz</a>
+						</div>
+						<div class="submenubutton">
+							<a href="producten.html?category=rock">Rock</a>
+						</div>
+						<div class="submenubutton">
+							<a href="producten.html?category=pop">Pop</a>
+						</div>
+					</div>
+					<div class="menubutton">
+						<a href="#">Mijn account</a>
+						<div class="submenubutton">
+							<a href="registreren.html">Registreren</a>
+						</div>
+						<div class="submenubutton">
+							<a href="#">Gegevens wijzigen</a>
+						</div>
+						<div class="submenubutton">
+							<a href="winkelwagen.html">Winkelwagen</a>
+						</div>
+						<div class="submenubutton">
+							<a href="aankopen.html">Aankopen</a>
+						</div>
+					</div>
+					<div class="menubutton">
+						<a href="over.html">Over ons</a>
+					</div>
+				</div>
+				<div id="breadcrumb">
+					{BREADCRUMB}
+				</div>
+			</div>
+			<div id="content">
+				{CONTENT}
+			</div>
+			<div id="sidebar">
+				<img src="img/ad.png" class="ad" alt="Advertentie">
+			</div>
+		</div>
+		<div id="footer">
+			<div id="footercontent">
+				<div class="footerpart">
+					<a href="#">Home</a><br />
+					<a href="#">Nieuws</a><br />
+					<a href="#">Producten</a>
+				</div>
+				<div class="footerpart">
+					<a href="#">Mijn account</a><br />
+					<a href="#">Winkelwagen</a><br />
+					<a href="#">Aankoopgeschiedenis</a>
+				</div>
+				<div class="footerpart">
+					<a href="#">Routebeschrijving</a><br />
+					<a href="#">Vacatures</a><br />
+					<a href="#">Algemene voorwaarden</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>

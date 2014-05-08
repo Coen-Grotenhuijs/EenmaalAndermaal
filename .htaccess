@@ -1,0 +1,12 @@
+RewriteEngine On
+
+
+# If the start of the URL doesn't match one of these...
+
+RewriteCond $1 !^(main\.css|index\.php|robots\.txt|img|cache|uploads|css|js|core)
+
+
+# Route through index.php
+
+RewriteRule ^(.*)$ index.php/$1 [L]
+ 
