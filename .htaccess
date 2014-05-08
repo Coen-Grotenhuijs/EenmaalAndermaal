@@ -3,7 +3,7 @@ RewriteEngine On
 
 # If the start of the URL doesn't match one of these...
 
-RewriteCond $1 !^(main\.css|index\.php|robots\.txt|img|cache|uploads|css|js|core)
+RewriteCond $1 !^(main\.css|index\.php|img|uploads|css|js)
 
 
 # Route through index.php
