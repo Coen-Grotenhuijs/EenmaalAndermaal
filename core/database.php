@@ -12,9 +12,9 @@ class database
 		{
 			$settings = new settings();
 			$this->servername = $settings->getSetting('database_servername');
-			$this->connectioninfo = array(	$settings->getSetting('database_database'),
-											$settings->getSetting('database_username'),
-											$settings->getSetting('database_password'));
+			$this->connectioninfo = array(  "Database"  => $settings->getSetting('database_database'),
+							"UID"       => $settings->getSetting('database_username'),
+							"PWD"       => $settings->getSetting('database_password'));
 			$this->c = sqlsrv_connect($this->servername, $this->connectioninfo) or die("Kon niet verbinden met de database.");
 		}
 	}

@@ -114,7 +114,6 @@ class control extends session
 
 	public function __destruct()
 	{
-		$this->replaceView('breadcrumb',$this->breadcrumb);
 		$this->formfill();
 		$this->sessionfill();
 		$this->view->cleanup('POST');
