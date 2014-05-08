@@ -6,7 +6,7 @@ class settings
 	
 	public function __construct()
 	{
-		if(empty($this->file)) $this->file = file_get_contents('../settings.cfg');
+		if(empty($this->file)) $this->file = file_get_contents('settings.cfg');
 	}
 	
 	public function getPart($part)
@@ -20,9 +20,9 @@ class settings
 			if($reading)
 			{
 				if(substr($value, 0, 1) == "[") break;
-				$part = explode("=", $value);
-				$index = array_shift($part);
-				$data[$index] = implode("=", $part);
+				$parts = explode("=", $value);
+				$index = array_shift($parts);
+				$data[$index] = trim(implode("=", $parts));
 			}
 
 			if(strtoupper(trim($value)) == "[".strtoupper($part)."]") $reading = true;
