@@ -29,7 +29,17 @@ class model
 		$result = $this->db->fetchquery("SELECT * FROM Gebruiker WHERE Gebruikersnaam = '".$data['user']."' AND Wachtwoord = '".$data['pass']."'");
 		if(!empty($result)) return true;
 		return false;
-	}        
+	}
+        
+        public function getLoggedIn()
+        {
+                return !empty($_SESSION['user']);
+        }
+        
+        public function getCurrentUser()
+        {
+                return $_SESSION['user'];
+        }
 }
 
 ?>
