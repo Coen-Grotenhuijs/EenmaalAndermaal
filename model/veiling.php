@@ -19,6 +19,22 @@ class veilingModel extends model
                 $data = $this->db->fetchQuery("SELECT * FROM Voorwerp WHERE Voorwerpnummer = ".$veiling);
                 return $data;
         }
+        
+        public function getBreadcrumb($veiling)
+        {
+                $string = '';
+                
+                // 1 Voorwerp kan in meerdere rubrieken zitten, hoe lossen we dit op?
+                $rubriek = $this->db->fetchQuery("SELECT * FROM Voorwerpinrubriek WHERE Voorwerp = ".$veiling);
+                $parent = $this->db->fetchQuery("SELECT * FROM Rubriek WHERE Rubrieknummer = ".$rubriek['Rubriekoplaagsteniveau']);
+                do
+                {
+                        $string = $parent['Rubrieknaam'].' > '.$string;
+                        $parent = $this->db->fetchQuery("SELECT * FROM Rubriek WHERE Rubrieknummer = ".$parent['Rubriek']);
+                } while($parent['Rubriek']!=0);
+                $string = $parent['Rubrieknaam'].' > '.$string;
+                return $string;
+        }
 }
 
 ?>
