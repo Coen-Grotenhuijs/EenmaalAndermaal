@@ -17,7 +17,10 @@ $settings = new settings();
 $libs = $settings->getPart('libraries');
 foreach($libs as $key=>$value)
 {
-	include('libs/'.$key.'.php');
+        if(!empty($key))
+        {
+                include('libs/'.trim($key).'.php');
+        }
 }
 
 // url bepalen
