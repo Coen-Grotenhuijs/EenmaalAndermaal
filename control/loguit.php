@@ -1,6 +1,6 @@
 <?php
 
-class contactControl extends control
+class loguitControl extends control
 {
 	public function run()
 	{

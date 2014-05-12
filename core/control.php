@@ -37,9 +37,9 @@ class control extends session {
 
                 // Ingelogd
                 if ($this->logged_in) {
-                        $this->loadView('topbar/loggedin', 'topbar');
+                        $this->loadView('header/loggedin', 'topbar');
                 } else {
-                        $this->loadView('topbar/loggedout', 'topbar');
+                        $this->loadView('header/loggedout', 'topbar');
                 }
 
                 // Inlog formulier errors weergeven
