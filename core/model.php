@@ -38,7 +38,18 @@ class model
         
         public function getCurrentUser()
         {
-                return $_SESSION['user'];
+                if(!empty($_SESSION['user']))
+                {
+                        return $_SESSION['user'];
+                }
+                return;
+        }
+        
+        public function getVerkoper()
+        {
+                $data = $this->getUser($this->getCurrentUser());
+                if($data['Verkoper']==1) return true;
+                return false;
         }
 }
 

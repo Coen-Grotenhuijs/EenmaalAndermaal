@@ -1,10 +1,11 @@
 <?php
 
-class veilingModel extends model
+class rubriekenModel extends model
 {
         public function getRubrieken()
         {
                 $data = $this->rubriek(0,0);
+                return $data;
         }
         
         public function rubriek($rubriek, $diepte)
@@ -19,8 +20,9 @@ class veilingModel extends model
                 {
                         foreach($subs as $key=>$value)
                         {
-                                $array[] = str_repeat('-', $diepte).$value['Rubrieknaam'];
+                                $array[] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $diepte).$value['Rubrieknaam'];
                                 $subsub = $this->rubriek($value['Rubrieknummer'], $diepte+1);
+                                if(empty($subsub)) continue;
                                 foreach($subsub as $subkey=>$subvalue)
                                 {
                                         $array[] = $subvalue;

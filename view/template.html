@@ -14,8 +14,8 @@
 		<div id="header">
 			<div class="wrapper">
 				<div id="upperArea">
-					<div id="banner">
-					
+					<div id="banner" class="left">
+						<img src="img/logo2.png" alt="Eenmaal Andermaal... Verkocht!" />
 					</div>
 					<div id="loginBox">
                                                 {TOPBAR}
@@ -25,14 +25,20 @@
 		</div>
 		<div id="menu">
 			<div class="wrapper">
-					<ul>
-						<li><a href="#">Home</a></li>
-						<li><a href="#">Rubrieken</a></li>
-						<li><a href="#">Account</a></li>
-						<li class="right noBG"><input type="text" placeholder="Zoek" /></li>
-					</ul>
-				</div>
+				<ul>
+					<li><a href="#">Home</a></li>
+					<li><a href="#">Rubrieken</a></li>
+					<li><a href="#">Account</a></li>
+					<li class="right"><input class="button" type="submit" value="Zoek"/></li>
+					<li class="right noBG"><input type="text" placeholder="Zoektermen..." /></li>
+					<li class="right noBG">
+					<select name="rubriek">
+                                                {NEXT_RUBRIEK_DROPDOWN}
+					</select>
+					</li>
+				</ul>
 			</div>
+                </div>
 		<div id="content">
 			<div class="wrapper">
 				<h1>{TITLE}</h1>

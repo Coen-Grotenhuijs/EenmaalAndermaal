@@ -22,6 +22,10 @@ a {
 	width: 100%;
 }
 
+#header img {
+	margin-top: 43px;
+}
+
 #header #loginBox {
 	float: right;
 	width: 150px;
@@ -37,11 +41,14 @@ a {
 }
 
 #header #loginBox  input[type="submit"]{
-	background: #9AC0E5;
+	background: #265889;
+	color: white;
+	-webkit-transition: background 0.2s;
 }
 
-#header #loginBox  input[type="submit"]:hover{
+#menu li a:hover, .button:hover, #header #loginBox  input[type="submit"]:hover{
 	cursor: pointer;
+	background: #7d90a3;
 }
 
 #menu {
@@ -51,17 +58,48 @@ a {
 	font-size: 0.8rem;
 }
 
-#menu li  a{
-	line-height: 40px;
+#menu li  a, .button{
+	line-height: 30px;
 	display: block;
-	padding: 0 10px;
+	padding: 0 30px;
+	margin: 5px 0;
+	background: #265889;
+	text-align: center;
+}
+
+.inlineButton {
+	color: #265889;
+}
+
+#menu input, #menu select {
+	padding: 5px 0 5px 30px;
+	background: no-repeat white url('img/search.png');
+	background-size: 18px 18px;
+	background-position: 3px 4px;
+	border: 0px solid gray;
+}
+
+#menu select {
+	background: white;
+	padding: 5px;
+}
+
+#menu input.button {
+	background: #265889;
+	text-align: center;
+	margin: 5px 0;
+	padding: 0 20px;
+	color: white;
 }
 
 #menu li {
 	float: left;
 	margin: 0 30px 0 0;
 	line-height: 40px;
-	background: #265889;
+}
+
+#menu li.right {
+	margin: 0 0 0 10px;
 }
 
 #content h1 {
@@ -76,20 +114,63 @@ a {
 	font-size: 1.1rem;
 }
 
+.panel .scroll {
+	overflow-y: auto;
+	height: 251px;
+}
+
+.panel li {
+	margin: 0 10px;
+	padding: 15px;
+	border-top: 1px dashed #dfdfdf;
+}
+
+.panel li:first-child {
+	border: none;
+}
+
+.panel li img{
+	background: #265889;
+	width: 40px;
+	height: 40px;
+	float: left;
+}
+
+.panel li p {
+	float: left;
+	margin: 0 10px;
+	line-height: 20px;
+	font-size: 0.8rem;
+}
+
 .wrapper {
 	margin: 0 auto;
 	width: 1000px;
 }
 
-#menu input {
-	padding: 5px 0 5px 30px;
-	background: no-repeat white url('img/search.png');
+#suggesties {
+	height: 580px;
+}
+
+#suggesties .scroll {
+	height: 531px;
+}
+
+#profielgegevens {
+	height: 250px;
+}
+
+#profielgegevens p{
+	width: 325px;
+	padding: 0 14px;
+	font-size: 0.9rem;
+	line-height: 20px;
 }
 
 .panel {
 	margin-bottom: 30px;
-	overflow: auto;
-	height: 500px;
+	overflow: hidden;
+	height: 300px;
 	background: white;
 	box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
 }
@@ -136,6 +217,22 @@ a {
 	overflow: hidden;
 	margin: 5px;
 	
+}
+
+*::-webkit-scrollbar-track
+{
+	background-color: #F5F5F5;
+}
+
+*::-webkit-scrollbar
+{
+	width: 6px;
+	background-color: #F5F5F5;
+}
+
+*::-webkit-scrollbar-thumb
+{
+	background-color: #265889;
 }
 
 *, *:before, *:after {

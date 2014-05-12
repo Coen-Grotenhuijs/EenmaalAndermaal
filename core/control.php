@@ -47,6 +47,18 @@ class control extends session {
                         $this->view->replace_array($this->loginform->geterrors());
                         $this->view->replace_array($this->loginform->getclasses());
                 }
+                
+                // Rubrieken dropdown
+                
+                $this->loadModel('rubrieken');
+                
+                $rubrieken = $this->rubriekenModel->getRubrieken();
+                
+                foreach($rubrieken as $key=>$value)
+                {
+                        $this->loadView('header/rubriek','next_rubriek_dropdown');
+                        $this->replaceView('rubriek_naam', $value);
+                }
         }
 
         public function filterrequestdata() {

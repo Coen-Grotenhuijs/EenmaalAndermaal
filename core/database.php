@@ -22,6 +22,7 @@ class database
 	public function query($query)
 	{
 		$return = sqlsrv_query($this->c, $query);
+                print_r(sqlsrv_errors());
 		return $return;
 	}
 	

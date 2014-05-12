@@ -27,7 +27,7 @@ foreach($libs as $key=>$value)
 $urltemp = explode('/',$_SERVER["REQUEST_URI"]);
 $urltemp2 = explode('.',$urltemp[count($urltemp)-1]);
 $url = $urltemp2[0];
-if(empty($url)) $url = 'index';
+if(empty($url)) $url = 'home';
 
 // control openen
 if(file_exists('control/'.$url.'.php'))
