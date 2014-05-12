@@ -20,7 +20,7 @@ class rubriekenModel extends model
                 {
                         foreach($subs as $key=>$value)
                         {
-                                $array[] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $diepte).$value['Rubrieknaam'];
+                                $array[] = array('Naam'=>str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $diepte).$value['Rubrieknaam'],'Nummer'=>$value['Rubrieknummer']);
                                 $subsub = $this->rubriek($value['Rubrieknummer'], $diepte+1);
                                 if(empty($subsub)) continue;
                                 foreach($subsub as $subkey=>$subvalue)

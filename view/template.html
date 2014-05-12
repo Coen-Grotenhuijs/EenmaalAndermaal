@@ -25,18 +25,20 @@
 		</div>
 		<div id="menu">
 			<div class="wrapper">
-				<ul>
-					<li><a href="#">Home</a></li>
-					<li><a href="#">Rubrieken</a></li>
-					<li><a href="#">Account</a></li>
-					<li class="right"><input class="button" type="submit" value="Zoek"/></li>
-					<li class="right noBG"><input type="text" placeholder="Zoektermen..." /></li>
-					<li class="right noBG">
-					<select name="rubriek">
-                                                {NEXT_RUBRIEK_DROPDOWN}
-					</select>
-					</li>
-				</ul>
+                                <form method='get' action='zoek'>
+                                        <ul>
+                                                <li><a href="#">Home</a></li>
+                                                <li><a href="#">Rubrieken</a></li>
+                                                <li><a href="#">Account</a></li>
+                                                <li class="right"><input class="button" type="submit" value="Zoek"/></li>
+                                                <li class="right noBG"><input type="text" name="zoekveld" placeholder="Zoektermen..." value="{GET_ZOEKVELD}" /></li>
+                                                <li class="right noBG">
+                                                        <select name="rubriek">
+                                                                {NEXT_RUBRIEK_DROPDOWN}
+                                                        </select>
+                                                </li>
+                                        </ul>
+                                </form>
 			</div>
                 </div>
 		<div id="content">

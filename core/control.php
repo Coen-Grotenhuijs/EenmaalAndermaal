@@ -57,8 +57,10 @@ class control extends session {
                 foreach($rubrieken as $key=>$value)
                 {
                         $this->loadView('header/rubriek','next_rubriek_dropdown');
-                        $this->replaceView('rubriek_naam', $value);
+                        $this->replaceView('rubriek_naam', $value['Naam']);
+                        $this->replaceView('rubriek_nummer', $value['Nummer']);
                 }
+                $this->replaceView('next_rubriek_dropdown', '');
         }
 
         public function filterrequestdata() {
@@ -99,6 +101,7 @@ class control extends session {
                 }
                 foreach ($_GET as $key => $value) {
                         $this->replaceView('GET_' . $key, $value);
+                        $this->replaceView('GET_' . $key . '_' . $value, 'selected');
                 }
         }
 

@@ -4,7 +4,13 @@ class zoekControl extends control
 {
 	public function run()
 	{
-		$this->loadView('home','content');
+                $data = $this->rubriekenModel->getRubrieken();
+                $string = "";
+                foreach($data as $key=>$value)
+                {
+                        $string .= $value."<br>";
+                }
+		$this->replaceView('content', $string);
 	}
 }
 
