@@ -25,8 +25,9 @@ foreach($libs as $key=>$value)
 
 // url bepalen
 $urltemp = explode('/',$_SERVER["REQUEST_URI"]);
-$urltemp2 = explode('.',$urltemp[count($urltemp)-1]);
+$urltemp2 = explode('?',$urltemp[count($urltemp)-1]);
 $url = $urltemp2[0];
+
 if(empty($url)) $url = 'home';
 
 // control openen

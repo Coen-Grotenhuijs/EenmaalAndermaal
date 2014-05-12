@@ -8,7 +8,7 @@ class zoekControl extends control
                 $string = "";
                 foreach($data as $key=>$value)
                 {
-                        $string .= $value."<br>";
+                        $string .= print_r($value,true)."<br>";
                 }
 		$this->replaceView('content', $string);
 	}
