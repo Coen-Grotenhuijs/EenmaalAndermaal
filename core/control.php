@@ -96,8 +96,7 @@ class control extends session {
         private function formfill() {
                 foreach ($_POST as $key => $value) {
                         $this->replaceView('POST_' . $key, $value);
-                        if (is_int($value))
-                                $this->replaceView('POST_' . $key . '_' . $value, 'selected');
+                        $this->replaceView('POST_' . $key . '_' . $value, 'selected');
                 }
                 foreach ($_GET as $key => $value) {
                         $this->replaceView('GET_' . $key, $value);
