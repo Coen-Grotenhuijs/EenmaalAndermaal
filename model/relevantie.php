@@ -1,6 +1,6 @@
 <?php
 
-class rubriekenModel extends model
+class relevantieModel extends model
 {
         public function getRubrieken()
         {
