@@ -2,7 +2,7 @@ body {
 	margin: 0;
 	padding: 0;
 	font-family: verdana;
-	background: #efefef;
+	background: #f5f5f5;
 }
 
 ul {
@@ -26,13 +26,13 @@ a {
 	margin-top: 43px;
 }
 
-#header #loginBox {
+#loginBox {
 	float: right;
 	width: 150px;
 	margin: 16px 0;
 }
 
-#header #loginBox  input{
+#loginBox  input{
 	display: block;
 	background: white;
 	border: none;
@@ -40,13 +40,26 @@ a {
 	width: 100%;
 }
 
-#header #loginBox  input[type="submit"]{
-	background: #265889;
-	color: white;
-	-webkit-transition: background 0.2s;
+#loginBottom input{
+	display: block;
+	background: white;
+	border: none;
+	padding: 0px 10px;
+	width: calc(100% - 10px);
+	line-height: 30px;
+	margin-top: 20px;
 }
 
-#menu li a:hover, .button:hover, #header #loginBox  input[type="submit"]:hover{
+#loginBottom input[type="text"], #loginBottom input[type="password"] {
+	border: 1px solid #f5f5f5;
+}
+
+#loginBox  input[type="submit"], #loginBottom input[type="submit"]{
+	background: #265889;
+	color: white;
+}
+
+#menu li a:hover, .button:hover, #loginBox  input[type="submit"]:hover, #loginBottom input[type="submit"]:hover{
 	cursor: pointer;
 	background: #7d90a3;
 }
@@ -114,6 +127,13 @@ a {
 	font-size: 1.1rem;
 }
 
+#content h3 {
+	margin: 0.83rem;
+	display: block;
+	font-size: 1.0rem;
+	color: #265889;
+}
+
 .panel .scroll {
 	overflow-y: auto;
 	height: 251px;
@@ -123,6 +143,11 @@ a {
 	margin: 0 10px;
 	padding: 15px;
 	border-top: 1px dashed #dfdfdf;
+}
+
+.panel li:hover, .topadvertentie:hover{
+	background: #fafafa;
+	cursor: pointer;
 }
 
 .panel li:first-child {
@@ -165,6 +190,60 @@ a {
 	padding: 0 14px;
 	font-size: 0.9rem;
 	line-height: 20px;
+}
+
+#rubrieken li{
+	font-size: 0.8rem;
+	border: none;
+	margin: 0;
+	padding: 0;
+}
+
+#rubrieken ul ul{
+	margin-left: 30px;
+}
+
+#rubrieken ul ul li a{
+	font-size: 0.7rem;
+	padding: 10px;
+}
+
+#rubrieken li a {
+	color: black;
+	padding: 15px;
+	display: block;
+}
+
+#rubrieken li:hover {
+	background: inherit !important;
+}
+
+#rubrieken li a:hover {
+	background: #f5f5f5;
+}
+
+.topadvertentie {
+	height: 125px;
+	width: 325px;
+}
+
+.topadvertentie:nth-child(1n+4) {
+	border-top: 1px dashed #efefef;
+}
+
+.topadvertentie:nth-child(even) {
+	border-right: 1px dashed #efefef;
+}
+
+.topadvertentie img {
+	margin: 12px;
+	width: 100px;
+	height: 100px;
+}
+
+.topadvertentie p {
+	line-height: 25px;
+	margin: 12px 0;
 }
 
 .panel {
@@ -211,11 +290,19 @@ a {
 	background: none !important;
 }
 
+.noHeight {
+	height: initial !important;
+}
+
 .hackfix {
 	height: 100%;
 	background: white;
 	overflow: hidden;
 	margin: 5px;
+	
+}
+
+.border-top {
 	
 }
 

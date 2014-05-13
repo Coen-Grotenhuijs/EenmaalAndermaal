@@ -10,17 +10,18 @@ class dashboardControl extends control
                 }
                 
 		$this->loadView('dashboard/dashboard','content');
-                $this->replaceView('BIEDINGEN', 12345);
                 $this->replaceView('title','Dashboard');
                 
                 $biedingen = $this->dashboardModel->getBiedingen();
                 foreach($biedingen as $key=>$value)
                 {
+                        $file = empty($value['Filenaam']) ? 'empty.jpg' : $value['Filenaam'];
                         $maxbod = $this->dashboardModel->getHoogsteBod($value['Voorwerpnummer']);
+                        $prijs = ($maxbod==0) ? $value['Startprijs'] : $maxbod;
                         $this->loadView('dashboard/bieding','next_bieding');
-                        $this->replaceView('bieding_image',$value['Filenaam']);
+                        $this->replaceView('bieding_image',$file);
                         $this->replaceView('bieding_tag',$value['Titel']);
-                        $this->replaceView('bieding_prijs',$maxbod);
+                        $this->replaceView('bieding_prijs',$prijs);
                         $this->replaceView('bieding_time','?');
                 }
 
@@ -29,11 +30,13 @@ class dashboardControl extends control
                 $voorwerpen = $this->dashboardModel->getVoorwerpen();
                 foreach($voorwerpen as $key=>$value)
                 {
+                        $file = empty($value['Filenaam']) ? 'empty.jpg' : $value['Filenaam'];
                         $maxbod = $this->dashboardModel->getHoogsteBod($value['Voorwerpnummer']);
+                        $prijs = ($maxbod==0) ? $value['Startprijs'] : $maxbod;
                         $this->loadView('dashboard/voorwerp','next_voorwerp');
-                        $this->replaceView('voorwerp_image',$value['Filenaam']);
+                        $this->replaceView('voorwerp_image',$file);
                         $this->replaceView('voorwerp_tag',$value['Titel']);
-                        $this->replaceView('voorwerp_prijs',$maxbod);
+                        $this->replaceView('voorwerp_prijs',$prijs);
                         $this->replaceView('voorwerp_time','?');
                 }
 
@@ -42,11 +45,13 @@ class dashboardControl extends control
                 $suggesties = $this->dashboardModel->getSuggesties();
                 foreach($suggesties as $key=>$value)
                 {
+                        $file = empty($value['Filenaam']) ? 'empty.jpg' : $value['Filenaam'];
                         $maxbod = $this->dashboardModel->getHoogsteBod($value['Voorwerpnummer']);
+                        $prijs = ($maxbod==0) ? $value['Startprijs'] : $maxbod;
                         $this->loadView('dashboard/suggestie','next_suggestie');
-                        $this->replaceView('suggestie_image',$value['Filenaam']);
+                        $this->replaceView('suggestie_image',$file);
                         $this->replaceView('suggestie_tag',$value['Titel']);
-                        $this->replaceView('suggestie_prijs',$maxbod);
+                        $this->replaceView('suggestie_prijs',$prijs);
                         $this->replaceView('suggestie_time','?');
                 }
 
