@@ -34,6 +34,7 @@
                                                 <li class="right noBG"><input type="text" name="zoekveld" placeholder="Zoektermen..." value="{GET_ZOEKVELD}" /></li>
                                                 <li class="right noBG">
                                                         <select name="rubriek">
+                                                                <option value="0">Alle rubrieken</option>
                                                                 {NEXT_RUBRIEK_DROPDOWN}
                                                         </select>
                                                 </li>
@@ -42,15 +43,13 @@
 			</div>
                 </div>
 		<div id="content">
-			<div class="wrapper">
+			<div class="wrapper cf">
 				<h1>{TITLE}</h1>
                                 {CONTENT}
 			</div>
 		</div>
 		<div id="footer">
-			<div class="wrapper">
-                            {FOOTER}
-			</div>
+                        {FOOTER}
 		</div>
 	</body>
 </html>
