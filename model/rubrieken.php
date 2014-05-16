@@ -61,22 +61,49 @@ class rubriekenModel extends model
                 return $array;
         }
         
-        public function zoek($text, $rubriek, $page, $perPage)
+        public function zoek($text, $rubriek)
         {
                 $rubrieken = $this->getRubriekenInRubriek($rubriek);
                 
                 $rubriekenString = implode(",",$rubrieken);
                 
-                $data = $this->db->fetchQueryAll("SELECT * FROM VoorwerpInRubriek INNER JOIN Voorwerp on VoorwerpInRubriek.Voorwerp = Voorwerp.Voorwerpnummer WHERE RubriekOpLaagsteNiveau IN (".$rubriekenString.") AND Titel LIKE '%".$text."%' AND Veilinggesloten = 0");
+                $data = $this->db->fetchQueryAll("SELECT *, VoorwerpInRubriek.Voorwerp AS Voorwerpnummer FROM VoorwerpInRubriek INNER JOIN Voorwerp on VoorwerpInRubriek.Voorwerp = Voorwerp.Voorwerpnummer LEFT JOIN Suggesties ON Suggesties.Voorwerpnummer = Voorwerp.Voorwerpnummer WHERE RubriekOpLaagsteNiveau IN (".$rubriekenString.") AND (Titel LIKE '%".$text."%' OR Beschrijving LIKE '%".$text."%') AND Veilinggesloten = 0 AND (Suggesties.Gebruikersnaam = '".$this->getCurrentUser()."' OR Suggesties.Gebruikersnaam IS NULL)");
                 
-                $return = array();
-                
-                for($i=($page-1)*$perPage;$i<$page*$perPage && !empty($data[$i]); $i++)
-                {
-                        $return[] = $data[$i];
-                }
-                return $return;
+                return $data;
+ 
         }
+        
+        public function getHoogsteBod($veiling)
+        {
+                $data = $this->db->fetchQuery("SELECT * FROM Bod WHERE Voorwerp = ".$veiling." ORDER BY Bodbedrag DESC");
+                return $data['Bodbedrag'];
+        }
+        
+        public function getRubriekenArray()
+        {
+                $data = $this->rubriekArray(0);
+                return $data;
+        }
+        
+        public function rubriekArray($rubriek)
+        {
+                $array = array();
+                $subs = $this->db->fetchQueryAll("SELECT * FROM Rubriek WHERE Rubriek = ".$rubriek);
+                if(empty($subs))
+                {
+                        return;
+                }
+                else
+                {
+                        foreach($subs as $key=>$value)
+                        {
+                                $subsub = $this->rubriekArray($value['Rubrieknummer']);
+                                $array[] = array('Naam'=>$value['Rubrieknaam'],'Nummer'=>$value['Rubrieknummer'], 'Subs'=>$subsub);
+                        }
+                }
+                return $array;
+        }
+
 }
 
 
