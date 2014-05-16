@@ -41,6 +41,9 @@ class control extends session {
                 } else {
                         $this->loadView('header/loggedout', 'topbar');
                 }
+                
+                // footer
+                $this->loadView('footer/footer', 'footer');
 
                 // Inlog formulier errors weergeven
                 if (!empty($this->loginform)) {
