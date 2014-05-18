@@ -50,7 +50,17 @@ class zoekControl extends control
 
                 $this->replaceView('next_resultaat','');
                 
-                $this->replaceView('rubrieken_overzicht',$this->parseRubrieken($this->rubriekenModel->getRubriekenArray()));
+                $alleRubrieken = array('Nummer'=>'0', 'Naam'=>'Alle rubrieken', 'Subs'=>null);
+                
+                $rubrieken = $this->rubriekenModel->getRubriekenArray();
+                
+                array_unshift($rubrieken, $alleRubrieken);
+                
+                $this->replaceView('rubrieken_overzicht',$this->parseRubrieken($rubrieken));
+                
+                $this->replaceView('rubrieken_active_'.$rubriek, "class='active'");
+                
+                $this->view->cleanup('rubrieken_active');
 	}
         
         private function parseRubrieken($data)
@@ -58,7 +68,7 @@ class zoekControl extends control
                 $string = '<ul>';
                 foreach($data as $key=>$value)
                 {
-                        $string .= '<li><a href="/zoek?rubriek='.$value['Nummer'].'">'.$value['Naam'].'</a></li>';
+                        $string .= '<li {RUBRIEKEN_ACTIVE_'.$value['Nummer'].'}><a href="/zoek?rubriek='.$value['Nummer'].'">'.$value['Naam'].'</a></li>';
                         if(is_array($value['Subs']))
                         {
                                 $string .= $this->parseRubrieken($value['Subs']);
