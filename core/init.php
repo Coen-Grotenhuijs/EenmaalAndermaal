@@ -47,5 +47,7 @@ else
 	$class = new notfoundControl;
 	$class->run();
 }
+unset($class);
+
 
 ?>
