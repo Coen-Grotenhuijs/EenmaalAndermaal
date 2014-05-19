@@ -46,6 +46,7 @@ class zoekControl extends control
                         $this->replaceView('resultaat_tag',$value['Titel']);
                         $this->replaceView('resultaat_prijs',$prijs);
                         $this->replaceView('resultaat_time','?');
+                        $this->replaceView('resultaat_nummer', $value['Voorwerpnummer']);
                 }
 
                 $this->replaceView('next_resultaat','');

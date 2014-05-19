@@ -23,6 +23,7 @@ class dashboardControl extends control
                         $this->replaceView('bieding_tag',$value['Titel']);
                         $this->replaceView('bieding_prijs',$prijs);
                         $this->replaceView('bieding_time','?');
+                        $this->replaceView('bieding_nummer', $value['Voorwerpnummer']);
                 }
 
                 $this->replaceView('next_bieding','');
@@ -38,6 +39,7 @@ class dashboardControl extends control
                         $this->replaceView('voorwerp_tag',$value['Titel']);
                         $this->replaceView('voorwerp_prijs',$prijs);
                         $this->replaceView('voorwerp_time','?');
+                        $this->replaceView('voorwerp_nummer', $value['Voorwerpnummer']);
                 }
 
                 $this->replaceView('next_voorwerp','');
@@ -53,6 +55,7 @@ class dashboardControl extends control
                         $this->replaceView('suggestie_tag',$value['Titel']);
                         $this->replaceView('suggestie_prijs',$prijs);
                         $this->replaceView('suggestie_time','?');
+                        $this->replaceView('suggestie_nummer', $value['Voorwerpnummer']);
                 }
 
                 $this->replaceView('next_suggestie','');

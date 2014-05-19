@@ -41,7 +41,10 @@ class veilingControl extends control
                         $this->replaceView('bod_bodbedrag', $value['Bodbedrag']);
                         $this->replaceView('bod_gebruiker', $value['Gebruiker']);
                 }
-                
+                if(empty($biedingen))
+                {
+                        $this->loadView('veiling/geenbiedingen','next_bod');
+                }
                 $this->replaceView('next_bod','');
                 
                 if($this->logged_in)
