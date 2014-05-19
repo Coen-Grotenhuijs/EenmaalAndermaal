@@ -1,0 +1,49 @@
+				<div class="left panel twothird noHeight" id="product">
+					<img src="img/{VEILING_IMAGE}" width=200 height=200 class="left" />
+					<h2>Informatie</h2>
+					<p>Titel: {VEILING_TITEL}<br />
+					Minimum-bod: {VEILING_STARTPRIJS} <br />
+					Plaatsnaam: {VEILING_PLAATSNAAM} <br />
+					Land: {VEILING_LAND} <br />
+					</p>
+					<h2>Beschrijving</h2>
+					<p>{VEILING_BESCHRIJVING}
+					</p>
+					<h2>Verzending</h2>
+					<p>Verzendkosten: {VEILING_VERZENDKOSTEN}<br />
+					Verzendinstructies: {VEILING_VERZENDINSTRUCTIES}<br />
+					</p>
+					<h2>Betaling</h2>
+					<p>Betalingsinstructie: {VEILING_BETALINGINSTRUCTIE}<br />
+					Betalingswijze: {VEILING_BETALINGSWIJZE} <br />
+					</p>
+				</div>
+
+				<div class="left panel third last noHeight" id="verkoper">
+					<h2>Verkoper</h2> 
+					<p>
+					{VEILING_GEBRUIKERSNAAM}<br/>
+					{VEILING_TELEFOON}<br/>
+                                        <a href="profiel?gebruiker={VEILING_GEBRUIKERSNAAM}">Profiel bekijken</a> <br/>
+					</p>
+					<h2>Tijd resterend</h2>
+					<p>
+					1d 3u 45m 32s
+					</p>
+					<h2>Biedingen</h2>
+                                        <p>
+                                                {VEILING_BIEDEN}
+                                        </p>
+                                        <table>
+                                                <tr>
+                                                        <thead>
+                                                                Bod
+                                                        </thead>
+                                                        <thead>
+                                                                Gebruiker
+                                                        </thead>
+                                                </tr>
+                                                {NEXT_BOD}
+                                        </table>
+                                                
+				</div>

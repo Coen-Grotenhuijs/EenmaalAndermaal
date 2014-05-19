@@ -74,6 +74,12 @@ class form
 						$this->adderror($parameter, "Er zijn ongeldige tekens gebruikt.");
 					}
 					break;
+                                case 'isnumber':
+                                        if(!$this->stringcheck($this->data[$parameter],'0-9,.'))
+                                        {
+						$this->adderror($parameter, "Er zijn ongeldige tekens gebruikt.");
+                                        }
+                                        break;
 			}
 		}
 	}
@@ -124,15 +130,16 @@ class form
 	
 	private function stringcheck($string, $options)
 	{
-		print_r($string);
 		$option = explode(",",$options);
+                $allowed = array();
+                
 		foreach($option as $key=>$value)
 		{
 			if(strlen($value)==1) $allowed[$key] = $value;
 			else $allowed[$key] = explode("-", trim($value));
 		}
-		
-		for($i=0;$i<strlen($string);$i++)
+
+                for($i=0;$i<strlen($string);$i++)
 		{
 			$allow = false;
 			foreach($allowed as $key=>$value)

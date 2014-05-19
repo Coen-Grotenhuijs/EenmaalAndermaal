@@ -13,7 +13,7 @@ ul {
 
 a {
 	text-decoration: none;
-	color: #fff;
+	color: #265889;
 }
 
 #header {
@@ -78,6 +78,7 @@ a {
 	margin: 5px 0;
 	background: #265889;
 	text-align: center;
+	color: #fff;
 }
 
 .inlineButton {
@@ -222,6 +223,54 @@ a {
 	background: #f5f5f5;
 }
 
+#product img {
+	margin: 8px;
+	float: right;
+}
+
+#product p, #verkoper p {
+	font-size: 0.8rem;
+	margin: 5px 15px;
+	padding: 5px 0;
+	
+}
+
+#product p:last-child {
+	border: none;
+}
+
+#registreren {
+	overflow: auto;
+	height: initial;
+	font-size: 0.8rem;
+}
+
+#registreren table {
+	width: calc(100% - 200px);
+	margin: 10px 100px;
+}
+
+#registreren td:first-child {
+	text-align: right;
+	width: 300px;
+	padding: 5px;
+}
+
+#registreren input {
+	width: calc(100% - 200px);
+	padding: 5px;
+}
+
+#registreren input[type="submit"] {
+	margin: 20px auto;
+	width: 300px;
+	display: block;
+}
+
+#registreren tr:nth-child(2){
+	border-bottom: 1px solid red;
+}
+
 #footer {
 	background: #343131;
 	font-size: 0.8rem;
@@ -238,6 +287,7 @@ a {
 
 #footer ul li a{
 	line-height: 50px;
+	color: white;
 }
 
 .topadvertentie {
@@ -282,6 +332,10 @@ a {
 	margin-right: 50px;
 }
 
+.full {
+	width: 1000px;
+}
+
 .last {
 	margin-right: 0 !important; 
 }
@@ -320,8 +374,34 @@ a {
 	
 }
 
+.progressBar {
+	width: 900px;
+	margin: 20px 50px;
+	height: 20px;
+	background: #b0b0b0;
+	border-radius: 10px;
+	line-height: 20px;
+	color: white;
+	
+}
+
+.progressBar .fill {
+	background: green;
+	height: 100%;
+	border-radius: 10px;
+	font-size: 0.7rem;
+	text-align: center;
+}
+
 .active {
 	background: #CBE0F3 !important;
+}
+
+.breadcrumbs {
+	display: block;
+	margin: 5px 0 0 0;
+	font-size: 0.8rem;
+	font-weight: initial;
 }
 
 *::-webkit-scrollbar-track
