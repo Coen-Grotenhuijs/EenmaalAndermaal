@@ -149,6 +149,7 @@ a {
 .panel li:hover, .topadvertentie:hover{
 	background: #fafafa;
 	cursor: pointer;
+	color: black !important;
 }
 
 .panel li:first-child {
@@ -257,8 +258,12 @@ a {
 }
 
 #registreren input {
-	width: calc(100% - 200px);
+	width: calc(100% - 195px);
 	padding: 5px;
+}
+
+#registreren input[type="radio"]{
+	width: initial;
 }
 
 #registreren input[type="submit"] {
@@ -402,6 +407,10 @@ a {
 	margin: 5px 0 0 0;
 	font-size: 0.8rem;
 	font-weight: initial;
+}
+
+.breadcrumbs a:hover {
+	text-decoration: underline;
 }
 
 *::-webkit-scrollbar-track

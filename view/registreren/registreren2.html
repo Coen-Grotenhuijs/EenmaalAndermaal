@@ -1,0 +1,39 @@
+					<div class="panel full" id="registreren">
+						<h2>Persoonsgegevens</h2>
+						<div class="progressBar">
+							<div class="fill" style="width: 50%;">
+								Stap 2 / 4
+							</div>
+						</div>
+						<form method="POST"/>
+							<table>
+								<tr>
+									<td>Voornaam</td><td><input type="text" name="voornaam" placeholder="Voornaam" value="{SESSION_REG_VOORNAAM}"></td>
+								</tr>
+								<tr>
+									<td>Achternaam</td><td><input type="text" name="achternaam" placeholder="Achternaam" value="{SESSION_REG_ACHTERNAAM}"></td>
+								</tr>
+								<tr>
+									<td>Straat, huisnummer</td><td><input type="text" name="straat" placeholder="Straat" style="width: calc(75% - 200px);" value="{SESSION_REG_STRAAT}"><input type="text" name="huisnummer" placeholder="Huisnummer" style="margin-left: 5px; width: calc(25%);" value="{SESSION_REG_HUISNUMMER}"></td>
+								</tr>
+								<tr>
+									<td>Woonplaats, postcode</td><td>	<input type="text" name="woonplaats" placeholder="Woonplaats" style="width: calc(75% - 200px);" value="{SESSION_REG_WOONPLAATS}">
+																		<input type="text" style="margin-left: 0px; width: calc(25%);" name="postcode" placeholder="Postcode" value="{SESSION_REG_POSTCODE}"></td>
+								</tr>
+								<tr>
+									<td>Land</td><td><select name="land"><option value="NL">Nederland</option><option value="NL">België</option></select></td>
+								</tr>
+								<tr>
+									<td>Geboortedatum</td><td><input type="text" name="geboortedatum" placeholder="Geboortedatum..." value="{SESSION_REG_GEBOORTEDATUM}"></td>
+								</tr>
+								<tr>
+									<td>Telefoonnummer 1</td><td><input type="text" name="tel1" placeholder="Telefoonnummer 1" value="{SESSION_REG_TEL1}"></td>
+								</tr>
+								<tr>
+									<td>Telefoonnummer 2</td><td><input type="text" name="tel2" placeholder="Telefoonnummer 2" value="{SESSION_REG_TEL2}"></td>
+								</tr>
+							</table>
+							<input type="submit" name="previous" value="Vorige stap" />
+							<input type="submit" name="next" value="Volgende stap" />
+						</form>
+					</div>

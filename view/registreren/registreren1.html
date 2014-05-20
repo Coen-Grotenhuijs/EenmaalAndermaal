@@ -1,0 +1,32 @@
+					
+					<div class="panel full" id="registreren">
+						<h2>Accountgegevens</h2>
+						<div class="progressBar">
+							<div class="fill" style="width: 25%;">
+								Stap 1 / 4
+							</div>
+						</div>
+						<form method="POST"/>
+							<table>
+								<tr>
+									<td>Email</td><td><input type="text" name="email" placeholder="mail@site.nl..." value="{SESSION_REG_EMAIL}"></td>
+								</tr>
+								<tr>
+									<td>Gebruikersnaam</td><td><input type="text" name="gebruikersnaam" placeholder="Gebruikersnaam..." value="{SESSION_REG_GEBRUIKERSNAAM}"></td>
+								</tr>
+								<tr>
+									<td>Wachtwoord</td><td><input type="password" name="wachtwoord" placeholder="wachtwoord" value="{SESSION_REG_WACHTWOORD}"></td>
+								</tr>
+								<tr>
+									<td>Herhaal wachtwoord</td><td><input type="password" name="herh_wachtwoord" placeholder="Herhaal wachtwoord" value="{SESSION_REG_HERH_WACHTWOORD}"></td>
+								</tr>
+								<tr>
+									<td>Geheime vraag</td><td><input type="text" name="vraag" placeholder="Geheime vraag" value="{SESSION_REG_VRAAG}"></td>
+								</tr>
+								<tr>
+									<td>Geheime antwoord</td><td><input type="text" name="antwoord" placeholder="Geheim antwoord" value="{SESSION_REG_ANTWOORD}"></td>
+								</tr>
+							</table>
+							<input type="submit" name="next" value="Volgende stap" />
+						</form>
+					</div>
