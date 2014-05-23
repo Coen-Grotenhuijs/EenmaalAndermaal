@@ -25,6 +25,11 @@ class registrerenControl extends control
                         $this->saveData($_SESSION['registratiestap']);
                 }
                 
+                if($_SESSION['registratiestap']==4)
+                {
+                        $this->register($_SESSION);
+                }
+                
                 if(!empty($this->post['next']))
                 {
                         $form = $this->getForm($_SESSION['registratiestap']);
@@ -34,10 +39,8 @@ class registrerenControl extends control
                                 if($_SESSION['registratiestap']<4) $_SESSION['registratiestap']++;
                                 header('Location: registreren');
                         }
-                        if($_SESSION['registratiestap']==4)
-                        {
-                                $this->register($_SESSION['registratie']);
-                        }
+                        $this->view->replace_array($form->geterrors());
+                        $this->view->replace_array($form->getclasses());
                 }
                 elseif(!empty($this->post['previous']))
                 {
@@ -47,6 +50,7 @@ class registrerenControl extends control
                                 header('Location: registreren');
                         }
                 }
+                
 	}
         
         private function saveData($stap)
@@ -85,7 +89,24 @@ class registrerenControl extends control
                 switch($stap)
                 {
                         case 1:
-                                
+                                $form->check('email', array('not null'=>true,'length'=>'0-35','isemail'=>true));
+                                $form->check('gebruikersnaam', array('not null'=>true, 'length'=>'0-30'));
+                                $form->check('wachtwoord', array('not null'=>true, 'length'=>'0-15', 'equals'=>$this->post['herh_wachtwoord']));
+                                $form->check('herh_wachtwoord', array('not null'=>true));
+                                $form->check('vraag', array('not null'=>true, 'length'=>'0-10'));
+                                $form->check('wachtwoord', array('not null'=>true, 'length'=>'0-15'));
+                                break;
+                        case 2:
+                                $form->check('voornaam',array('not null'=>true, 'length'=>'0-30'));
+                                $form->check('achternaam',array('not null'=>true, 'length'=>'0-30'));
+                                $form->check('straat',array('not null'=>true, 'length'=>'0-30'));
+                                $form->check('huisnummer',array('not null'=>true));
+                                $form->check('woonplaats',array('not null'=>true));
+                                $form->check('postcode',array('not null'=>true));
+                                $form->check('land',array('not null'=>true));
+                                $form->check('geboortedatum',array('not null'=>true));
+                                $form->check('tel1',array('not null'=>true));
+//                                $form->check('tel2', array());
                                 break;
                 }
                 return $form;
@@ -93,7 +114,8 @@ class registrerenControl extends control
         
         private function register($data)
         {
-                
+                $this->registrerenModel->register($data);
+                unset($_SESSION['registratiestap']);
         }
 }
 

@@ -8,29 +8,29 @@
 						<form method="POST"/>
 							<table>
 								<tr>
-									<td>Voornaam</td><td><input type="text" name="voornaam" placeholder="Voornaam" value="{SESSION_REG_VOORNAAM}"></td>
+									<td>Voornaam</td><td><input type="text" name="voornaam" placeholder="Voornaam" value="{SESSION_REG_VOORNAAM}" {CLASS_VOORNAAM}> {ERROR_VOORNAAM}</td>
 								</tr>
 								<tr>
-									<td>Achternaam</td><td><input type="text" name="achternaam" placeholder="Achternaam" value="{SESSION_REG_ACHTERNAAM}"></td>
+									<td>Achternaam</td><td><input type="text" name="achternaam" placeholder="Achternaam" value="{SESSION_REG_ACHTERNAAM}" {CLASS_ACHTERNAAM}> {ERROR_ACHTERNAAM}</td>
 								</tr>
 								<tr>
-									<td>Straat, huisnummer</td><td><input type="text" name="straat" placeholder="Straat" style="width: calc(75% - 200px);" value="{SESSION_REG_STRAAT}"><input type="text" name="huisnummer" placeholder="Huisnummer" style="margin-left: 5px; width: calc(25%);" value="{SESSION_REG_HUISNUMMER}"></td>
+									<td>Straat, huisnummer</td><td><input type="text" name="straat" placeholder="Straat" style="width: calc(75% - 200px);" value="{SESSION_REG_STRAAT}" {CLASS_STRAAT}> {ERROR_STRAAT}<input type="text" name="huisnummer" placeholder="Huisnummer" style="margin-left: 5px; width: calc(25%);" value="{SESSION_REG_HUISNUMMER}" {CLASS_HUISNUMMER}> {ERROR_HUISNUMMER}</td>
 								</tr>
 								<tr>
-									<td>Woonplaats, postcode</td><td>	<input type="text" name="woonplaats" placeholder="Woonplaats" style="width: calc(75% - 200px);" value="{SESSION_REG_WOONPLAATS}">
-																		<input type="text" style="margin-left: 0px; width: calc(25%);" name="postcode" placeholder="Postcode" value="{SESSION_REG_POSTCODE}"></td>
+									<td>Woonplaats, postcode</td><td>	<input type="text" name="woonplaats" placeholder="Woonplaats" style="width: calc(75% - 200px);" value="{SESSION_REG_WOONPLAATS}" {CLASS_WOONPLAATS}> {ERROR_WOONPLAATS}
+																		<input type="text" style="margin-left: 0px; width: calc(25%);" name="postcode" placeholder="Postcode" value="{SESSION_REG_POSTCODE}" {CLASS_POSTCODE}> {ERROR_POSTCODE}</td>
 								</tr>
 								<tr>
-									<td>Land</td><td><select name="land"><option value="NL">Nederland</option><option value="NL">België</option></select></td>
+									<td>Land</td><td><select name="land"><option value="NL">Nederland</option><option value="NL">België</option></select> {ERROR_LAND}</td>
 								</tr>
 								<tr>
-									<td>Geboortedatum</td><td><input type="text" name="geboortedatum" placeholder="Geboortedatum..." value="{SESSION_REG_GEBOORTEDATUM}"></td>
+									<td>Geboortedatum</td><td><input type="text" name="geboortedatum" placeholder="Geboortedatum..." value="{SESSION_REG_GEBOORTEDATUM}" {CLASS_GEBOORTEDATUM}> {ERROR_GEBOORTEDATUM}</td>
 								</tr>
 								<tr>
-									<td>Telefoonnummer 1</td><td><input type="text" name="tel1" placeholder="Telefoonnummer 1" value="{SESSION_REG_TEL1}"></td>
+									<td>Telefoonnummer 1</td><td><input type="text" name="tel1" placeholder="Telefoonnummer 1" value="{SESSION_REG_TEL1}" {CLASS_TEL1}> {ERROR_TEL1}</td>
 								</tr>
 								<tr>
-									<td>Telefoonnummer 2</td><td><input type="text" name="tel2" placeholder="Telefoonnummer 2" value="{SESSION_REG_TEL2}"></td>
+									<td>Telefoonnummer 2</td><td><input type="text" name="tel2" placeholder="Telefoonnummer 2" value="{SESSION_REG_TEL2}" {CLASS_TEL2}> {ERROR_TEL2}</td>
 								</tr>
 							</table>
 							<input type="submit" name="previous" value="Vorige stap" />

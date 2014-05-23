@@ -64,6 +64,8 @@ class control extends session {
                         $this->replaceView('rubriek_nummer', $value['Nummer']);
                 }
                 $this->replaceView('next_rubriek_dropdown', '');
+                
+                $this->replaceView('aantalbiedingen','');
         }
 
         public function filterrequestdata() {
@@ -121,6 +123,7 @@ class control extends session {
                 $this->view->cleanup('ERROR');
                 $this->view->cleanup('CLASS');
                 $this->view->cleanup('JS');
+                $this->view->cleanup('SESSION');
                 unset($this->view);
         }
 

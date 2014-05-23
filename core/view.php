@@ -4,7 +4,7 @@ class view {
 
         private $output = '';
         
-        private $bencmark = 0;
+        private $benchmark = 0;
         
         private $cache = array();
 
