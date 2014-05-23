@@ -80,6 +80,11 @@ class form
 						$this->adderror($parameter, "Er zijn ongeldige tekens gebruikt.");
                                         }
                                         break;
+                                case 'isemail':
+                                        if(!filter_var($this->data[$parameter], FILTER_VALIDATE_EMAIL))
+                                        {
+                                            $this->adderror($parameter, "Ongeldigd e-mailadres");
+                                        }
 			}
 		}
 	}

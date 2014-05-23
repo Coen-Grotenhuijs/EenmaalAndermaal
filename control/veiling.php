@@ -28,6 +28,15 @@ class veilingControl extends control
                 
 		$this->loadView('veiling/veiling','content');
                 
+                if(empty($veiling['Filenaam']))
+                {
+                        $veiling['Filenaam'] = 'uploads/empty.jpg';
+                }
+                else
+                {
+                        $veiling['Filenaam'] = 'uploads/empty.jpg';
+                }
+
                 foreach($veiling as $key=>$value)
                 {
                         $this->replaceView('veiling_'.$key, $value);
