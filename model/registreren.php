@@ -38,6 +38,11 @@ class registrerenModel extends model
                                                                 0,
                                                                 '".$code."')");
         }
+        
+        public function getVragen()
+        {
+                return $this->db->fetchQueryAll("SELECT * FROM Vraag");
+        }
 }
 
 ?>

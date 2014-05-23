@@ -112,6 +112,10 @@ class control extends session {
         private function sessionfill() {
                 foreach ($_SESSION as $key => $value) {
                         $this->replaceView('SESSION_' . $key, $value);
+                        if(!is_array($value))
+                        {
+                                $this->replaceView('SESSION_' . $key . '_' . $value, 'selected');
+                        }
                 }
         }
 

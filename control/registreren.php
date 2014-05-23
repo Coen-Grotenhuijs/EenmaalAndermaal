@@ -24,6 +24,19 @@ class registrerenControl extends control
                 {
                         $this->saveData($_SESSION['registratiestap']);
                 }
+
+                if($_SESSION['registratiestap']==1)
+                {
+                        $vragen = $this->registrerenModel->getVragen();
+                        foreach($vragen as $key=>$value)
+                        {
+                                $this->loadView('registreren/vraag','next_vraag');
+                                $this->replaceView('tekstvraag', $value['Tekstvraag']);
+                                $this->replaceView('vraag_nummer', $value['Vraagnummer']);
+                        }
+                        $this->replaceView('next_vraag', '');
+                        
+                }
                 
                 if($_SESSION['registratiestap']==4)
                 {

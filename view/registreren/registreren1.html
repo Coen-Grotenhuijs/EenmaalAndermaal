@@ -21,10 +21,15 @@
 									<td>Herhaal wachtwoord</td><td><input type="password" name="herh_wachtwoord" placeholder="Herhaal wachtwoord" value="{SESSION_REG_HERH_WACHTWOORD}" {CLASS_HERH_WACHTWOORD}> {ERROR_HERH_WACHTWOORD}</td>
 								</tr>
 								<tr>
-									<td>Geheime vraag</td><td><input type="text" name="vraag" placeholder="Geheime vraag" value="{SESSION_REG_VRAAG}" {CLASS_VRAAG}> {ERROR_VRAAG}</td>
+									<td>Geheime vraag</td>
+                                                                        <td>
+                                                                                <select name="vraag">
+                                                                                        {NEXT_VRAAG}
+                                                                                </select>
+                                                                        </td>
 								</tr>
 								<tr>
-									<td>Geheime antwoord</td><td><input type="text" name="antwoord" placeholder="Geheim antwoord" value="{SESSION_REG_ANTWOORD}" {CLASS_ANTWOORD}> {ERROR_ANTWOORD}</td>
+									<td>Geheime antwoord</td><td><input type="text" name="antwoord" placeholder="Geheim antwoord" value="{SESSION_REG_ANTWOORD}"    {CLASS_ANTWOORD}> {ERROR_ANTWOORD}</td>
 								</tr>
 							</table>
 							<input type="submit" name="next" value="Volgende stap" />
