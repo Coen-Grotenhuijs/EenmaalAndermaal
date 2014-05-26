@@ -4,8 +4,9 @@ class homeModel extends model
 {
         public function getAdvertenties()
         {
-                $data = $this->db->fetchQueryAll("SELECT TOP(4) * FROM Voorwerp");
-                return $data;
+                $data = $this->db->fetchQueryAll("SELECT * FROM Voorwerp");
+                shuffle($data);
+                return array_slice($data, 0, 4);
         }
         
         public function getSuggesties()

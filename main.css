@@ -213,7 +213,7 @@ a {
 }
 
 #rubrieken ul ul{
-	margin-left: 30px;
+	padding-left: 30px;
 }
 
 #rubrieken ul ul li a{
@@ -415,8 +415,12 @@ a {
 	text-align: center;
 }
 
-.active {
+.active > a {
 	background: #CBE0F3 !important;
+}
+
+.active li {
+	background: white;
 }
 
 .breadcrumbs {
