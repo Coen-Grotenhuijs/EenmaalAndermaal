@@ -66,6 +66,7 @@ class control extends session {
                 $this->replaceView('next_rubriek_dropdown', '');
                 
                 $this->replaceView('aantalbiedingen','');
+                
         }
 
         public function filterrequestdata() {
@@ -120,6 +121,9 @@ class control extends session {
         }
 
         public function __destruct() {
+                $timer = new Timer();
+                $this->replaceView('js_countdown', $timer->getJavascript());
+
                 $this->formfill();
                 $this->sessionfill();
                 $this->view->cleanup('POST');

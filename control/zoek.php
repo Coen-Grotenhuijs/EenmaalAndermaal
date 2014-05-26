@@ -45,8 +45,10 @@ class zoekControl extends control
                         $this->replaceView('resultaat_image',$file);
                         $this->replaceView('resultaat_tag',$value['Titel']);
                         $this->replaceView('resultaat_prijs',$prijs);
-                        $this->replaceView('resultaat_time','?');
                         $this->replaceView('resultaat_nummer', $value['Voorwerpnummer']);
+                        $timer = new Timer();
+                        $time = $timer->getTimestamp($value['Looptijdeindedag'], $value['Looptijdeindetijdstip']);
+                        $this->replaceView('timer_class',$timer->setTimer($time));
                 }
 
                 $this->replaceView('next_resultaat','');
@@ -66,14 +68,15 @@ class zoekControl extends control
         
         private function parseRubrieken($data)
         {
-                $string = '<ul>';
+                $string = '<ul class="rubriekenlist">';
                 foreach($data as $key=>$value)
                 {
-                        $string .= '<li {RUBRIEKEN_ACTIVE_'.$value['Nummer'].'}><a href="/zoek?rubriek='.$value['Nummer'].'">'.$value['Naam'].'</a></li>';
+                        $string .= '<li {RUBRIEKEN_ACTIVE_'.$value['Nummer'].'}><a href="/zoek?rubriek='.$value['Nummer'].'"><span>'.$value['Naam'].'</span></a>';
                         if(is_array($value['Subs']))
                         {
                                 $string .= $this->parseRubrieken($value['Subs']);
                         }
+                        $string .= '</li>';
                 }
                 $string .= '</ul>';
                 return $string;

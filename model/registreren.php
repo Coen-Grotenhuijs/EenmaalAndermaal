@@ -33,7 +33,7 @@ class registrerenModel extends model
                                                                 '".$data['reg_geboortedatum']."',
                                                                 '".$data['reg_email']."',
                                                                 '".$data['reg_wachtwoord']."',
-                                                                1,
+                                                                '".$data['reg_vraag']."',
                                                                 '".$data['reg_antwoord']."',
                                                                 0,
                                                                 '".$code."')");
@@ -42,6 +42,18 @@ class registrerenModel extends model
         public function getVragen()
         {
                 return $this->db->fetchQueryAll("SELECT * FROM Vraag");
+        }
+        
+        public function getUserEmail($email)
+        {
+                $data = $this->db->fetchQuery("SELECT * FROM Gebruiker WHERE Emailadres = '".$email."'");
+                return isset($data['Emailadres']);
+        }
+        
+        public function getUserExists($gebruikersnaam)
+        {
+                $data = $this->db->fetchQuery("SELECT * FROM Gebruiker WHERE Gebruikersnaam = '".$gebruikersnaam."'");
+                return isset($data['Gebruikersnaam']);
         }
 }
 

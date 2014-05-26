@@ -8,7 +8,38 @@
    <link rel="stylesheet" type="text/css" href="main.css" />
    <script type="text/javascript" src="js/jquery.min.js"></script>
    <script type="text/javascript" src="js/main.js"></script>
-   {JS_PRODUCTEN}
+   <script type="text/javascript" src="js/jquery.plugin.js"></script>
+   <script type="text/javascript" src="js/jquery.countdown.js"></script>
+   <script type="text/javascript" src="js/jquery-ui-1.10.4.custom.js"></script>
+   
+   <script>
+           $(function () {
+                 $('.rubriekenlist').accordion({
+                        heightStyle: "content",
+                        event: "click",
+                        navigation: true,
+                        animate: 200
+                });
+                $(".rubriekenlist a span").click(function() { 
+                        window.location = $(this).parent().attr("href");
+                        return false;
+                });
+                
+                var element = $(".rubriekenlist li.active");
+                var parent = element.parent();
+                while(parent.prop("tagName")=='UL')
+                {
+                        var index = element.index();
+                        parent.accordion({animate: 0});
+                        parent.accordion({active: index});
+                        parent.accordion({animate: 200});
+                        element = element.parent().parent();
+                        parent = parent.parent().parent();
+                }
+                {JS_COUNTDOWN}
+           })
+   </script>
+
 </head>
     <body>
 		<div id="header">

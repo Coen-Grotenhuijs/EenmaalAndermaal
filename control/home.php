@@ -17,8 +17,10 @@ class homeControl extends control
                         $this->replaceView('advertentie_image',$file);
                         $this->replaceView('advertentie_tag',$value['Titel']);
                         $this->replaceView('advertentie_prijs',$prijs);
-                        $this->replaceView('advertentie_time','?');
                         $this->replaceView('advertentie_nummer', $value['Voorwerpnummer']);
+                        $timer = new Timer();
+                        $time = $timer->getTimestamp($value['Looptijdeindedag'], $value['Looptijdeindetijdstip']);
+                        $this->replaceView('timer_class',$timer->setTimer($time));
                 }
 
                 $this->replaceView('next_advertentie','');
@@ -33,8 +35,10 @@ class homeControl extends control
                         $this->replaceView('suggestie_image',$file);
                         $this->replaceView('suggestie_tag',$value['Titel']);
                         $this->replaceView('suggestie_prijs',$prijs);
-                        $this->replaceView('suggestie_time','?');
                         $this->replaceView('suggestie_nummer', $value['Voorwerpnummer']);
+                        $timer = new Timer();
+                        $time = $timer->getTimestamp($value['Looptijdeindedag'], $value['Looptijdeindetijdstip']);
+                        $this->replaceView('timer_class',$timer->setTimer($time));
                 }
 
                 $this->replaceView('next_suggestie','');

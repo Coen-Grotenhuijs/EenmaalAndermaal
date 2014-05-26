@@ -22,8 +22,10 @@ class dashboardControl extends control
                         $this->replaceView('bieding_image',$file);
                         $this->replaceView('bieding_tag',$value['Titel']);
                         $this->replaceView('bieding_prijs',$prijs);
-                        $this->replaceView('bieding_time','?');
                         $this->replaceView('bieding_nummer', $value['Voorwerpnummer']);
+                        $timer = new Timer();
+                        $time = $timer->getTimestamp($value['Looptijdeindedag'], $value['Looptijdeindetijdstip']);
+                        $this->replaceView('timer_class',$timer->setTimer($time));
                 }
 
                 $this->replaceView('next_bieding','');
@@ -38,8 +40,10 @@ class dashboardControl extends control
                         $this->replaceView('voorwerp_image',$file);
                         $this->replaceView('voorwerp_tag',$value['Titel']);
                         $this->replaceView('voorwerp_prijs',$prijs);
-                        $this->replaceView('voorwerp_time','?');
                         $this->replaceView('voorwerp_nummer', $value['Voorwerpnummer']);
+                        $timer = new Timer();
+                        $time = $timer->getTimestamp($value['Looptijdeindedag'], $value['Looptijdeindetijdstip']);
+                        $this->replaceView('timer_class',$timer->setTimer($time));
                 }
 
                 $this->replaceView('next_voorwerp','');
@@ -54,8 +58,10 @@ class dashboardControl extends control
                         $this->replaceView('suggestie_image',$file);
                         $this->replaceView('suggestie_tag',$value['Titel']);
                         $this->replaceView('suggestie_prijs',$prijs);
-                        $this->replaceView('suggestie_time','?');
                         $this->replaceView('suggestie_nummer', $value['Voorwerpnummer']);
+                        $timer = new Timer();
+                        $time = $timer->getTimestamp($value['Looptijdeindedag'], $value['Looptijdeindetijdstip']);
+                        $this->replaceView('timer_class',$timer->setTimer($time));
                 }
 
                 $this->replaceView('next_suggestie','');

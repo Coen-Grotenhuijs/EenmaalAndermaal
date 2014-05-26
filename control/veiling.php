@@ -41,7 +41,11 @@ class veilingControl extends control
                 {
                         $this->replaceView('veiling_'.$key, $value);
                 }
-                
+
+                $timer = new Timer();
+                $time = $timer->getTimestamp($veiling['Looptijdeindedag'], $veiling['Looptijdeindetijdstip']);
+                $this->replaceView('timer_class',$timer->setTimer($time));
+
                 
                 $biedingen = $this->veilingModel->getBiedingen(intval($this->get['id']));
                 foreach($biedingen as $key=>$value)
