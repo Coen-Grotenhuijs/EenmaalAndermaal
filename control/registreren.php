@@ -82,6 +82,7 @@ class registrerenControl extends control
                         case 2:
                                 
                                 $_SESSION['reg_voornaam'] = $this->post['voornaam'];
+                                $_SESSION['reg_tussenvoegsel'] = $this->post['tussenvoegsel'];
                                 $_SESSION['reg_achternaam'] = $this->post['achternaam'];
                                 $_SESSION['reg_straat'] = $this->post['straat'];
                                 $_SESSION['reg_huisnummer'] = $this->post['huisnummer'];
@@ -102,8 +103,11 @@ class registrerenControl extends control
                 switch($stap)
                 {
                         case 1:
-                                $form->check('email', array('not null'=>true,'length'=>'0-35','isemail'=>true));
-                                $form->check('gebruikersnaam', array('not null'=>true, 'length'=>'0-30'));
+                                $user = $this->registrerenModel->getUserExists($this->post['gebruikersnaam']);
+                                $email = $this->registrerenModel->getUserEmail($this->post['email']);
+                                print_r(array($user, $email));
+                                $form->check('email', array('not null'=>true,'length'=>'0-35','isemail'=>true, 'null'=>array($email, 'Dit e-mailadres is reeds bezet.')));
+                                $form->check('gebruikersnaam', array('not null'=>true, 'length'=>'0-30', 'null'=>array($user,'Deze gebruikersnaam is reeds bezet.')));
                                 $form->check('wachtwoord', array('not null'=>true, 'length'=>'0-15', 'equals'=>$this->post['herh_wachtwoord']));
                                 $form->check('herh_wachtwoord', array('not null'=>true));
                                 $form->check('vraag', array('not null'=>true, 'length'=>'0-10'));
@@ -111,6 +115,7 @@ class registrerenControl extends control
                                 break;
                         case 2:
                                 $form->check('voornaam',array('not null'=>true, 'length'=>'0-30'));
+                                $form->check('tussenvoegsel',array('not null'=>false, 'length'=>'0-30'));
                                 $form->check('achternaam',array('not null'=>true, 'length'=>'0-30'));
                                 $form->check('straat',array('not null'=>true, 'length'=>'0-30'));
                                 $form->check('huisnummer',array('not null'=>true));

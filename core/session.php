@@ -32,8 +32,8 @@ class session
 			$this->loginform = $form;
 			if($form->valid())
 			{
-				$_SESSION['user'] = $this->post['username'];
-				$_SESSION['pass'] = $this->post['password'];
+				$_SESSION['user'] = $user['Gebruikersnaam'];
+				$_SESSION['pass'] = $user['Wachtwoord'];
 				header('Location: '.$_SERVER['REQUEST_URI']);
 			}
 		}
