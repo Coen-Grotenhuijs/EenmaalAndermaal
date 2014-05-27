@@ -28,6 +28,10 @@ class dashboardControl extends control
                         $this->replaceView('timer_class',$timer->setTimer($time));
                 }
 
+                if(empty($biedingen))
+                {
+                        $this->loadView('dashboard/geenbiedingen', 'next_bieding');
+                }
                 $this->replaceView('next_bieding','');
                 
                 $voorwerpen = $this->dashboardModel->getVoorwerpen();
@@ -46,6 +50,10 @@ class dashboardControl extends control
                         $this->replaceView('timer_class',$timer->setTimer($time));
                 }
 
+                if(empty($voorwerpen))
+                {
+                        $this->loadView('dashboard/geenvoorwerpen', 'next_voorwerp');
+                }
                 $this->replaceView('next_voorwerp','');
 
                 $suggesties = $this->dashboardModel->getSuggesties();
@@ -64,6 +72,10 @@ class dashboardControl extends control
                         $this->replaceView('timer_class',$timer->setTimer($time));
                 }
 
+                if(empty($suggesties))
+                {
+                        $this->loadView('dashboard/geensuggesties', 'next_suggestie');
+                }
                 $this->replaceView('next_suggestie','');
                 
                 $profiel = $this->dashboardModel->getProfielgegevens();

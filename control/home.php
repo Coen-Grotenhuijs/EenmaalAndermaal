@@ -22,7 +22,11 @@ class homeControl extends control
                         $time = $timer->getTimestamp($value['Looptijdeindedag'], $value['Looptijdeindetijdstip']);
                         $this->replaceView('timer_class',$timer->setTimer($time));
                 }
-
+                
+                if(empty($advertenties))
+                {
+                        $this->loadView('home/geenadvertenties', 'next_advertentie');
+                }
                 $this->replaceView('next_advertentie','');
 
                 $suggesties = $this->homeModel->getSuggesties();
@@ -41,6 +45,10 @@ class homeControl extends control
                         $this->replaceView('timer_class',$timer->setTimer($time));
                 }
 
+                if(empty($suggesties))
+                {
+                        $this->loadView('home/geensuggesties', 'next_suggestie');
+                }
                 $this->replaceView('next_suggestie','');
                 
                 
