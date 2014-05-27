@@ -56,6 +56,10 @@ class zoekControl extends control
                 
                 if($this->logged_in) $this->relevantieModel->addSearch($ids);
 
+                if(empty($resultaten_relevantie))
+                {
+                        $this->loadView('zoek/geenresultaten', 'next_resultaat');
+                }
                 $this->replaceView('next_resultaat','');
                 
                 $alleRubrieken = array('Nummer'=>'0', 'Naam'=>'Alle rubrieken', 'Subs'=>null);
