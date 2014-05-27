@@ -2,6 +2,74 @@
 
 class relevantieModel extends model
 {
+        public function addView($veiling)
+        {
+                if(empty($_SESSION['bekekenVeilingen']))
+                {
+                        $_SESSION['bekekenVeilingen'] = array($veiling);
+                }
+                else
+                {
+                        $_SESSION['bekekenVeilingen'][] = $veiling;
+                }
+                
+                foreach($_SESSION['bekekenVeilingen'] as $key=>$value)
+                {
+                        if($value!=$veiling)
+                        {
+                                $data = $this->db->fetchQuery("SELECT * FROM Relaties WHERE Voorwerpnummer = ".$veiling." AND GerelateerdeVoorwerpnummer = ".$value);
+                                if(!empty($data))
+                                {
+                                        $this->db->query("UPDATE Relaties SET Factor = Factor + 1 WHERE Voorwerpnummer = ".$veiling." AND GerelateerdeVoorwerpnummer = ".$value);
+                                }
+                                else
+                                {
+                                        $this->db->query("INSERT INTO Relaties (Voorwerpnummer, GerelateerdeVoorwerpnummer, Factor) VALUES (".$veiling.", ".$value.", 1)");
+                                }
+                        }
+                }
+                
+                $data = $this->db->fetchQuery("SELECT * FROM Suggesties WHERE Voorwerpnummer = ".$veiling." AND Gebruikersnaam = ".$this->getCurrentUser());
+                if(!empty($data))
+                {
+                        $this->db->query("UPDATE Suggesties SET Factor = Factor + 10 WHERE Voorwerpnummer = ".$veiling." AND Gebruikersnaam = ".$this->getCurrentUser());
+                }
+                else
+                {
+                        $this->db->query("INSERT INTO Suggesties (Voorwerpnummer, Gebruikersnaam, Factor) VALUES (".$veiling.", ".$this->getCurrentUser().", 10)");
+                }
+                
+        }
+        
+        public function addSearch($veilingen)
+        {
+                foreach($veilingen as $key=>$value)
+                {
+                        $data = $this->db->fetchQuery("SELECT * FROM Suggesties WHERE Voorwerpnummer = ".$value." AND Gebruikersnaam = ".$this->getCurrentUser());
+                        if(!empty($data))
+                        {
+                                $this->db->query("UPDATE Suggesties SET Factor = Factor + 1 WHERE Voorwerpnummer = ".$value." AND Gebruikersnaam = ".$this->getCurrentUser());
+                        }
+                        else
+                        {
+                                $this->db->query("INSERT INTO Suggesties (Voorwerpnummer, Gebruikersnaam, Factor) VALUES (".$value.", ".$this->getCurrentUser().", 1)");
+                        }
+                }
+        }
+        
+        public function addBid($veiling)
+        {
+                $data = $this->db->fetchQuery("SELECT * FROM Suggesties WHERE Voorwerpnummer = ".$veiling." AND Gebruikersnaam = ".$this->getCurrentUser());
+                if(!empty($data))
+                {
+                        $this->db->query("UPDATE Suggesties SET Factor = Factor + 100 WHERE Voorwerpnummer = ".$veiling." AND Gebruikersnaam = ".$this->getCurrentUser());
+                }
+                else
+                {
+                        $this->db->query("INSERT INTO Suggesties (Voorwerpnummer, Gebruikersnaam, Factor) VALUES (".$veiling.", ".$this->getCurrentUser().", 100)");
+                }
+        }
+        
         public function getZoekRelevantie($data, $text, $rubriek, $page, $perPage, $start = 0)
         {
                 // Waardering door gebruiker per product

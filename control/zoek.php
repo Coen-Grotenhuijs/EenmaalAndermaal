@@ -36,8 +36,11 @@ class zoekControl extends control
                 
                 $resultaten_relevantie = $this->relevantieModel->getZoekRelevantie($resultaten, $zoek, $rubriek, $page, $perpage);
                 
+                $ids = array();
+                
                 foreach($resultaten_relevantie as $key=>$value)
                 {
+                        $ids[] = $value['Voorwerpnummer'];
                         $file = empty($value['Filenaam']) ? 'empty.jpg' : $value['Filenaam'];
                         $maxbod = $this->rubriekenModel->getHoogsteBod($value['Voorwerpnummer']);
                         $prijs = ($maxbod==0) ? $value['Startprijs'] : $maxbod;
@@ -50,6 +53,8 @@ class zoekControl extends control
                         $time = $timer->getTimestamp($value['Looptijdeindedag'], $value['Looptijdeindetijdstip']);
                         $this->replaceView('timer_class',$timer->setTimer($time));
                 }
+                
+                if($this->logged_in) $this->relevantieModel->addSearch($ids);
 
                 $this->replaceView('next_resultaat','');
                 

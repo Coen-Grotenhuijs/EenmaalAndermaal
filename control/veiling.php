@@ -4,6 +4,8 @@ class veilingControl extends control
 {
 	public function run()
 	{
+                $this->loadModel('relevantie');
+                
                 $veiling = $this->veilingModel->getVeiling(intval($this->get['id']));
                 
                 if(empty($veiling))
@@ -11,14 +13,16 @@ class veilingControl extends control
                         header('Location: zoek');
                 }
                 
-                if(!empty($this->post['submitbod']))
+                if($this->logged_in) $this->relevantieModel->addView($this->get['id']);
+                
+                if(!empty($this->post['submitbod']) && $this->logged_in)
                 {
                         $form = new form($this->post);
                         $form->check('bod',array('length'=>'0-4', 'isnumber'=>true));
                         
                         if($form->valid())
                         {
-                                
+                                $this->relevantieModel->addBid($this->get['id']);
                         }
                 }
                 $breadcrumb = $this->veilingModel->getBreadcrumb(intval($this->get['id']));

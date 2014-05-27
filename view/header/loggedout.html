@@ -5,6 +5,7 @@
                                                         {ERROR_PASSWORD}
 							<input type="Submit" name="submitlogin" value="Inloggen" />
                                                 </form>
-                                                <form action="wachtwoordvergeten" method="post">
+                                                <form action="wachtwoordvergeten" method="get">
+							<input type="hidden" name="username" placeholder="Gebruikersnaam"  value="{POST_USERNAME}" />
 							<input type="Submit" name="forgot" value="Wachtwoord vergeten" />
 						</form>
