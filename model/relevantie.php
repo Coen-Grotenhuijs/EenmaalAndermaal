@@ -29,14 +29,14 @@ class relevantieModel extends model
                         }
                 }
                 
-                $data = $this->db->fetchQuery("SELECT * FROM Suggesties WHERE Voorwerpnummer = ".$veiling." AND Gebruikersnaam = ".$this->getCurrentUser());
+                $data = $this->db->fetchQuery("SELECT * FROM Suggesties WHERE Voorwerpnummer = ".$veiling." AND Gebruikersnaam = '".$this->getCurrentUser()."'");
                 if(!empty($data))
                 {
-                        $this->db->query("UPDATE Suggesties SET Factor = Factor + 10 WHERE Voorwerpnummer = ".$veiling." AND Gebruikersnaam = ".$this->getCurrentUser());
+                        $this->db->query("UPDATE Suggesties SET Factor = Factor + 10 WHERE Voorwerpnummer = ".$veiling." AND Gebruikersnaam = '".$this->getCurrentUser()."'");
                 }
                 else
                 {
-                        $this->db->query("INSERT INTO Suggesties (Voorwerpnummer, Gebruikersnaam, Factor) VALUES (".$veiling.", ".$this->getCurrentUser().", 10)");
+                        $this->db->query("INSERT INTO Suggesties (Voorwerpnummer, Gebruikersnaam, Factor) VALUES (".$veiling.", '".$this->getCurrentUser()."', 10)");
                 }
                 
         }
@@ -45,28 +45,28 @@ class relevantieModel extends model
         {
                 foreach($veilingen as $key=>$value)
                 {
-                        $data = $this->db->fetchQuery("SELECT * FROM Suggesties WHERE Voorwerpnummer = ".$value." AND Gebruikersnaam = ".$this->getCurrentUser());
+                        $data = $this->db->fetchQuery("SELECT * FROM Suggesties WHERE Voorwerpnummer = ".$value." AND Gebruikersnaam = '".$this->getCurrentUser()."'");
                         if(!empty($data))
                         {
-                                $this->db->query("UPDATE Suggesties SET Factor = Factor + 1 WHERE Voorwerpnummer = ".$value." AND Gebruikersnaam = ".$this->getCurrentUser());
+                                $this->db->query("UPDATE Suggesties SET Factor = Factor + 1 WHERE Voorwerpnummer = ".$value." AND Gebruikersnaam = '".$this->getCurrentUser()."'");
                         }
                         else
                         {
-                                $this->db->query("INSERT INTO Suggesties (Voorwerpnummer, Gebruikersnaam, Factor) VALUES (".$value.", ".$this->getCurrentUser().", 1)");
+                                $this->db->query("INSERT INTO Suggesties (Voorwerpnummer, Gebruikersnaam, Factor) VALUES (".$value.", '".$this->getCurrentUser()."', 1)");
                         }
                 }
         }
         
         public function addBid($veiling)
         {
-                $data = $this->db->fetchQuery("SELECT * FROM Suggesties WHERE Voorwerpnummer = ".$veiling." AND Gebruikersnaam = ".$this->getCurrentUser());
+                $data = $this->db->fetchQuery("SELECT * FROM Suggesties WHERE Voorwerpnummer = ".$veiling." AND Gebruikersnaam = '".$this->getCurrentUser()."'");
                 if(!empty($data))
                 {
-                        $this->db->query("UPDATE Suggesties SET Factor = Factor + 100 WHERE Voorwerpnummer = ".$veiling." AND Gebruikersnaam = ".$this->getCurrentUser());
+                        $this->db->query("UPDATE Suggesties SET Factor = Factor + 100 WHERE Voorwerpnummer = ".$veiling." AND Gebruikersnaam = '".$this->getCurrentUser()."'");
                 }
                 else
                 {
-                        $this->db->query("INSERT INTO Suggesties (Voorwerpnummer, Gebruikersnaam, Factor) VALUES (".$veiling.", ".$this->getCurrentUser().", 100)");
+                        $this->db->query("INSERT INTO Suggesties (Voorwerpnummer, Gebruikersnaam, Factor) VALUES (".$veiling.", '".$this->getCurrentUser()."', 100)");
                 }
         }
         
@@ -106,19 +106,23 @@ class relevantieModel extends model
 		$result_all = $this->db->fetchQueryAll("SELECT *, Voorwerp.Voorwerpnummer AS Voorwerpnummer FROM Voorwerp LEFT JOIN Suggesties ON Suggesties.Voorwerpnummer = Voorwerp.Voorwerpnummer WHERE Suggesties.Gebruikersnaam = '".$this->getCurrentUser()."' OR Suggesties.Gebruikersnaam IS NULL ORDER BY Suggesties.Factor");
 		foreach($result_all as $key=>$value)
 		{
-			if(!empty($userrating[$value['Voorwerpnummer']])) $userrating[$value['Voorwerpnummer']] += intval($value['Factor']/10);
-			else $userrating[$value['Voorwerpnummer']] = intval($value['Factor']/10);
+			if(!empty($userrating[$value['Voorwerpnummer']])) $userrating[$value['Voorwerpnummer']] += intval($value['Factor']/50);
+			else $userrating[$value['Voorwerpnummer']] = intval($value['Factor']/50);
 			$rating[$value['Voorwerpnummer']] = $userrating[$value['Voorwerpnummer']];
 		}
 
                 // Alle relaties ophalen
 		$result2 = $this->db->fetchQueryAll("SELECT * FROM Relaties");
                 
+                // Max factor ophalen
+                $result_max = $this->db->fetchQuery("SELECT MAX(Factor) AS Factor FROM Relaties");
+                $max = $result_max['Factor'];
+                
                 // De waardering van gerelateerde producten optellen bij de reeds vastgestelde waardering
 		foreach($result2 as $key=>$value)
 		{
-			$rating[$value['Voorwerpnummer']] += $value['Factor']*$userrating[$value['GerelateerdeVoorwerpnummer']];
-			$rating[$value['GerelateerdeVoorwerpnummer']] += $value['Factor']*$userrating[$value['Voorwerpnummer']];
+			$rating[$value['Voorwerpnummer']] += $value['Factor']/$max*$userrating[$value['GerelateerdeVoorwerpnummer']];
+			$rating[$value['GerelateerdeVoorwerpnummer']] += $value['Factor']/$max*$userrating[$value['Voorwerpnummer']];
 		}
 		
                 // Sorteren
@@ -154,7 +158,7 @@ class relevantieModel extends model
 		}
                 
 		// Data teruggeven
-                return array_slice($data, ($page-1)*$perPage, $perPage);
+                return array_slice($result, ($page-1)*$perPage, $perPage);
         }
 
         public function getRelevantie($data, $page, $perPage, $start = 0)
@@ -229,7 +233,7 @@ class relevantieModel extends model
 		}
                 
 		// Data teruggeven
-                return array_slice($data, ($page-1)*$perPage, $perPage);
+                return array_slice($result, ($page-1)*$perPage, $perPage);
         }
         
 }
