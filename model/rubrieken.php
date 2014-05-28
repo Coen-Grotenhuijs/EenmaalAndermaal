@@ -67,7 +67,7 @@ class rubriekenModel extends model
                 
                 $rubriekenString = implode(",",$rubrieken);
                 
-                $data = $this->db->fetchQueryAll("SELECT *, VoorwerpInRubriek.Voorwerp AS Voorwerpnummer FROM VoorwerpInRubriek INNER JOIN Voorwerp on VoorwerpInRubriek.Voorwerp = Voorwerp.Voorwerpnummer LEFT JOIN Suggesties ON Suggesties.Voorwerpnummer = Voorwerp.Voorwerpnummer WHERE RubriekOpLaagsteNiveau IN (".$rubriekenString.") AND (Titel LIKE '%".$text."%' OR Beschrijving LIKE '%".$text."%') AND Veilinggesloten = 0 AND (Suggesties.Gebruikersnaam = '".$this->getCurrentUser()."' OR Suggesties.Gebruikersnaam IS NULL)");
+                $data = $this->db->fetchQueryAll("SELECT *, VoorwerpInRubriek.Voorwerp AS Voorwerpnummer FROM VoorwerpInRubriek INNER JOIN Voorwerp on VoorwerpInRubriek.Voorwerp = Voorwerp.Voorwerpnummer LEFT JOIN Suggesties ON Suggesties.Voorwerpnummer = Voorwerp.Voorwerpnummer WHERE RubriekOpLaagsteNiveau IN (".$rubriekenString.") AND (Titel LIKE '%".$text."%' OR Beschrijving LIKE '%".$text."%') AND Veilinggesloten = 0");
                 
                 return $data;
  

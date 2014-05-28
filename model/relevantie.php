@@ -72,6 +72,7 @@ class relevantieModel extends model
         
         public function getZoekRelevantie($data, $text, $rubriek, $page, $perPage, $start = 0)
         {
+                
                 // Waardering door gebruiker per product
                 $userrating = array();
                 
@@ -101,29 +102,38 @@ class relevantieModel extends model
                         }
 		}
 		
+                if($this->getCurrentUser() == null)
+                {
+                        // Van alle veilingen de waardering ophalen voor deze gebruiker
+                        $result_all = $this->db->fetchQueryAll("SELECT *, Voorwerp.Voorwerpnummer AS Voorwerpnummer FROM Voorwerp LEFT JOIN Suggesties ON Suggesties.Voorwerpnummer = Voorwerp.Voorwerpnummer WHERE Suggesties.Gebruikersnaam = '".$this->getCurrentUser()."' OR Suggesties.Gebruikersnaam IS NULL ORDER BY Suggesties.Factor");
+                        foreach($result_all as $key=>$value)
+                        {
+                                if(!empty($userrating[$value['Voorwerpnummer']])) $userrating[$value['Voorwerpnummer']] += intval($value['Factor']/50);
+                                else $userrating[$value['Voorwerpnummer']] = intval($value['Factor']/50);
+                                $rating[$value['Voorwerpnummer']] = $userrating[$value['Voorwerpnummer']];
+                        }
 
-                // Van alle veilingen de waardering ophalen voor deze gebruiker
-		$result_all = $this->db->fetchQueryAll("SELECT *, Voorwerp.Voorwerpnummer AS Voorwerpnummer FROM Voorwerp LEFT JOIN Suggesties ON Suggesties.Voorwerpnummer = Voorwerp.Voorwerpnummer WHERE Suggesties.Gebruikersnaam = '".$this->getCurrentUser()."' OR Suggesties.Gebruikersnaam IS NULL ORDER BY Suggesties.Factor");
-		foreach($result_all as $key=>$value)
-		{
-			if(!empty($userrating[$value['Voorwerpnummer']])) $userrating[$value['Voorwerpnummer']] += intval($value['Factor']/50);
-			else $userrating[$value['Voorwerpnummer']] = intval($value['Factor']/50);
-			$rating[$value['Voorwerpnummer']] = $userrating[$value['Voorwerpnummer']];
-		}
+                        // Alle relaties ophalen
+                        $result2 = $this->db->fetchQueryAll("SELECT * FROM Relaties");
 
-                // Alle relaties ophalen
-		$result2 = $this->db->fetchQueryAll("SELECT * FROM Relaties");
-                
-                // Max factor ophalen
-                $result_max = $this->db->fetchQuery("SELECT MAX(Factor) AS Factor FROM Relaties");
-                $max = $result_max['Factor'];
-                
-                // De waardering van gerelateerde producten optellen bij de reeds vastgestelde waardering
-		foreach($result2 as $key=>$value)
-		{
-			$rating[$value['Voorwerpnummer']] += $value['Factor']/$max*$userrating[$value['GerelateerdeVoorwerpnummer']];
-			$rating[$value['GerelateerdeVoorwerpnummer']] += $value['Factor']/$max*$userrating[$value['Voorwerpnummer']];
-		}
+                        // Max factor ophalen
+                        $result_max = $this->db->fetchQuery("SELECT MAX(Factor) AS Factor FROM Relaties");
+                        $max = $result_max['Factor'];
+
+                        // De waardering van gerelateerde producten optellen bij de reeds vastgestelde waardering
+                        foreach($result2 as $key=>$value)
+                        {
+                                $rating[$value['Voorwerpnummer']] += $value['Factor']/$max*$userrating[$value['GerelateerdeVoorwerpnummer']];
+                                $rating[$value['GerelateerdeVoorwerpnummer']] += $value['Factor']/$max*$userrating[$value['Voorwerpnummer']];
+                        }
+                }
+                else
+                {
+                        foreach($userrating as $key=>$value)
+                        {
+                                $rating[$key] = $value;
+                        }
+                }
 		
                 // Sorteren
 		arsort($rating);
