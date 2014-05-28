@@ -157,8 +157,48 @@ class relevantieModel extends model
 			if($value['Voorwerpnummer']==$start) $start_key = $key+1;
 		}
                 
+                // Data opslaan in sessie voor gebruik bij scrollen
+                $_SESSION['last_voorwerp'] = $result[min($perPage-1,count($result)-1)]['Voorwerpnummer'];
+                $_SESSION['zoekresultaten'] = array();
+                foreach($result as $key=>$value)
+                {
+                        $_SESSION['zoekresultaten'][] = $value['Voorwerpnummer'];
+                }
+                
 		// Data teruggeven
                 return array_slice($result, ($page-1)*$perPage, $perPage);
+        }
+        
+        public function getAjax()
+        {
+                $perPage = 10;
+                
+                $voorwerpen = implode(',', $_SESSION['zoekresultaten']);
+                
+		$i = 1;
+		$order = "";
+		foreach($_SESSION['zoekresultaten'] as $key=>$value)
+		{
+			$order .= "WHEN ".$value." THEN ".$i." ";
+			$i++;
+		}
+                
+		$result = $this->db->fetchQueryAll("SELECT * FROM Voorwerp WHERE Voorwerpnummer IN (".$voorwerpen.") ORDER BY CASE Voorwerpnummer ".$order." END");
+		
+                // Pagina vaststellen
+                $start_key = 0;
+		foreach($result as $key=>$value)
+		{
+			if($value['Voorwerpnummer']==$_SESSION['last_voorwerp']) $start_key = $key+1;
+		}
+                
+                // Nieuwe pagina vaststellen
+                $_SESSION['last_voorwerp'] = $_SESSION['zoekresultaten'][min($_SESSION['last_voorwerp']+$perPage, count($_SESSION['zoekresultaten'])-1)];
+                        
+//                echo $_SESSION['last_voorwerp'];
+                
+		// Data teruggeven
+                return array_slice($result, $start_key, $perPage);
         }
 
         public function getRelevantie($data, $page, $perPage, $start = 0)
