@@ -24,7 +24,7 @@ class dashboardControl extends control
                         $this->replaceView('bieding_prijs',$prijs);
                         $this->replaceView('bieding_nummer', $value['Voorwerpnummer']);
                         $timer = new Timer();
-                        $time = $timer->getTimestamp($value['Looptijdeindedag'], $value['Looptijdeindetijdstip']);
+                        $time = $timer->getTimestamp($value['Looptijdeindedag'], $value['Looptijdbegintijdstip']);
                         $this->replaceView('timer_class',$timer->setTimer($time));
                 }
 

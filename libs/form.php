@@ -75,7 +75,7 @@ class form
 					}
 					break;
                                 case 'isnumber':
-                                        if(!$this->stringcheck($this->data[$parameter],'0-9,.'))
+                                        if(!$this->stringcheck(str_replace(",",".",$this->data[$parameter]),'0-9,.'))
                                         {
 						$this->adderror($parameter, "Er zijn ongeldige tekens gebruikt.");
                                         }
@@ -83,7 +83,13 @@ class form
                                 case 'isemail':
                                         if(!filter_var($this->data[$parameter], FILTER_VALIDATE_EMAIL))
                                         {
-                                            $this->adderror($parameter, "Ongeldigd e-mailadres");
+                                                $this->adderror($parameter, "Ongeldigd e-mailadres");
+                                        }
+                                        break;
+                                case 'bigger':
+                                        if(str_replace(",",".",$this->data[$parameter])<$value)
+                                        {
+                                                $this->adderror($parameter, "Te klein getal.");
                                         }
 			}
 		}

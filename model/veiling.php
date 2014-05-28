@@ -42,6 +42,34 @@ class veilingModel extends model
                 $data = $this->db->fetchQuery("SELECT * FROM Voorwerp INNER JOIN Gebruiker ON Gebruiker.Gebruikersnaam = Voorwerp.Verkoper LEFT JOIN Bestand ON Bestand.Voorwerp = Voorwerp.Voorwerpnummer LEFT JOIN Gebruikerstelefoon ON Gebruikerstelefoon.Gebruiker = Voorwerp.Verkoper WHERE Voorwerpnummer = ".$id);
                 return $data;
         }
+        
+        public function getMinBod($id)
+        {
+                $data = $this->db->fetchQuery("SELECT * FROM Bod WHERE Voorwerp = ".$id." ORDER BY Bodbedrag DESC");
+                if(!empty($data))
+                {
+                        return $data['Bodbedrag'];
+                }
+                $data = $this->db->fetchQuery("SELECT * FROM Voorwerp WHERE Voorwerpnummer = ".$id);
+                return $data['Startprijs'];
+        }
+        
+        public function addBod($voorwerp, $bedrag, $gebruiker)
+        {
+                $this->db->query("INSERT INTO Bod (Voorwerp, Bodbedrag, Gebruiker, Boddag, Bodtijdstip) VALUES (".$voorwerp.", '".$bedrag."','".$gebruiker."','".date('d/n/Y')."','".date('H:i:s')."')");
+        }
+        
+        public function getUserLastBid($id)
+        {
+                $data = $this->db->fetchQuery("SELECT * FROM Bod WHERE Voorwerp = ".$id." ORDER BY Bodbedrag DESC");
+                return $data['Gebruiker'];
+        }
+        
+        public function getOwner($id)
+        {
+                $data = $this->db->fetchQuery("SELECT * FROM Voorwerp WHERE Voorwerpnummer = ".$id);
+                return $data['Verkoper'];
+        }
 }
 
 ?>

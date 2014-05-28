@@ -15,14 +15,19 @@ class veilingControl extends control
                 
                 if($this->logged_in) $this->relevantieModel->addView($this->get['id']);
                 
-                if(!empty($this->post['submitbod']) && $this->logged_in)
+                if(!empty($this->post['submitbod']) && $this->logged_in && strtolower($this->user)!=strtolower($this->veilingModel->getUserLastBid($this->get['id'])) && strtolower($this->user)!=strtolower($this->veilingModel->getOwner($this->get['id'])))
                 {
+                        $min = $this->veilingModel->getMinBod($this->get['id']);
+                        
+                        $this->post['bod'] = str_replace(',','.',$this->post['bod']);
+                        
                         $form = new form($this->post);
-                        $form->check('bod',array('length'=>'0-4', 'isnumber'=>true));
+                        $form->check('bod',array('length'=>'0-13', 'isnumber'=>true, 'bigger'=>array($min, 'Dit bod is een te laag bod, het minimumbod is '.$min.'.')));
                         
                         if($form->valid())
                         {
-                                $this->relevantieModel->addBid($this->get['id']);
+                                $this->veilingModel->addBod($this->get['id'], $this->post['bod'], $this->user);
+//                                $this->relevantieModel->addBid($this->get['id']);
                         }
                 }
                 $breadcrumb = $this->veilingModel->getBreadcrumb(intval($this->get['id']));
@@ -66,11 +71,27 @@ class veilingControl extends control
                 
                 if($this->logged_in)
                 {
-                        $this->loadView('veiling/loggedin', 'veiling_bieden');
+                        if(strtolower($this->user)==strtolower($this->veilingModel->getOwner($this->get['id'])))
+                        {
+                                $this->loadView('veiling/eigenaar', 'veiling_bieden');
+                        }
+                        if(strtolower($this->user)==strtolower($this->veilingModel->getUserLastBid($this->get['id'])))
+                        {
+                                $this->loadView('veiling/algeboden', 'veiling_bieden');
+                        }
+                        if(strtolower($this->user)!=strtolower($this->veilingModel->getUserLastBid($this->get['id'])) && strtolower($this->user)==strtolower($this->veilingModel->getOwner($this->get['id'])))
+                        {
+                                $this->loadView('veiling/loggedin', 'veiling_bieden');
+                        }
                 }
                 else
                 {
                         $this->loadView('veiling/loggedout', 'veiling_bieden');
+                }
+                if(!empty($form))
+                {
+                        $this->view->replace_array($form->geterrors());
+                        $this->view->replace_array($form->getclasses());
                 }
 	}
 }
