@@ -4,6 +4,8 @@ class zoekControl extends control
 {
 	public function run()
 	{
+                Timer::resetCounter();
+
                 $this->loadModel('relevantie');
                 
 		$this->loadView('zoek/zoek','content');

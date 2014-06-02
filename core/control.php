@@ -22,7 +22,9 @@ class control extends session {
 
                 // HTML template laden
                 if ($classname != 'ajaxControl')
+                {
                         $this->loadView("template");
+                }
 
                 // huidige URL bepalen
                 $urltemp = explode('/', $_SERVER["REQUEST_URI"]);

@@ -72,7 +72,6 @@ class relevantieModel extends model
         
         public function getZoekRelevantie($data, $text, $rubriek, $page, $perPage, $start = 0)
         {
-                
                 // Waardering door gebruiker per product
                 $userrating = array();
                 
@@ -82,28 +81,34 @@ class relevantieModel extends model
                 // Geen zoekresultaat hoeft niet te worden gesorteerd.
 		if(empty($data)) return array();
                 
+                // Voorwerpen die zoekresultaten vormen vaststellen
+                $voorwerpNummers = array();
                 
-                // Verzekeren dat iedere index een waarde toegewezen krijgt
-		foreach($data as $key=>$value)
-		{
-			$userrating[$value['Voorwerpnummer']] = intval($value['Factor']);
-			$rating[$value['Voorwerpnummer']] = $userrating[$value['Voorwerpnummer']];
-                        
-                        if(!empty($text))
+                foreach($data as $key=>$value)
+                {
+                        $voorwerpNummers[$key] = $value['Voorwerpnummer'];
+                }
+                
+                if($this->getCurrentUser() != null)
+                {
+                        // Verzekeren dat iedere index een waarde toegewezen krijgt
+                        foreach($data as $key=>$value)
                         {
-                                if(strpos(strtolower($value['Titel']), strtolower($text))!==FALSE)
+                                $userrating[$value['Voorwerpnummer']] = intval($value['Factor']);
+                                $rating[$value['Voorwerpnummer']] = $userrating[$value['Voorwerpnummer']];
+
+                                if(!empty($text))
                                 {
-                                        $userrating[$value['Voorwerpnummer']] += 500;
-                                }
-                                if(strpos(strtolower($value['Beschrijving']), strtolower($text))!==FALSE)
-                                {
-                                        $userrating[$value['Voorwerpnummer']] += 200;
+                                        if(strpos(strtolower($value['Titel']), strtolower($text))!==FALSE)
+                                        {
+                                                $userrating[$value['Voorwerpnummer']] += 500;
+                                        }
+                                        if(strpos(strtolower($value['Beschrijving']), strtolower($text))!==FALSE)
+                                        {
+                                                $userrating[$value['Voorwerpnummer']] += 200;
+                                        }
                                 }
                         }
-		}
-		
-                if($this->getCurrentUser() == null)
-                {
                         // Van alle veilingen de waardering ophalen voor deze gebruiker
                         $result_all = $this->db->fetchQueryAll("SELECT *, Voorwerp.Voorwerpnummer AS Voorwerpnummer FROM Voorwerp LEFT JOIN Suggesties ON Suggesties.Voorwerpnummer = Voorwerp.Voorwerpnummer WHERE Suggesties.Gebruikersnaam = '".$this->getCurrentUser()."' OR Suggesties.Gebruikersnaam IS NULL ORDER BY Suggesties.Factor");
                         foreach($result_all as $key=>$value)
@@ -114,7 +119,8 @@ class relevantieModel extends model
                         }
 
                         // Alle relaties ophalen
-                        $result2 = $this->db->fetchQueryAll("SELECT * FROM Relaties");
+                        $in = implode(",", $voorwerpNummers);
+                        $result2 = $this->db->fetchQueryAll("SELECT * FROM Relaties WHERE Voorwerpnummer IN (".$in.") AND GerelateerdeVoorwerpnummer IN (".$in.")");
 
                         // Max factor ophalen
                         $result_max = $this->db->fetchQuery("SELECT MAX(Factor) AS Factor FROM Relaties");
@@ -129,6 +135,24 @@ class relevantieModel extends model
                 }
                 else
                 {
+                        // Verzekeren dat iedere index een waarde toegewezen krijgt
+                        foreach($data as $key=>$value)
+                        {
+                                $userrating[$value['Voorwerpnummer']] = 0;
+                                $rating[$value['Voorwerpnummer']] = 0;
+
+                                if(!empty($text))
+                                {
+                                        if(strpos(strtolower($value['Titel']), strtolower($text))!==FALSE)
+                                        {
+                                                $userrating[$value['Voorwerpnummer']] += 500;
+                                        }
+                                        if(strpos(strtolower($value['Beschrijving']), strtolower($text))!==FALSE)
+                                        {
+                                                $userrating[$value['Voorwerpnummer']] += 200;
+                                        }
+                                }
+                        }
                         foreach($userrating as $key=>$value)
                         {
                                 $rating[$key] = $value;
@@ -147,15 +171,6 @@ class relevantieModel extends model
 			$i++;
 		}
 		
-                
-                // Voorwerpen die zoekresultaten vormen vaststellen
-                $voorwerpNummers = array();
-                
-                foreach($data as $key=>$value)
-                {
-                        $voorwerpNummers[$key] = $value['Voorwerpnummer'];
-                }
-                
                 // Query nogmaals uitvoeren maar nu met de juiste sorteringen, zelfde resultaten
                 $voorwerpen = implode(",", $voorwerpNummers);
 		$result = $this->db->fetchQueryAll("SELECT * FROM Voorwerp WHERE Voorwerpnummer IN (".$voorwerpen.") ORDER BY CASE Voorwerpnummer ".$order." END");
@@ -202,8 +217,13 @@ class relevantieModel extends model
 			if($value['Voorwerpnummer']==$_SESSION['last_voorwerp']) $start_key = $key+1;
 		}
                 
+                if(!empty($_SESSION['last_voorwerp']) && empty($start_key))
+                {
+                        return array();
+                }
+                
                 // Nieuwe pagina vaststellen
-                $_SESSION['last_voorwerp'] = $_SESSION['zoekresultaten'][min($_SESSION['last_voorwerp']+$perPage, count($_SESSION['zoekresultaten'])-1)];
+                $_SESSION['last_voorwerp'] = $_SESSION['zoekresultaten'][min($start_key+$perPage, count($_SESSION['zoekresultaten'])-1)];
                         
 //                echo $_SESSION['last_voorwerp'];
                 

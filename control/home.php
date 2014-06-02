@@ -7,6 +7,8 @@ class homeControl extends control
 		$this->loadView('home/home','content');
                 $this->replaceView('title','Home');
                 
+                Timer::resetCounter();
+                
                 $advertenties = $this->homeModel->getAdvertenties();
                 foreach($advertenties as $key=>$value)
                 {

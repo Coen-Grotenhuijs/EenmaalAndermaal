@@ -12,6 +12,8 @@ class dashboardControl extends control
 		$this->loadView('dashboard/dashboard','content');
                 $this->replaceView('title','Dashboard');
                 
+                Timer::resetCounter();
+
                 $biedingen = $this->dashboardModel->getBiedingen();
                 foreach($biedingen as $key=>$value)
                 {

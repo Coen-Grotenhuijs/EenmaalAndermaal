@@ -4,8 +4,8 @@ class loguitControl extends control
 {
 	public function run()
 	{
-		unset($_SESSION['user']);
-		unset($_SESSION['pass']);
+		unset($_SESSION);
+                session_destroy();
 		header('Location: '.$_SERVER['HTTP_REFERER']);
 	}
 }

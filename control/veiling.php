@@ -79,7 +79,7 @@ class veilingControl extends control
                         {
                                 $this->loadView('veiling/algeboden', 'veiling_bieden');
                         }
-                        if(strtolower($this->user)!=strtolower($this->veilingModel->getUserLastBid($this->get['id'])) && strtolower($this->user)==strtolower($this->veilingModel->getOwner($this->get['id'])))
+                        if(strtolower($this->user)!=strtolower($this->veilingModel->getUserLastBid($this->get['id'])) || strtolower($this->user)==strtolower($this->veilingModel->getOwner($this->get['id'])))
                         {
                                 $this->loadView('veiling/loggedin', 'veiling_bieden');
                         }

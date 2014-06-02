@@ -49,6 +49,10 @@ class ajaxControl extends control
                 if($this->logged_in) $this->relevantieModel->addSearch($ids);
                 
                 $this->replaceView('next_resultaat','');
+
+                $timer = new Timer();
+                $this->replaceView('javascript', $timer->getJavascript());
+                
         }
 }
 

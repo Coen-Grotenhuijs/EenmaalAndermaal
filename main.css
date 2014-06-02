@@ -3,6 +3,11 @@ body {
 	padding: 0;
 	font-family: verdana;
 	background: #f5f5f5;
+	height: 100%;
+}
+
+html {
+	height: 100%;
 }
 
 ul {
@@ -14,6 +19,15 @@ ul {
 a {
 	text-decoration: none;
 	color: #265889;
+}
+
+.panel form {
+	margin-bottom: 00px;
+}
+
+#container {
+	min-height: 100%;
+	position: relative;
 }
 
 #header {
@@ -121,6 +135,10 @@ a {
 
 #menu li.right {
 	margin: 0 0 0 10px;
+}
+
+#content {
+	padding-bottom: 60px;
 }
 
 #content h1 {
@@ -255,33 +273,60 @@ a {
 	border: none;
 }
 
-#registreren {
+#registreren, #gegevens{
 	overflow: auto;
 	height: initial;
 	font-size: 0.8rem;
 }
 
-#registreren table {
+#registreren table, #gegevens table {
 	width: calc(100% - 200px);
 	margin: 10px 100px;
 }
 
-#registreren td:first-child {
+#registreren td:first-child, #gegevens td:first-child{
 	text-align: right;
 	width: 300px;
 	padding: 5px;
 }
 
-#registreren input {
+#registreren input, #registreren textarea, #registreren select,#gegevens select, #gegevens textarea, #gegevens input{
 	width: calc(100% - 195px);
 	padding: 5px;
 }
 
-#registreren input[type="radio"]{
+#registeren input[type="file"]{
+	display: none;
+}
+
+#registreren .file {
+	display: none !important;
+}
+
+#registreren img {
+	display: none;
+	background-size: 100% auto;
+	width: calc(100% - 195px);
+	height: 150px;
+}
+
+#registreren img.fileSelector {
+	display: block;
+	width: 290px;
+	height: 290px;
+}
+
+#registreren textarea , #gegevens textarea{
+	height: 100px;
+	font-family: verdana;
+	font-size: 0.8rem;
+}
+
+#registreren input[type="radio"], #gegevens input[type="radio"]{
 	width: initial;
 }
 
-#registreren input[type="submit"] {
+#registreren input[type="submit"], #gegevens input[type="submit"] {
 	margin: 20px auto;
 	width: 300px;
 	display: block;
@@ -291,11 +336,34 @@ a {
 	border-bottom: 1px solid red;
 }
 
+#gegevens a {
+	margin: 10px 10px;
+	line-height: 20px;
+}
 
+#gegevens td:nth-child(2) {
+	width: calc(100% - 195px);
+	padding: 4px;
+	height: 32px;
+	border: 1px solid rgba(0,0,0,0)
+}
+
+#gegevens tr span{
+	height: 32px;
+}
+
+#gegevens tr input{
+	margin: 0;
+}
 
 #footer {
 	background: #343131;
 	font-size: 0.8rem;
+	height: 60px;
+	line-height: 60px;
+	bottom: 0;
+	position: absolute;
+	width: 100%;
 }
 
 #footer ul{
@@ -440,8 +508,13 @@ a {
 }
 
 input[type="text"].error, input[type="password"].error {
-	border: 1px solid rgb(255,150,150);
+	border: 2px solid rgb(255,150,150);
 	background: rgb(255,240,240);
+}
+
+input[type="text"].good, input[type="password"].good {
+	border: 2px solid rgb(150,255,150);
+	background: rgb(240,255,240);
 }
 
 *::-webkit-scrollbar-track

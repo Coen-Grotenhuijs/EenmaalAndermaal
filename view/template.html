@@ -43,46 +43,48 @@
    </script>
 
 </head>
-    <body>
-		<div id="header">
-			<div class="wrapper">
-				<div id="upperArea">
-					<div id="banner" class="left">
-						<img src="img/logo2.png" alt="Eenmaal Andermaal... Verkocht!" />
-					</div>
-					<div id="loginBox">
-                                                {TOPBAR}
-					</div>
-				</div>
-			</div>
-		</div>
-		<div id="menu">
-			<div class="wrapper">
-                                <form method='get' action='zoek'>
-                                        <ul>
-                                                <li><a href="home">Home</a></li>
-                                                <li><a href="zoek">Rubrieken</a></li>
-                                                <li><a href="mijnaccount">Account</a></li>
-                                                <li class="right"><input class="button" type="submit" value="Zoek"/></li>
-                                                <li class="right noBG"><input type="text" name="zoekveld" placeholder="Zoektermen..." value="{GET_ZOEKVELD}" /></li>
-                                                <li class="right noBG">
-                                                        <select name="rubriek">
-                                                                <option value="0">Alle rubrieken</option>
-                                                                {NEXT_RUBRIEK_DROPDOWN}
-                                                        </select>
-                                                </li>
-                                        </ul>
-                                </form>
-			</div>
+        <body>
+                <div id="container">
+                        <div id="header">
+                                <div class="wrapper">
+                                        <div id="upperArea">
+                                                <div id="banner" class="left">
+                                                        <img src="img/logo2.png" alt="Eenmaal Andermaal... Verkocht!" />
+                                                </div>
+                                                <div id="loginBox">
+                                                        {TOPBAR}
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+                        <div id="menu">
+                                <div class="wrapper">
+                                        <form method='get' action='zoek'>
+                                                <ul>
+                                                        <li><a href="home">Home</a></li>
+                                                        <li><a href="zoek">Rubrieken</a></li>
+                                                        <li><a href="mijnaccount">Account</a></li>
+                                                        <li class="right"><input class="button" type="submit" value="Zoek"/></li>
+                                                        <li class="right noBG"><input type="text" name="zoekveld" placeholder="Zoektermen..." value="{GET_ZOEKVELD}" /></li>
+                                                        <li class="right noBG">
+                                                                <select name="rubriek">
+                                                                        <option value="0">Alle rubrieken</option>
+                                                                        {NEXT_RUBRIEK_DROPDOWN}
+                                                                </select>
+                                                        </li>
+                                                </ul>
+                                        </form>
+                                </div>
+                        </div>
+                        <div id="content">
+                                <div class="wrapper cf">
+                                        <h1>{TITLE}</h1>
+                                        {CONTENT}
+                                </div>
+                        </div>
+                        <div id="footer">
+                                {FOOTER}
+                        </div>
                 </div>
-		<div id="content">
-			<div class="wrapper cf">
-				<h1>{TITLE}</h1>
-                                {CONTENT}
-			</div>
-		</div>
-		<div id="footer">
-                        {FOOTER}
-		</div>
 	</body>
 </html>
