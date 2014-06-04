@@ -162,19 +162,23 @@ class relevantieModel extends model
                 // Sorteren
 		arsort($rating);
                 
+                $rating = array_slice($rating, 0, 100);
+                
                 // Order query vaststellen
 		$i = 1;
 		$order = "";
 		foreach($rating as $key=>$value)
 		{
-			$order .= "WHEN ".$key." THEN ".$i." ";
-			$i++;
+                        if(in_array($key, $voorwerpNummers))
+                        {
+                                $order .= "WHEN ".$key." THEN ".$i." ";
+                                $i++;
+                        }
 		}
 		
                 // Query nogmaals uitvoeren maar nu met de juiste sorteringen, zelfde resultaten
                 $voorwerpen = implode(",", $voorwerpNummers);
 		$result = $this->db->fetchQueryAll("SELECT * FROM Voorwerp WHERE Voorwerpnummer IN (".$voorwerpen.") ORDER BY CASE Voorwerpnummer ".$order." END");
-		
                 // Pagina vaststellen
                 $start_key = 0;
 		foreach($result as $key=>$value)

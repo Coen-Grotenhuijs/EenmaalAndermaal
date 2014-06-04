@@ -6,7 +6,7 @@ class veilingControl extends control
 	{
                 $this->loadModel('relevantie');
                 
-                $veiling = $this->veilingModel->getVeiling(intval($this->get['id']));
+                $veiling = $this->veilingModel->getVeiling(round($this->get['id']));
                 
                 if(empty($veiling))
                 {
@@ -30,14 +30,14 @@ class veilingControl extends control
 //                                $this->relevantieModel->addBid($this->get['id']);
                         }
                 }
-                $breadcrumb = $this->veilingModel->getBreadcrumb(intval($this->get['id']));
+                $breadcrumb = $this->veilingModel->getBreadcrumb(round($this->get['id']));
                 $this->loadView('veiling/breadcrumbs','title');
-                $this->replaceView('title', $veiling['Titel']);
+                $this->replaceView('title', strip_tags($veiling['Titel']));
                 $this->replaceView('breadcrumbs',$breadcrumb);
                 
 		$this->loadView('veiling/veiling','content');
 
-                $images = $this->veilingModel->getImages(intval($this->get['id']));
+                $images = $this->veilingModel->getImages(round($this->get['id']));
                 
                 if(!empty($images))
                 {
@@ -52,6 +52,7 @@ class veilingControl extends control
                 
                 foreach($images as $key=>$value)
                 {
+                        echo $key;
                         $this->loadView('veiling/afbeelding', 'next_afbeelding');
                         $this->replaceView('veiling_filenaam', $value['Filenaam']);
                 }
@@ -61,7 +62,7 @@ class veilingControl extends control
 
                 foreach($veiling as $key=>$value)
                 {
-                        $this->replaceView('veiling_'.$key, $value);
+                        $this->replaceView('veiling_'.$key, strip_tags($value));
                 }
 
                 $timer = new Timer();
@@ -69,7 +70,7 @@ class veilingControl extends control
                 $this->replaceView('timer_class',$timer->setTimer($time));
 
                 
-                $biedingen = $this->veilingModel->getBiedingen(intval($this->get['id']));
+                $biedingen = $this->veilingModel->getBiedingen(round($this->get['id']));
                 foreach($biedingen as $key=>$value)
                 {
                         $this->loadView('veiling/bod','next_bod');

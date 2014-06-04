@@ -18,6 +18,13 @@ class sessionModel extends model
 		if(!empty($result)) return true;
 		return false;
 	}
+        
+        public function getBlocked($user)
+        {
+                $result = $this->db->fetchQuery("SELECT * FROM Gebruiker WHERE Gebruikersnaam = '".$user."'");
+                if($result['IsGeblokkeerd']==0) return false;
+                return true;
+        }
 }
 
 ?>

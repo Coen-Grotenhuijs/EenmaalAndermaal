@@ -11,11 +11,15 @@ class session
     {
         if(isset($_SESSION['user']) && isset($_SESSION['pass']))
         {
-			if($this->sessionModel->validateSession($_SESSION))
+			if($this->sessionModel->validateSession($_SESSION) && $this->sessionModel->getBlocked($_SESSION['user'])==0)
 			{
 				$this->logged_in = true;
 				$this->user = $_SESSION['user'];
 			}
+                        if($this->sessionModel->getBlocked($_SESSION['user'])!=0)
+                        {
+                                unset($_SESSION);
+                        }
         }
 		
 		if(isset($_POST['submitlogin']))
@@ -24,9 +28,15 @@ class session
 			
 			$user = $this->sessionModel->getUser($this->post['username']);
 			$pass = $this->sessionModel->getUserPass($this->post['username'], $this->post['password']);
+                        
+                        $blocked = $this->sessionModel->getBlocked($this->post['username']);
 			
+                        print_r($blocked);
+                        echo '<br><br>';
+                        
 			$form->check('username',	array(	'not null'=>'true',
-												'not empty'=>array($user,'Gebruikersnaam bestaat niet.')));
+								'not empty'=>array($user,'Gebruikersnaam bestaat niet.'),
+                                                                'null'=>array($blocked, 'Dit account is inactief.')));
 			$form->check('password', 	array( 	'not null'=>'true',
 												'not empty'=>array($pass,'Wachtwoord komt niet overeen.')));
 			$this->loginform = $form;

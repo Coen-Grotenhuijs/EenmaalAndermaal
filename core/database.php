@@ -21,7 +21,10 @@ class database
 	
 	public function query($query)
 	{
+                $millis = microtime(true);
 		$return = sqlsrv_query($this->c, $query);
+//                echo (microtime(true)-$millis).', '.$millis.': '.$query."<br>";
+                
                 print_r(sqlsrv_errors());
 		return $return;
 	}
