@@ -70,6 +70,12 @@ class veilingModel extends model
                 $data = $this->db->fetchQuery("SELECT * FROM Voorwerp WHERE Voorwerpnummer = ".$id);
                 return $data['Verkoper'];
         }
+        
+        public function getImages($voorwerp)
+        {
+                $data = $this->db->fetchQueryAll("SELECT * FROM Bestand WHERE Voorwerp = ".$voorwerp);
+                return $data;
+        }
 }
 
 ?>

@@ -36,15 +36,28 @@ class veilingControl extends control
                 $this->replaceView('breadcrumbs',$breadcrumb);
                 
 		$this->loadView('veiling/veiling','content');
+
+                $images = $this->veilingModel->getImages(intval($this->get['id']));
                 
-                if(empty($veiling['Filenaam']))
+                if(!empty($images))
                 {
-                        $veiling['Filenaam'] = 'uploads/empty.jpg';
+                        $this->replaceView('veiling_filenaam', $images[0]['Filenaam']);
                 }
                 else
                 {
-                        $veiling['Filenaam'] = 'uploads/empty.jpg';
+                        $this->replaceView('veiling_filenaam', 'empty.jpg');
                 }
+                
+                array_shift($images);
+                
+                foreach($images as $key=>$value)
+                {
+                        $this->loadView('veiling/afbeelding', 'next_afbeelding');
+                        $this->replaceView('veiling_filenaam', $value['Filenaam']);
+                }
+                
+                $this->replaceView('next_afbeelding','');
+                        
 
                 foreach($veiling as $key=>$value)
                 {
