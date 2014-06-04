@@ -1,0 +1,55 @@
+					<div class="panel full" id="gegevens">
+						<h2>Gebruikersgegevens aanpassen</h2>
+						<form method="POST" enctype="multipart/form-data"/>
+							<table>
+								<tr>
+									<td>Voornaam</td><td><input type="text" value="{GEBRUIKER_VOORNAAM}" name="voornaam" {CLASS_VOORNAAM} /> {ERROR_VOORNAAM}</td>
+								</tr>
+								<tr>
+									<td>Tussenvoegsel</td><td><input type="text" value="{GEBRUIKER_TUSSENVOEGSEL}" name="tussenvoegsel" {CLASS_TUSSENVOEGSEL} /> {ERROR_TUSSENVOEGSEL}</td>
+								</tr>
+								<tr>
+									<td>Achternaam</td><td><input type="text" value="{GEBRUIKER_ACHTERNAAM}" name="achternaam"/> {ERROR_ACHTERNAAM}</td>
+								</tr>
+								<tr>
+									<td>Straat</td><td><input type="text" name="adresregel1" value="{GEBRUIKER_ADRESREGEL1}" placeholder="Straat"> {ERROR_ADRESREGEL1}</td>
+								</tr>
+                                                                <tr>
+                                                                        <td>Huisnummer</td><td><input type="text" name="adresregel2" value="{GEBRUIKER_ADRESREGEL2}" placeholder="Huisnummer"> {ERROR_ADRESREGEL2}</td>
+								<tr>
+									<td>Woonplaats, postcode</td><td>	<input type="text" name="plaatsnaam" value="{GEBRUIKER_PLAATSNAAM}" placeholder="Woonplaats" style="width: calc(75% - 200px);">
+																		<input type="text" style="margin-left: 0px; width: calc(25%);" value="{GEBRUIKER_POSTCODE}" name="postcode" placeholder="Postcode"></td>
+								</tr>
+								<tr>
+									<td>Land</td><td><select name="land"><option checked value="NL">Nederland</option><option value="NL">België</option></select></td>
+								</tr>
+								<tr>
+									<td>Geboortedatum</td><td><input type="text" value="{GEBRUIKER_GEBOORTEDAG}" name="geboortedag" placeholder="Geboortedatum"> {ERROR_GEBOORTEDAG}</td>
+								</tr>
+								<tr>
+									<td>Telefoonnummer 1</td><td><input type="text" value="{GEBRUIKER_TELEFOONNUMMER}" name="tel1" placeholder="Telefoonnummer 1"> {ERROR_TEL1}</td>
+								</tr>
+								<tr>
+									<td>Telefoonnummer 2</td><td><input type="text" name="tel2" placeholder="Telefoonnummer 2"> {ERROR_TEL2}</td>
+								</tr>
+							</table>
+							<input type="submit" name="submit_account" value="Wijzigingen opslaan" />
+						</form>
+					</div>
+					<div class="panel full" id="gegevens">
+						<h2>Wachtwoord wijzigen</h2>
+						<form method="POST"/>
+							<table>
+								<tr>
+									<td>Huidig wachtwoord:</td><td><input type="password" name="huidig_wachtwoord" placeholder="Huidig wachtwoord..." {CLASS_HUIDIG_WACHTWOORD} /> {ERROR_HUIDIG_WACHTWOORD}</td>
+								</tr>
+								<tr>
+									<td>Nieuw wachtwoord:</td><td><input type="password" name="wachtwoord" placeholder="Wachtwoord..." onkeyup="compare();" {CLASS_WACHTWOORD} /> {ERROR_WACHTWOORD} </td>
+								</tr>
+								<tr>
+									<td>Herhaal nieuw wachtwoord:</td><td><input type="password" name="herhaal_wachtwoord" placeholder="Herhaal wachtwoord..." onkeyup="compare();" {CLASS_HERHAAL_WACHTWOORD} /> {ERROR_HERHAAL_WACHWTOORD} </td>
+								</tr>
+							</table>
+							<input type="submit" id="wwSubmit" name="submit_password" value="Wijzig wachtwoord" disabled />
+						</form>
+					</div>
