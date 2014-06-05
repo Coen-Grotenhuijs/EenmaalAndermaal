@@ -1,0 +1,41 @@
+					<div class="panel full" id="registreren">
+						<h2>Voorwerpgegevens</h2>
+						<form method="POST" enctype="multipart/form-data"/>
+							<table>
+								<tr>
+									<td>Voorwerpnaam</td><td><input type="text" name="voorwerpnaam" placeholder="Voorwerpnaam" value="{POST_VOORWERPNAAM}" {CLASS_VOORWERPNAAM}> {ERROR_VOORWERPNAAM}</td>
+								</tr>
+								<tr>
+									<td>Beschrijving</td><td><textarea name="beschrijving" placeholder="Beschrijving" {CLASS_BESCHRIJVING}>{POST_BESCHRIJVING}</textarea>{ERROR_BESCHRIJVING}</td>
+								</tr>
+								<tr>
+									<td>Plaatsnaam</td><td><input type="text" name="plaatsnaam" placeholder="Plaatsnaam" value="{POST_PLAATSNAAM}" {CLASS_PLAATSNAAM}> {ERROR_PLAATSNAAM}</td>
+								</tr>
+								<tr>
+									<td>Land</td><td><select name="land"><option value="NL">Nederland</option><option value="NL">België</option></select></td>
+								</tr>
+								<tr>
+									<td>Looptijd</td><td><input type="text" name="looptijd" placeholder="Aantal dagen..." value="{POST_LOOPTIJD}" {CLASS_LOOPTIJD}> {ERROR_LOOPTIJD}</td>
+								</tr>
+								<tr>
+									<td>Verzendinstructies</td><td><input type="text" name="verzendinstructies" placeholder="Ophalen of verzenden..." value="{POST_VERZENDINSTRUCTIES}" {CLASS_VERZENDINSTRUCTIES}> {ERROR_VERZENDINSTRUCTIES}</td>
+								</tr>
+								<tr>
+									<td>Verzendkosten</td><td><input type="text" name="verzendkosten" placeholder="Ophalen of verzenden..." value="{POST_VERZENDKOSTEN}" {CLASS_VERZENDKOSTEN}> {ERROR_VERZENDKOSTEN}</td>
+								</tr>
+								<tr>
+									<td>Startprijs</td><td><input type="text" name="startprijs" placeholder="299" value="{POST_STARTPRIJS}" {CLASS_STARTPRIJS}> {ERROR_STARTPRIJS}</td>
+								</tr>
+								<tr>
+									<td>Betalingswijze</td><td><input type="text" name="betalingswijze" placeholder="Overmaken, contant..." value="{POST_BETALINGSWIJZE}" {CLASS_BETALINGSWIJZE}> {ERROR_BETALINGSWIJZE}</td>
+								</tr>
+								<tr>
+									<td>Betalingsinstructies</td><td><input type="text" name="betalingsinstructies" placeholder="Maak het geld over naar deze rekening..." value="{POST_BETALINGSINSTRUCTIES}" {CLASS_BETALINGSINSTRUCTIES}> {ERROR_BETALINGSINSTRUCTIES}</td>
+								</tr>
+								<tr>
+									<td>Afbeelding</td><td><img class="preview" src="" alt="" /><input type="file" name="file[]" class="file" onchange="readURL(this);"/><img src="img/plus.png" class="fileSelector" /></td>
+								</tr>
+							</table>
+							<input type="submit" name="submit" value="Plaats voorwerp" />
+						</form>
+					</div>

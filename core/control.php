@@ -69,6 +69,14 @@ class control extends session {
                 
                 $this->replaceView('aantalbiedingen','');
                 
+                if(file_exists('./js/'.str_replace("Control", "", $classname).'.js'))
+                {
+                        $this->replaceView('js_file', '<script type="text/javascript" src="js/'.str_replace("Control", "", $classname).'.js"></script>');
+                }
+                else
+                {
+                        $this->replaceView('js_file', '');
+                }
         }
 
         public function filterrequestdata() {
@@ -123,6 +131,7 @@ class control extends session {
         }
 
         public function __destruct() {
+                
                 $timer = new Timer();
                 $this->replaceView('js_countdown', $timer->getJavascript());
 

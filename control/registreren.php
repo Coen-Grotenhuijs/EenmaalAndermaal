@@ -108,7 +108,7 @@ class registrerenControl extends control
                                 print_r(array($user, $email));
                                 $form->check('email', array('not null'=>true,'length'=>'0-35','isemail'=>true, 'null'=>array($email, 'Dit e-mailadres is reeds bezet.')));
                                 $form->check('gebruikersnaam', array('not null'=>true, 'length'=>'0-30', 'null'=>array($user,'Deze gebruikersnaam is reeds bezet.')));
-                                $form->check('wachtwoord', array('not null'=>true, 'length'=>'0-15', 'equals'=>$this->post['herh_wachtwoord']));
+                                $form->check('wachtwoord', array('not null'=>true, 'length'=>'8-15', 'equals'=>$this->post['herh_wachtwoord']));
                                 $form->check('herh_wachtwoord', array('not null'=>true));
                                 $form->check('vraag', array('not null'=>true, 'length'=>'0-10'));
                                 $form->check('wachtwoord', array('not null'=>true, 'length'=>'0-15'));

@@ -35,6 +35,7 @@ class Timer
         
         public function getTimestamp($date, $time)
         {
+                $date = str_replace("/","-", $date);
                 $temp_date = explode("-", $date);
                 $temp_time = explode(":",$time);
                 $timestamp = mktime($temp_time[0], $temp_time[1], 0, $temp_date[1], $temp_date[0], $temp_date[2]);

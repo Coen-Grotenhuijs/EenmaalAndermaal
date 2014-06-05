@@ -39,10 +39,13 @@ class mijnaccountControl extends control
                 if(!empty($this->post['submit_password']))
                 {
                         $password = $this->mijnaccountModel->getPass();
+                        
+                        $equal = $this->post['wachtwoord']==$this->post['herhaal_wachtwoord'];
+                        
                         $form = new form($this->post);
                         $form->check('huidig_wachtwoord', array('not null'=>true, 'length'=>'0-30', 'equals'=>array($password, 'Het wachtwoord is onjuist.')));
-                        $form->check('wachtwoord', array('not null'=>true, 'length'=>'0-30'));
-                        $form->check('herhaal_wachtwoord', array('not null'=>true, 'length'=>'0-30'));
+                        $form->check('wachtwoord', array('not null'=>true, 'length'=>'8-30', 'not empty'=>array($equal, 'De wachtwoorden komen niet overeen.')));
+                        $form->check('herhaal_wachtwoord', array('not null'=>true, 'length'=>'8-30'));
                         
                         if($form->valid())
                         {

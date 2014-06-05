@@ -32,7 +32,6 @@ class session
                         $blocked = $this->sessionModel->getBlocked($this->post['username']);
 			
                         print_r($blocked);
-                        echo '<br><br>';
                         
 			$form->check('username',	array(	'not null'=>'true',
 								'not empty'=>array($user,'Gebruikersnaam bestaat niet.'),

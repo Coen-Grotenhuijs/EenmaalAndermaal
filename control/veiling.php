@@ -38,6 +38,8 @@ class veilingControl extends control
 		$this->loadView('veiling/veiling','content');
 
                 $images = $this->veilingModel->getImages(round($this->get['id']));
+
+                print_r($images);
                 
                 if(!empty($images))
                 {
@@ -52,7 +54,6 @@ class veilingControl extends control
                 
                 foreach($images as $key=>$value)
                 {
-                        echo $key;
                         $this->loadView('veiling/afbeelding', 'next_afbeelding');
                         $this->replaceView('veiling_filenaam', $value['Filenaam']);
                 }
