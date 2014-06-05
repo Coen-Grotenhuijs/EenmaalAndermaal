@@ -14,7 +14,8 @@ class database
 			$this->servername = $settings->getSetting('database_servername');
 			$this->connectioninfo = array(  "Database"  => $settings->getSetting('database_database'),
 							"UID"       => $settings->getSetting('database_username'),
-							"PWD"       => $settings->getSetting('database_password'));
+							"PWD"       => $settings->getSetting('database_password'),
+                                                        "CharacterSet" => "UTF-8");
 			$this->c = sqlsrv_connect($this->servername, $this->connectioninfo) or die("Kon niet verbinden met de database.");
 		}
 	}
@@ -50,6 +51,17 @@ class database
 	{
 		return $this->fetchAll($this->query($query));
 	}
+        
+        public function insertGetId($query)
+        {
+                $query = $query."; SELECT SCOPE_IDENTITY()";
+                $arrParams[]="1"; 
+                $arrParams[]="2"; 
+		$resource = sqlsrv_query($this->c, $query, $arrParams);
+                sqlsrv_next_result($resource); 
+                sqlsrv_fetch($resource); 
+                return sqlsrv_get_field($resource, 0);
+        }
 	
 	public function __destruct()
 	{
