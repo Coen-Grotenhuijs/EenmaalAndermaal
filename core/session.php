@@ -30,12 +30,13 @@ class session
 			$pass = $this->sessionModel->getUserPass($this->post['username'], $this->post['password']);
                         
                         $blocked = $this->sessionModel->getBlocked($this->post['username']);
-			
-                        print_r($blocked);
+
+                        $activated = $this->sessionModel->getActivated($this->post['username']);
                         
 			$form->check('username',	array(	'not null'=>'true',
 								'not empty'=>array($user,'Gebruikersnaam bestaat niet.'),
-                                                                'null'=>array($blocked, 'Dit account is inactief.')));
+                                                                'null'=>array($blocked, 'Dit account is inactief.',
+                                                                'not null'=>array($activated, 'Dit account is nog niet geactiveerd.'))));
 			$form->check('password', 	array( 	'not null'=>'true',
 												'not empty'=>array($pass,'Wachtwoord komt niet overeen.')));
 			$this->loginform = $form;

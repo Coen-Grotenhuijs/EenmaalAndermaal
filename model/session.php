@@ -25,6 +25,14 @@ class sessionModel extends model
                 if($result['IsGeblokkeerd']==0) return false;
                 return true;
         }
+        
+        public function getActivated($user)
+        {
+                $result = $this->db->fetchQuery("SELECT * FROM Gebruiker WHERE Gebruikersnaam = '".$user."'");
+                if(empty($result['Activatiecode'])) return true;
+                return false;
+        }
+                
 }
 
 ?>
