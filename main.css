@@ -50,6 +50,11 @@ a {
 	float: right;
 	width: 150px;
 	margin: 16px 0;
+	font-size: 0.9rem;
+}
+
+#loginBox a:hover {
+	text-decoration: underline;
 }
 
 #loginBox  input{
@@ -81,7 +86,17 @@ a {
 
 #menu li a:hover, .button:hover, #loginBox  input[type="submit"]:hover, #loginBottom input[type="submit"]:hover{
 	cursor: pointer;
-	background: #7d90a3;
+	background: #7d90a3 !important;
+	border: 0px;
+}
+
+#loginBox .form_error {
+	color: red;
+	float: left;
+	position: absolute;
+	margin-left: -250px;
+	text-align: right;
+	margin-top: -22px;
 }
 
 #menu {
@@ -94,7 +109,7 @@ a {
 #menu li  a, .button{
 	line-height: 30px;
 	display: block;
-	
+	border: 0px;
 	margin: 5px 0;
 	background: #265889;
 	text-align: center;
@@ -138,7 +153,7 @@ a {
 }
 
 #content {
-	padding-bottom: 60px;
+	padding-bottom: 100px;
 }
 
 #content h1 {
@@ -181,6 +196,10 @@ a {
 	border: none;
 }
 
+.panel p {
+	padding-left: 15px;
+}
+
 .panel li img{
 	background: #265889;
 	width: 40px;
@@ -200,12 +219,27 @@ a {
 	width: 1000px;
 }
 
+h1 a {
+	font-size: 1rem;
+	width: auto !important;
+	padding: 0 20px;
+	font-weight: normal;
+}
+
 #suggesties {
 	height: 580px;
 }
 
 #suggesties .scroll {
 	height: 531px;
+}
+
+.panel ul li p {
+	float: none;
+}
+
+.panel ul li img {
+	margin: 0 10px 10px 0;
 }
 
 #profielgegevens {
@@ -254,7 +288,34 @@ a {
 }
 
 #verkoper table{
-	
+	margin: 13px;
+	font-size: 0.8rem;
+	width: calc(100% - 26px);
+	border-spacing: 0;
+}
+
+#verkoper tr:nth-child(even){
+	background: #efefef;
+}
+
+#verkoper form {
+	margin: 0 14px;
+}
+
+#verkoper tr td {
+	padding: 5px;
+}
+
+#verkoper input[type="submit"] {
+	width: auto;
+	margin: 0;
+	display: inline;
+	border: 2px solid #265889;
+}
+
+#verkoper input {
+	padding: 5px 10px;
+	line-height: 15px;
 }
 
 #product img {
@@ -383,6 +444,7 @@ a {
 .topadvertentie {
 	height: 125px;
 	width: 325px;
+	font-size: 0.9rem;
 }
 
 .topadvertentie:nth-child(1n+4) {
@@ -507,7 +569,12 @@ a {
 	color: red;
 }
 
-input[type="text"].error, input[type="password"].error {
+#imageBox {
+	margin-left: 30px;
+	margin-bottom: 30px;
+}
+
+input[type="text"].error, input[type="password"].error, textarea.error {
 	border: 2px solid rgb(255,150,150);
 	background: rgb(255,240,240);
 }
