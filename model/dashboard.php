@@ -10,7 +10,7 @@ class dashboardModel extends model
         
         public function getVoorwerpen()
         {
-                $data = $this->db->fetchQueryAll("SELECT TOP(3) * FROM Voorwerp WHERE Verkoper = '".$this->getCurrentUser()."'");
+                $data = $this->db->fetchQueryAll("SELECT TOP(3) * FROM Voorwerp LEFT JOIN Bestand ON Bestand.Filenaam = (SELECT MIN(Bestand.Filenaam) FROM Bestand WHERE Bestand.Voorwerp = Voorwerp.Voorwerpnummer) WHERE Verkoper = '".$this->getCurrentUser()."'");
                 return $data;
         }
         

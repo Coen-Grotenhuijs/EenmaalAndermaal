@@ -80,7 +80,7 @@ class nieuweveilingControl extends control
                         if($this->fileValid($key))
                         {
                                 $path = getcwd().'\img\uploads\\';
-                                $name = $this->generateRandomString(20);
+                                $name = $key.$this->generateRandomString(20);
 
                                 $temp = $_FILES['file']['name'][$key];
                                 $ext = ".".pathinfo($temp, PATHINFO_EXTENSION);

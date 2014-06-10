@@ -4,6 +4,8 @@ class activerenControl extends control
 {
 	public function run()
 	{
+                $this->activerenModel->getCode($this->get['gebruiker']);
+                
                 $gebruiker = $this->activerenModel->getUser($this->get['gebruiker']);
                 
                 if($this->logged_in)
