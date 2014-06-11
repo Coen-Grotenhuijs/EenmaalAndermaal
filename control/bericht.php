@@ -8,12 +8,12 @@ class berichtControl extends control
                 
                 if(empty($gebruiker))
                 {
-                        header('Location: home');
+                        header('Location: home.php');
                 }
                 
                 if(!$this->logged_in)
                 {
-                        header('Location: home');
+                        header('Location: home.php');
                 }
                 
                 $this->replaceView('title','Bericht versturen naar '.$gebruiker['Gebruikersnaam']);

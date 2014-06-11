@@ -8,7 +8,7 @@ class registrerenControl extends control
                 
                 if($this->logged_in)
                 {
-                        header('Location: home');
+                        header('Location: home.php');
                 }
                         
                 if(empty($_SESSION['registratiestap'])) $_SESSION['registratiestap'] = 1;

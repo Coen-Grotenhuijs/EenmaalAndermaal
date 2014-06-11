@@ -39,7 +39,7 @@ class veilingModel extends model
                         else $string = '<a href="zoek?rubriek='.$parent['Rubrieknummer'].'">'.$parent['Rubrieknaam'].'</a>';
                         $parent = $this->db->fetchQuery("SELECT * FROM Rubriek WHERE Rubrieknummer = ".$parent['Rubriek']);
                 } while($parent['Rubriek']!=-1);
-                $string = '<a href="zoek?rubriek='.$parent['Rubrieknummer'].'">'.$parent['Rubrieknaam'].'</a> > '.$string;
+                $string = '<a href="zoek.php?rubriek='.$parent['Rubrieknummer'].'">'.$parent['Rubrieknaam'].'</a> > '.$string;
                 return $string;
         }
         

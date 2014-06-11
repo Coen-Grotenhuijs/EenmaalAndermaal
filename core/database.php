@@ -2,6 +2,8 @@
 
 class database
 {
+        
+        private static $total = 0;
 	private static $c;
 	private $servername;
 	private $connectioninfo = array();
@@ -24,7 +26,8 @@ class database
 	{
                 $millis = microtime(true);
 		$return = sqlsrv_query($this->c, $query);
-//                echo (microtime(true)-$millis).', '.$millis.': '.$query."<br>";
+                echo (microtime(true)-$millis).', '.$millis.': '.$query."<br>";
+                $this->total += microtime(true)-$millis;
                 
                 print_r(sqlsrv_errors());
 		return $return;
@@ -65,6 +68,7 @@ class database
 	
 	public function __destruct()
 	{
+                echo '<br><br>Totaal '.get_class().': '.$this->total.'<br><br>';
 		if(!empty($this->c))
 		{
 			sqlsrv_close($this->c);

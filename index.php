@@ -1,1 +1,1 @@
-<?php include("./core/init.php") ?>
+<?php header('Location: home.php') ?>

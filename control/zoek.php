@@ -82,7 +82,7 @@ class zoekControl extends control
                 $string = '<ul class="rubriekenlist">';
                 foreach($data as $key=>$value)
                 {
-                        $string .= '<li {RUBRIEKEN_ACTIVE_'.$value['Nummer'].'}><a href="/zoek?rubriek='.$value['Nummer'].'"><span>'.$value['Naam'].'</span></a>';
+                        $string .= '<li {RUBRIEKEN_ACTIVE_'.$value['Nummer'].'}><a href="/zoek.php?rubriek='.$value['Nummer'].'"><span>'.$value['Naam'].'</span></a>';
                         if(is_array($value['Subs']))
                         {
                                 $string .= $this->parseRubrieken($value['Subs']);

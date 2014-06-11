@@ -6,7 +6,7 @@ class dashboardControl extends control
 	{
                 if(!$this->dashboardModel->getLoggedIn())
                 {
-                        header('Location: home');
+                        header('Location: home.php');
                 }
                 
 		$this->loadView('dashboard/dashboard','content');

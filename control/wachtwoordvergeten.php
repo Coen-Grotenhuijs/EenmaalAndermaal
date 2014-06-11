@@ -8,7 +8,7 @@ class wachtwoordvergetenControl extends control
                 
                 if(empty($gebruiker))
                 {
-                        header('Location: home');
+                        header('Location: home.php');
                 }
                 
                 if(!empty($this->post['submit']))
@@ -36,7 +36,7 @@ class wachtwoordvergetenControl extends control
                                 }
                                 else
                                 {
-                                        header('Location: wachtwoordvergeten?username='.$this->get['username']);
+                                        header('Location: wachtwoordvergeten.php?username='.$this->get['username']);
                                 }
                         }
                         else if(!empty($this->get['mail']))

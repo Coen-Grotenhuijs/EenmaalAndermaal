@@ -10,7 +10,7 @@ class veilingControl extends control
                 
                 if(empty($veiling))
                 {
-                        header('Location: zoek');
+                        header('Location: zoek.php');
                 }
                 
                 if($this->logged_in) $this->relevantieModel->addView($this->get['id']);

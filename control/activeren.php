@@ -10,7 +10,7 @@ class activerenControl extends control
                 
                 if($this->logged_in)
                 {
-                        header('Location: home');
+                        header('Location: home.php');
                 }
                 
                 $this->replaceView('title','Account activeren');

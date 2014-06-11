@@ -10,24 +10,42 @@ class relevantieModel extends model
                 }
                 else
                 {
-                        $_SESSION['bekekenVeilingen'][] = $veiling;
+                        if(!in_array($veiling, $_SESSION['bekekenVeilingen']))
+                        {
+                                $_SESSION['bekekenVeilingen'][] = $veiling;
+                                if(count($_SESSION['bekekenVeilingen'])>10)
+                                {
+                                        array_shift($_SESSION['bekekenVeilingen']);
+                                }
+                        }
                 }
+                
+                $bestaand = array();
+                $data = $this->db->fetchQueryAll("SELECT * FROM Relaties WHERE Voorwerpnummer = ".$veiling);
+                foreach($data as $key=>$value)
+                {
+                        $bestaand[] = $value['GerelateerdeVoorwerpnummer'];
+                }
+                
+                $query = "";
                 
                 foreach($_SESSION['bekekenVeilingen'] as $key=>$value)
                 {
                         if($value!=$veiling)
                         {
-                                $data = $this->db->fetchQuery("SELECT * FROM Relaties WHERE Voorwerpnummer = ".$veiling." AND GerelateerdeVoorwerpnummer = ".$value);
-                                if(!empty($data))
+                                if(in_array($value, $bestaand))
                                 {
+                                        $query .= "UPDATE Relaties SET Factor = Factor + 1 WHERE Voorwerpnummer = ".$veiling." AND GerelateerdeVoorwerpnummer = ".$value.";";
                                         $this->db->query("UPDATE Relaties SET Factor = Factor + 1 WHERE Voorwerpnummer = ".$veiling." AND GerelateerdeVoorwerpnummer = ".$value);
                                 }
                                 else
                                 {
+                                        $query .= "INSERT INTO Relaties (Voorwerpnummer, GerelateerdeVoorwerpnummer, Factor) VALUES (".$veiling.", ".$value.", 1);";
                                         $this->db->query("INSERT INTO Relaties (Voorwerpnummer, GerelateerdeVoorwerpnummer, Factor) VALUES (".$veiling.", ".$value.", 1)");
                                 }
                         }
                 }
+//                if(!empty($query)) $this->db->query($query);
                 
                 $data = $this->db->fetchQuery("SELECT * FROM Suggesties WHERE Voorwerpnummer = ".$veiling." AND Gebruikersnaam = '".$this->getCurrentUser()."'");
                 if(!empty($data))
@@ -120,7 +138,14 @@ class relevantieModel extends model
 
                         // Alle relaties ophalen
                         $in = implode(",", $voorwerpNummers);
-                        $result2 = $this->db->fetchQueryAll("SELECT * FROM Relaties WHERE Voorwerpnummer IN (".$in.") AND GerelateerdeVoorwerpnummer IN (".$in.")");
+                        if(!empty($text))
+                        {
+                                $result2 = $this->db->fetchQueryAll("SELECT * FROM Relaties WHERE Voorwerpnummer IN (".$in.") AND GerelateerdeVoorwerpnummer IN (".$in.")");
+                        }
+                        else
+                        {
+                                $result2 = $this->db->fetchQueryAll("SELECT * FROM Relaties");
+                        }
 
                         // Max factor ophalen
                         $result_max = $this->db->fetchQuery("SELECT MAX(Factor) AS Factor FROM Relaties");
@@ -178,7 +203,14 @@ class relevantieModel extends model
 		
                 // Query nogmaals uitvoeren maar nu met de juiste sorteringen, zelfde resultaten
                 $voorwerpen = implode(",", $voorwerpNummers);
-		$result = $this->db->fetchQueryAll("SELECT * FROM Voorwerp WHERE Voorwerpnummer IN (".$voorwerpen.") ORDER BY CASE Voorwerpnummer ".$order." END");
+                if(empty($text))
+                {
+                        $result = $this->db->fetchQueryAll("SELECT * FROM Voorwerp ORDER BY CASE Voorwerpnummer ".$order." END");
+                }
+                else
+                {
+                        $result = $this->db->fetchQueryAll("SELECT * FROM Voorwerp WHERE Voorwerpnummer IN (".$voorwerpen.") ORDER BY CASE Voorwerpnummer ".$order." END");
+                }
                 // Pagina vaststellen
                 $start_key = 0;
 		foreach($result as $key=>$value)

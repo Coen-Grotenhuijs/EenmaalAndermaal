@@ -10,7 +10,7 @@ class mijnaccountControl extends control
                 
                 if($this->logged_in == false)
                 {
-                        header('Location: home');
+                        header('Location: home.php');
                 }
                 
                 if(!empty($this->post['submit_account']))
