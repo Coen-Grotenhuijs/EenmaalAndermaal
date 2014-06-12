@@ -47,6 +47,7 @@ class nieuweveilingModel extends model
                         $this->db->fetchQuery("INSERT INTO Bestand (Filenaam, Voorwerp) VALUES ('".$value."', ".$id.")");
                 }
         }
+        
                 
 }
 

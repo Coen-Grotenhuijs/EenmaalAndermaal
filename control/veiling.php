@@ -39,8 +39,6 @@ class veilingControl extends control
 
                 $images = $this->veilingModel->getImages(round($this->get['id']));
 
-                print_r($images);
-                
                 if(!empty($images))
                 {
                         $this->replaceView('veiling_filenaam', $images[0]['Filenaam']);

@@ -205,11 +205,11 @@ class relevantieModel extends model
                 $voorwerpen = implode(",", $voorwerpNummers);
                 if(empty($text))
                 {
-                        $result = $this->db->fetchQueryAll("SELECT * FROM Voorwerp ORDER BY CASE Voorwerpnummer ".$order." END");
+                        $result = $this->db->fetchQueryAll("SELECT * FROM Voorwerp LEFT JOIN Bestand ON Bestand.Filenaam = (SELECT MIN(Bestand.Filenaam) FROM Bestand WHERE Bestand.Voorwerp = Voorwerp.Voorwerpnummer) ORDER BY CASE Voorwerpnummer ".$order." END");
                 }
                 else
                 {
-                        $result = $this->db->fetchQueryAll("SELECT * FROM Voorwerp WHERE Voorwerpnummer IN (".$voorwerpen.") ORDER BY CASE Voorwerpnummer ".$order." END");
+                        $result = $this->db->fetchQueryAll("SELECT * FROM Voorwerp LEFT JOIN Bestand ON Bestand.Filenaam = (SELECT MIN(Bestand.Filenaam) FROM Bestand WHERE Bestand.Voorwerp = Voorwerp.Voorwerpnummer) WHERE Voorwerpnummer IN (".$voorwerpen.") ORDER BY CASE Voorwerpnummer ".$order." END");
                 }
                 // Pagina vaststellen
                 $start_key = 0;

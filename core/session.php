@@ -16,7 +16,7 @@ class session
 				$this->logged_in = true;
 				$this->user = $_SESSION['user'];
 			}
-                        if($this->sessionModel->getBlocked($_SESSION['user'])!=0)
+                        else
                         {
                                 unset($_SESSION);
                         }

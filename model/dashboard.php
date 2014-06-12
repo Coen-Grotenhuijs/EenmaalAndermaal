@@ -4,7 +4,7 @@ class dashboardModel extends model
 {
         public function getBiedingen()
         {
-                $data = $this->db->fetchQueryAll("SELECT TOP(3) Voorwerp.Voorwerpnummer, Voorwerp.Startprijs, Voorwerp.Titel, Voorwerp.Looptijdbegintijdstip, Voorwerp.Looptijdeindedag FROM Voorwerp INNER JOIN Bod ON Voorwerp.Voorwerpnummer = Bod.Voorwerp WHERE Bod.Gebruiker = '".$this->getCurrentUser()."' GROUP BY Voorwerp.Voorwerpnummer, Voorwerp.Startprijs, Voorwerp.Titel, Voorwerp.Looptijdbegintijdstip, Voorwerp.Looptijdeindedag");
+                $data = $this->db->fetchQueryAll("SELECT TOP(3) Bestand.Filenaam, Voorwerp.Voorwerpnummer, Voorwerp.Startprijs, Voorwerp.Titel, Voorwerp.Looptijdbegintijdstip, Voorwerp.Looptijdeindedag FROM Voorwerp LEFT JOIN Bestand ON Bestand.Filenaam = (SELECT MIN(Bestand.Filenaam) FROM Bestand WHERE Bestand.Voorwerp = Voorwerp.Voorwerpnummer) INNER JOIN Bod ON Voorwerp.Voorwerpnummer = Bod.Voorwerp WHERE Bod.Gebruiker = '".$this->getCurrentUser()."' GROUP BY Voorwerp.Voorwerpnummer, Voorwerp.Startprijs, Voorwerp.Titel, Voorwerp.Looptijdbegintijdstip, Voorwerp.Looptijdeindedag, Bestand.Filenaam");
                 return $data;
         }
         
@@ -16,7 +16,7 @@ class dashboardModel extends model
         
         public function getSuggesties()
         {
-                $data = $this->db->fetchQueryAll("SELECT TOP(5) * FROM Voorwerp");
+                $data = $this->db->fetchQueryAll("SELECT TOP(5) * FROM Voorwerp LEFT JOIN Bestand ON Bestand.Filenaam = (SELECT MIN(Bestand.Filenaam) FROM Bestand WHERE Bestand.Voorwerp = Voorwerp.Voorwerpnummer)");
                 return $data;
         }
         

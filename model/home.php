@@ -4,14 +4,14 @@ class homeModel extends model
 {
         public function getAdvertenties()
         {
-                $data = $this->db->fetchQueryAll("SELECT TOP(5) * FROM Voorwerp");
+                $data = $this->db->fetchQueryAll("SELECT TOP(5) * FROM Voorwerp LEFT JOIN Bestand ON Bestand.Filenaam = (SELECT MIN(Bestand.Filenaam) FROM Bestand WHERE Bestand.Voorwerp = Voorwerp.Voorwerpnummer)");
                 shuffle($data);
                 return array_slice($data, 0, 4);
         }
         
         public function getSuggesties()
         {
-                $data = $this->db->fetchQueryAll("SELECT TOP(5) * FROM Voorwerp");
+                $data = $this->db->fetchQueryAll("SELECT TOP(5) * FROM Voorwerp LEFT JOIN Bestand ON Bestand.Filenaam = (SELECT MIN(Bestand.Filenaam) FROM Bestand WHERE Bestand.Voorwerp = Voorwerp.Voorwerpnummer)");
                 return $data;
         }
         

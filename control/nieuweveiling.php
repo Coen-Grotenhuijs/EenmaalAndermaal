@@ -6,6 +6,7 @@ class nieuweveilingControl extends control
         
 	public function run()
 	{
+                $this->replaceView('title','Veiling aanmaken');
                 $veiling = array();
 
                 if(!empty($this->get['veiling']))
@@ -13,19 +14,24 @@ class nieuweveilingControl extends control
                         $veiling = $this->nieuweveilingModel->getVeiling($this->get['veiling']);
                 }
                 
+                $verkoper = $this->nieuweveilingModel->getVerkoper();
                 
                 if(!empty($veiling))
                 {
-                        
+                        $this->loadView('nieuweveiling/aangemaakt', 'content');
+                        $this->replaceView('id',$this->get['veiling']);
                 }
                 elseif(!$this->logged_in)
                 {
-                        
+                        $this->loadView('nieuweveiling/login', 'content');
+                }
+                elseif(empty($verkoper))
+                {
+                        $this->loadView('geenverkoper', 'content');
                 }
                 else
                 {
                         $this->loadView('nieuweveiling/nieuweveiling', 'content');
-                        $this->replaceView('title','Veiling aanmaken');
                         
                         if(!empty($this->post['submit']))
                         {
