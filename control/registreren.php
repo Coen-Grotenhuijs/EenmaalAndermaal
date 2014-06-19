@@ -10,6 +10,7 @@ class registrerenControl extends control
                 {
                         header('Location: home.php');
                 }
+                
                         
                 if(empty($_SESSION['registratiestap'])) $_SESSION['registratiestap'] = 1;
                 
@@ -50,7 +51,7 @@ class registrerenControl extends control
                         if($form->valid())
                         {
                                 if($_SESSION['registratiestap']<4) $_SESSION['registratiestap']++;
-                                header('Location: registreren');
+                                header('Location: registreren.php');
                         }
                         $this->view->replace_array($form->geterrors());
                         $this->view->replace_array($form->getclasses());
@@ -60,7 +61,7 @@ class registrerenControl extends control
                         if($_SESSION['registratiestap']>1)
                         {
                                 $_SESSION['registratiestap']--;
-                                header('Location: registreren');
+                                header('Location: registreren.php');
                         }
                 }
                 
@@ -90,8 +91,7 @@ class registrerenControl extends control
                                 $_SESSION['reg_postcode'] = $this->post['postcode'];
                                 $_SESSION['reg_land'] = $this->post['land'];
                                 $_SESSION['reg_geboortedatum'] = $this->post['geboortedatum'];
-                                $_SESSION['reg_tel1'] = $this->post['tel1'];
-                                $_SESSION['reg_tel2'] = $this->post['tel2'];
+                                $_SESSION['reg_tel'] = $this->post['tel'];
                                 
                                 break;
                 }
@@ -105,7 +105,6 @@ class registrerenControl extends control
                         case 1:
                                 $user = $this->registrerenModel->getUserExists($this->post['gebruikersnaam']);
                                 $email = $this->registrerenModel->getUserEmail($this->post['email']);
-                                print_r(array($user, $email));
                                 $form->check('email', array('not null'=>true,'length'=>'0-35','isemail'=>true, 'null'=>array($email, 'Dit e-mailadres is reeds bezet.')));
                                 $form->check('gebruikersnaam', array('not null'=>true, 'length'=>'0-30', 'null'=>array($user,'Deze gebruikersnaam is reeds bezet.')));
                                 $form->check('wachtwoord', array('not null'=>true, 'length'=>'8-15', 'equals'=>$this->post['herh_wachtwoord']));
@@ -123,8 +122,7 @@ class registrerenControl extends control
                                 $form->check('postcode',array('not null'=>true));
                                 $form->check('land',array('not null'=>true));
                                 $form->check('geboortedatum',array('not null'=>true));
-                                $form->check('tel1',array('not null'=>true));
-//                                $form->check('tel2', array());
+                                $form->check('tel',array('not null'=>true));
                                 break;
                 }
                 return $form;
@@ -132,8 +130,10 @@ class registrerenControl extends control
         
         private function register($data)
         {
-                $this->registrerenModel->register($data);
+                $code = $this->registrerenModel->register($data);
                 unset($_SESSION['registratiestap']);
+                
+                mail($data['reg_email'], "Uw registratie bij EenmaalAndermaal!", "Welkom bij EenmaalAndermaal!\n Klik op de volgende link om uw account te activeren: \n <a href='http://iproject31.icasites.nl/activeren.php?gebruiker=".$data['reg_gebruikersnaam']."&code=".$code."'>Activeer uw account</a>");
         }
 }
 

@@ -4,14 +4,14 @@ class homeModel extends model
 {
         public function getAdvertenties()
         {
-                $data = $this->db->fetchQueryAll("SELECT TOP(5) * FROM Voorwerp LEFT JOIN Bestand ON Bestand.Filenaam = (SELECT MIN(Bestand.Filenaam) FROM Bestand WHERE Bestand.Voorwerp = Voorwerp.Voorwerpnummer)");
+                $data = $this->db->fetchQueryAll("SELECT TOP(5) * FROM Voorwerp LEFT JOIN Bestand ON Bestand.Filenaam = (SELECT MIN(Bestand.Filenaam) FROM Bestand WHERE Bestand.Voorwerp = Voorwerp.Voorwerpnummer) AND CONVERT(datetime, Looptijdeindedag, 103) + CONVERT(datetime, Looptijdeindetijdstip, 108) > GETDATE() ORDER BY NEWID()");
                 shuffle($data);
                 return array_slice($data, 0, 4);
         }
         
         public function getSuggesties()
         {
-                $data = $this->db->fetchQueryAll("SELECT TOP(5) * FROM Voorwerp LEFT JOIN Bestand ON Bestand.Filenaam = (SELECT MIN(Bestand.Filenaam) FROM Bestand WHERE Bestand.Voorwerp = Voorwerp.Voorwerpnummer)");
+                $data = $this->db->fetchQueryAll("SELECT TOP(100) * FROM Voorwerp LEFT JOIN Bestand ON Bestand.Filenaam = (SELECT MIN(Bestand.Filenaam) FROM Bestand WHERE Bestand.Voorwerp = Voorwerp.Voorwerpnummer) WHERE CONVERT(datetime, Looptijdeindedag, 103) + CONVERT(datetime, Looptijdeindetijdstip, 108) > GETDATE() ORDER BY NEWID()");
                 return $data;
         }
         

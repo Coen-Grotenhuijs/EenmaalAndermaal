@@ -4,6 +4,8 @@ class homeControl extends control
 {
 	public function run()
 	{
+                $this->loadModel('relevantie');
+                
 		$this->loadView('home/home','content');
                 $this->replaceView('title','Home');
                 
@@ -32,6 +34,7 @@ class homeControl extends control
                 $this->replaceView('next_advertentie','');
 
                 $suggesties = $this->homeModel->getSuggesties();
+                $suggesties = $this->relevantieModel->getRelevantie($suggesties, 5);
                 foreach($suggesties as $key=>$value)
                 {
                         $file = empty($value['Filenaam']) ? 'empty.jpg' : $value['Filenaam'];

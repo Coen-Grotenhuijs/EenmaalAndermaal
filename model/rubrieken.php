@@ -82,7 +82,7 @@ class rubriekenModel extends model
                 
                 $rubriekenString = implode(",",$rubrieken);
                 
-                $data = $this->db->fetchQueryAll("SELECT *, Suggesties.Factor AS Factor, VoorwerpInRubriek.Voorwerp AS Voorwerpnummer FROM VoorwerpInRubriek INNER JOIN Voorwerp on VoorwerpInRubriek.Voorwerp = Voorwerp.Voorwerpnummer LEFT JOIN Suggesties ON Suggesties.Voorwerpnummer = Voorwerp.Voorwerpnummer WHERE VoorwerpInRubriek.RubriekOpLaagsteNiveau IN (".$rubriekenString.") AND Titel LIKE '%".$text."%'");// AND (Titel LIKE '%".$text."%' OR Beschrijving LIKE '%".$text."%') AND Veilinggesloten = 0");
+                $data = $this->db->fetchQueryAll("SELECT *, Suggesties.Factor AS Factor, VoorwerpInRubriek.Voorwerp AS Voorwerpnummer FROM VoorwerpInRubriek INNER JOIN Voorwerp on VoorwerpInRubriek.Voorwerp = Voorwerp.Voorwerpnummer LEFT JOIN Suggesties ON Suggesties.Voorwerpnummer = Voorwerp.Voorwerpnummer WHERE VoorwerpInRubriek.RubriekOpLaagsteNiveau IN (".$rubriekenString.") AND Titel LIKE '%".$text."%' AND CONVERT(datetime, Looptijdeindedag, 103) + CONVERT(datetime, Looptijdeindetijdstip, 108) > GETDATE()");// AND (Titel LIKE '%".$text."%' OR Beschrijving LIKE '%".$text."%') AND Veilinggesloten = 0");
                 
                 return $data;
  

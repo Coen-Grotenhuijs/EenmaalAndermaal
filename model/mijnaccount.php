@@ -20,17 +20,25 @@ class mijnaccountModel extends model
                                                             Land = '".$data['land']."',
                                                             Geboortedag = '".$data['geboortedag']."'
                                                         WHERE Gebruikersnaam = '".$this->getCurrentUser()."'");
+                
+                $this->db->query("UPDATE Gebruikerstelefoon SET Telefoon = '".$data['tel']."' WHERE Gebruiker = '".$this->getCurrentUser()."'");
         }
         
         public function updatePass($data)
         {
-                $this->db->fetchQuery("UPDATE Gebruiker SET Wachtwoord = '".$data['wachtwoord']."' WHERE Gebruikersnaam = '".$this->getCurrentUser()."'");
+                $this->db->fetchQuery("UPDATE Gebruiker SET Wachtwoord = '".$this->encrypt($data['wachtwoord'])."' WHERE Gebruikersnaam = '".$this->getCurrentUser()."'");
         }
         
         public function getPass()
         {
                 $data = $this->db->fetchQuery("SELECT * FROM Gebruiker WHERE Gebruikersnaam = '".$this->getCurrentUser()."'");
                 return $data['Wachtwoord'];
+        }
+        
+        public function getTelefoonnummer()
+        {
+                $data = $this->db->fetchQuery("SELECT * FROM Gebruikerstelefoon WHERE Gebruiker = '".$this->getCurrentUser()."'");
+                return $data['Telefoon'];
         }
 }
 

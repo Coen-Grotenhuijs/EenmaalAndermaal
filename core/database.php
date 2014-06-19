@@ -29,7 +29,7 @@ class database
 //                echo (microtime(true)-$millis).', '.$millis.': '.$query."<br>";
                 $this->total += microtime(true)-$millis;
                 
-                print_r(sqlsrv_errors());
+//                print_r(sqlsrv_errors());
 		return $return;
 	}
 	

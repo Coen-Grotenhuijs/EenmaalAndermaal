@@ -20,23 +20,28 @@ class registrerenModel extends model
                                                                 Vraag,
                                                                 Antwoordtekst,
                                                                 Verkoper,
-                                                                Activatiecode)
+                                                                Activatiecode,
+                                                                IsGeblokkeerd)
                                                 VALUES (        '".$data['reg_gebruikersnaam']."',
                                                                 '".$data['reg_voornaam']."',
                                                                 '".$data['reg_tussenvoegsel']."',
                                                                 '".$data['reg_achternaam']."',
-                                                                '".$data['reg_straat']." ".$data['reg_huisnummer']."',
-                                                                '',
+                                                                '".$data['reg_straat']."',
+                                                                '".$data['reg_huisnummer']."',
                                                                 '".$data['reg_postcode']."',
-                                                                '".$data['reg_plaatsnaam']."',
+                                                                '".$data['reg_woonplaats']."',
                                                                 '".$data['reg_land']."',
                                                                 '".$data['reg_geboortedatum']."',
                                                                 '".$data['reg_email']."',
-                                                                '".$data['reg_wachtwoord']."',
+                                                                '".$this->encrypt($data['reg_wachtwoord'])."',
                                                                 '".$data['reg_vraag']."',
                                                                 '".$data['reg_antwoord']."',
                                                                 0,
-                                                                '".$code."')");
+                                                                '".$code."',
+                                                                0)");
+                
+                $this->db->query("INSERT INTO Gebruikerstelefoon (Volgnr, Gebruiker, Telefoontype, Telefoon) VALUES (1, '".$data['reg_gebruikersnaam']."','Thuis', '".$data['reg_tel']."')");
+                return $code;
         }
         
         public function getVragen()

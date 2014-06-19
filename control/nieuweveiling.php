@@ -15,7 +15,6 @@ class nieuweveilingControl extends control
                 }
                 
                 $verkoper = $this->nieuweveilingModel->getVerkoper();
-                
                 if(!empty($veiling))
                 {
                         $this->loadView('nieuweveiling/aangemaakt', 'content');
@@ -27,17 +26,28 @@ class nieuweveilingControl extends control
                 }
                 elseif(empty($verkoper))
                 {
-                        $this->loadView('geenverkoper', 'content');
+                        $this->loadView('nieuweveiling/geenverkoper', 'content');
                 }
                 else
                 {
                         $this->loadView('nieuweveiling/nieuweveiling', 'content');
+                        
+                        $rubrieken = $this->rubriekenModel->getRubrieken();
+
+                        foreach($rubrieken as $key=>$value)
+                        {
+                                $this->loadView('header/rubriek','next_rubriek_dropdown');
+                                $this->replaceView('rubriek_naam', $value['Naam']);
+                                $this->replaceView('rubriek_nummer', $value['Nummer']);
+                        }
+                        $this->replaceView('next_rubriek_dropdown', '');
                         
                         if(!empty($this->post['submit']))
                         {
                                 $this->post['verzendkosten'] = str_replace(',','.',$this->post['verzendkosten']);
                                 $this->post['startprijs'] = str_replace(',','.',$this->post['startprijs']);
                                 
+                                $rubriek = $this->nieuweveilingModel->getRubriek($this->post['rubriek']);
                                 
                                 $form = new form($this->post);
                                 
@@ -45,12 +55,11 @@ class nieuweveilingControl extends control
                                 $form->check('beschrijving', array('not null'=>true, 'length'=>'0-1000'));
                                 $form->check('plaatsnaam', array('not null'=>true, 'length'=>'0-100'));
                                 $form->check('land', array('not null'=>true, 'length'=>'0-100'));
-                                $form->check('looptijd', array('not null'=>true, 'length'=>'0-5'));
-                                $form->check('verzendinstructies', array('not null'=>true, 'length'=>'0-27'));
                                 $form->check('verzendkosten', array('not null'=>true, 'length'=>'0-10', 'isnumber'=>true));
                                 $form->check('startprijs', array('not null'=>true, 'length'=>'0-10', 'isnumber'=>true));
                                 $form->check('betalingswijze', array('not null'=>true, 'length'=>'0-9'));
                                 $form->check('betalingsinstructies', array('not null'=>true, 'length'=>'0-23'));
+                                $form->check('rubriek', array('true'=>$rubriek));
                                 
                                 $files = array();
                                 if(!empty($_FILES))
@@ -58,20 +67,19 @@ class nieuweveilingControl extends control
                                         $files = $this->uploadFiles();
                                 }
                                 
-                                print_r($this->fileError);
                                 
                                 if($form->valid() && empty($this->fileError))
                                 {
-                                        print_r($files);
                                         $id = $this->nieuweveilingModel->addVeiling($this->post);
                                         $this->nieuweveilingModel->addBestanden($files, $id);
-                                        echo $id;
+                                        header('Location: nieuweveiling.php?veiling='.$id);
                                 }
                                 
                                 $this->view->replace_array($form->geterrors());
                                 $this->view->replace_array($form->getclasses());
                                 
                         }
+                        $this->replaceView('file_errors', implode('<br>', $this->fileError));
                 }
 
         }
@@ -83,9 +91,9 @@ class nieuweveilingControl extends control
                 {
                         if(empty($value)) continue;
                         
-                        if($this->fileValid($key))
+                        if($this->fileValid($key) && count($files)<4)
                         {
-                                $path = getcwd().'\img\uploads\\';
+                                $path = getcwd().'\upload\\';
                                 $name = $key.$this->generateRandomString(20);
 
                                 $temp = $_FILES['file']['name'][$key];

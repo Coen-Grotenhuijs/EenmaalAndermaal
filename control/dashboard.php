@@ -4,10 +4,13 @@ class dashboardControl extends control
 {
 	public function run()
 	{
+                
                 if(!$this->dashboardModel->getLoggedIn())
                 {
                         header('Location: home.php');
                 }
+                
+                $this->loadModel('relevantie');
                 
 		$this->loadView('dashboard/dashboard','content');
                 $this->replaceView('title','Dashboard');
@@ -59,6 +62,7 @@ class dashboardControl extends control
                 $this->replaceView('next_voorwerp','');
 
                 $suggesties = $this->dashboardModel->getSuggesties();
+                $suggesties = $this->relevantieModel->getRelevantie($suggesties, 5);
                 foreach($suggesties as $key=>$value)
                 {
                         $file = empty($value['Filenaam']) ? 'empty.jpg' : $value['Filenaam'];

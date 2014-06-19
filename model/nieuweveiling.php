@@ -4,11 +4,19 @@ class nieuweveilingModel extends model
 {
         public function addVeiling($data)
         {
+                if(!in_array($data['looptijd'], array(3,5,7,10)))
+                {
+                        $data['looptijd'] = 3;
+                }
+                if(!in_array($data['verzendinstructies'], array('Verzenden', 'Ophalen')))
+                {
+                        $data['verzendinstructies'] = 'Verzenden';
+                }
                 $looptijdbegindag = date('d/n/Y');
-                $looptijdeindedag = date('d/n/Y', time() + 3600*24*$data['looptijd']);
+                $looptijdeindedag = date('d/n/Y', time() + 3600*24*round($data['looptijd']));
                 $looptijdbegintijdstip = date('H:i:s');
                 
-                $data = 
+                $id = 
                 $this->db->insertGetId("INSERT INTO Voorwerp (  Titel,
                                                                 Beschrijving,
                                                                 Plaatsnaam,
@@ -37,7 +45,10 @@ class nieuweveilingModel extends model
                                                                 '".$looptijdeindedag."',
                                                                 '".$looptijdbegintijdstip."',
                                                                 '".$looptijdbegindag."')");
-                return $data;
+                
+                $this->db->query("INSERT INTO VoorwerpInRubriek (Voorwerp, RubriekOpLaagsteNiveau) VALUES (".$id.", ".$data['rubriek'].")");
+                
+                return $id;
         }
         
         public function addBestanden($files, $id)
@@ -48,6 +59,19 @@ class nieuweveilingModel extends model
                 }
         }
         
+        
+        public function getRubriek($id)
+        {
+                $data = $this->db->fetchQuery("SELECT * FROM Rubriek WHERE Rubrieknummer = ".round($id));
+                if(!empty($data)) return true;
+                return false;
+        }
+        
+        public function getVeiling($id)
+        {
+                $data = $this->db->fetchQuery("SELECT * FROM Voorwerp WHERE Voorwerpnummer = ".$id);
+                return $data;
+        }
                 
 }
 

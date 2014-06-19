@@ -25,7 +25,7 @@ class mijnaccountControl extends control
                         $form->check('postcode',array('not null'=>true));
                         $form->check('land',array('not null'=>true));
                         $form->check('geboortedag',array('not null'=>true));
-                        $form->check('tel1',array('not null'=>true));
+                        $form->check('tel',array('not null'=>true));
                         
                         if($form->valid())
                         {
@@ -38,12 +38,13 @@ class mijnaccountControl extends control
                 
                 if(!empty($this->post['submit_password']))
                 {
-                        $password = $this->mijnaccountModel->getPass();
+                        $pass = $this->mijnaccountModel->getPass();
+                        $password = $this->mijnaccountModel->encrypt($this->post['huidig_wachtwoord'])==$pass;
                         
                         $equal = $this->post['wachtwoord']==$this->post['herhaal_wachtwoord'];
                         
                         $form = new form($this->post);
-                        $form->check('huidig_wachtwoord', array('not null'=>true, 'length'=>'0-30', 'equals'=>array($password, 'Het wachtwoord is onjuist.')));
+                        $form->check('huidig_wachtwoord', array('not null'=>true, 'length'=>'0-30', 'not empty'=>array($password, 'Het wachtwoord is onjuist.')));
                         $form->check('wachtwoord', array('not null'=>true, 'length'=>'8-30', 'not empty'=>array($equal, 'De wachtwoorden komen niet overeen.')));
                         $form->check('herhaal_wachtwoord', array('not null'=>true, 'length'=>'8-30'));
                         
@@ -57,6 +58,8 @@ class mijnaccountControl extends control
                 }
                 
 
+                $telefoon = $this->mijnaccountModel->getTelefoonnummer();
+                
                 $gebruiker = $this->mijnaccountModel->getProfielGegevens();
                 
                 $data = array();
@@ -74,6 +77,8 @@ class mijnaccountControl extends control
                 }
                 
                 $this->view->replace_array($data);
+                
+                $this->replaceView('gebruiker_telefoonnummer', $telefoon);
                 
                 $this->view->cleanup('GEBRUIKER');
 	}

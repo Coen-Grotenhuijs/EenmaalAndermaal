@@ -6,7 +6,6 @@ class activerenModel extends model
         public function getCode($user)
         {
                 $data = $this->db->fetchQuery("SELECT * FROM Gebruiker WHERE Gebruikersnaam = '".$user."'");
-                echo $data['Activatiecode'];
         }
         
         public function getUserCode($id, $code)

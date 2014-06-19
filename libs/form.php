@@ -83,7 +83,7 @@ class form
                                 case 'isemail':
                                         if(!filter_var($this->data[$parameter], FILTER_VALIDATE_EMAIL))
                                         {
-                                                $this->adderror($parameter, "Ongeldigd e-mailadres");
+                                                $this->adderror($parameter, "Ongeldig e-mailadres.");
                                         }
                                         break;
                                 case 'bigger':
@@ -91,6 +91,12 @@ class form
                                         {
                                                 $this->adderror($parameter, "Te klein getal.");
                                         }
+                                case 'true':
+                                        if(!$value)
+                                        {
+                                                $this->adderror($parameter, "Niet true.");
+                                        }
+                                        break;
 			}
 		}
 	}

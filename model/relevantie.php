@@ -88,7 +88,7 @@ class relevantieModel extends model
                 }
         }
         
-        public function getZoekRelevantie($data, $text, $rubriek, $page, $perPage, $start = 0)
+        public function getZoekRelevantie($data, $text, $rubriek, $page, $perPage, $start = 0, $suggesties = false)
         {
                 // Waardering door gebruiker per product
                 $userrating = array();
@@ -138,7 +138,7 @@ class relevantieModel extends model
 
                         // Alle relaties ophalen
                         $in = implode(",", $voorwerpNummers);
-                        if(!empty($text))
+                        if(!empty($text) || $suggesties)
                         {
                                 $result2 = $this->db->fetchQueryAll("SELECT * FROM Relaties WHERE Voorwerpnummer IN (".$in.") AND GerelateerdeVoorwerpnummer IN (".$in.")");
                         }
@@ -185,46 +185,57 @@ class relevantieModel extends model
                 }
 		
                 // Sorteren
+                $start = microtime(true);
 		arsort($rating);
                 
-                $rating = array_slice($rating, 0, 100);
+//                $rating = array_slice($rating, 0, 10);
                 
                 // Order query vaststellen
 		$i = 1;
 		$order = "";
-		foreach($rating as $key=>$value)
-		{
-                        if(in_array($key, $voorwerpNummers))
-                        {
-                                $order .= "WHEN ".$key." THEN ".$i." ";
-                                $i++;
-                        }
-		}
-		
-                // Query nogmaals uitvoeren maar nu met de juiste sorteringen, zelfde resultaten
-                $voorwerpen = implode(",", $voorwerpNummers);
-                if(empty($text))
+                $in = array();
+                
+                foreach($voorwerpNummers as $key=>$value)
                 {
-                        $result = $this->db->fetchQueryAll("SELECT * FROM Voorwerp LEFT JOIN Bestand ON Bestand.Filenaam = (SELECT MIN(Bestand.Filenaam) FROM Bestand WHERE Bestand.Voorwerp = Voorwerp.Voorwerpnummer) ORDER BY CASE Voorwerpnummer ".$order." END");
+                        $voorwerpRating[$value] = $rating[$value];
+                }
+                
+                arsort($voorwerpRating);
+                
+                
+                $zoekresultaten = array();
+                foreach($voorwerpNummers as $key=>$value)
+                {
+                        $zoekresultaten[] = $value;
+                }
+                $_SESSION['zoekresultaten'] = $zoekresultaten;
+                
+                
+                $ratings = array_slice($voorwerpRating, 0, 10);
+
+                foreach($ratings as $key=>$value)
+		{
+                        $order .= "WHEN ".$key." THEN ".$i." ";
+                        $in[] = $key;
+                        $i++;
+		}
+                
+                if(empty($order)) return array();
+                $instring = implode(",", $in);
+		
+                
+                // Query nogmaals uitvoeren maar nu met de juiste sorteringen, zelfde resultaten
+                if(empty($text) && empty($rubriek))
+                {
+                        $result = $this->db->fetchQueryAll("SELECT * FROM Voorwerp LEFT JOIN Bestand ON Bestand.Filenaam = (SELECT MIN(Bestand.Filenaam) FROM Bestand WHERE Bestand.Voorwerp = Voorwerp.Voorwerpnummer) WHERE Voorwerpnummer IN (".$instring.") ORDER BY CASE Voorwerpnummer ".$order." END");
                 }
                 else
                 {
-                        $result = $this->db->fetchQueryAll("SELECT * FROM Voorwerp LEFT JOIN Bestand ON Bestand.Filenaam = (SELECT MIN(Bestand.Filenaam) FROM Bestand WHERE Bestand.Voorwerp = Voorwerp.Voorwerpnummer) WHERE Voorwerpnummer IN (".$voorwerpen.") ORDER BY CASE Voorwerpnummer ".$order." END");
+                        $result = $this->db->fetchQueryAll("SELECT * FROM Voorwerp LEFT JOIN Bestand ON Bestand.Filenaam = (SELECT MIN(Bestand.Filenaam) FROM Bestand WHERE Bestand.Voorwerp = Voorwerp.Voorwerpnummer) WHERE Voorwerpnummer IN (".$instring.") ORDER BY CASE Voorwerpnummer ".$order." END");
                 }
-                // Pagina vaststellen
-                $start_key = 0;
-		foreach($result as $key=>$value)
-		{
-			if($value['Voorwerpnummer']==$start) $start_key = $key+1;
-		}
                 
                 // Data opslaan in sessie voor gebruik bij scrollen
-                $_SESSION['last_voorwerp'] = $result[min($perPage-1,count($result)-1)]['Voorwerpnummer'];
-                $_SESSION['zoekresultaten'] = array();
-                foreach($result as $key=>$value)
-                {
-                        $_SESSION['zoekresultaten'][] = $value['Voorwerpnummer'];
-                }
+                $_SESSION['page'] = 0;
                 
 		// Data teruggeven
                 return array_slice($result, ($page-1)*$perPage, $perPage);
@@ -234,11 +245,17 @@ class relevantieModel extends model
         {
                 $perPage = 10;
                 
-                $voorwerpen = implode(',', $_SESSION['zoekresultaten']);
+                $page = $_SESSION['page']+1;
+                
+                $zoekresultaten = array_slice($_SESSION['zoekresultaten'], $page*10, 10);
+                
+                if(empty($zoekresultaten)) return array();
+                
+                $voorwerpen = implode(',', $zoekresultaten);
                 
 		$i = 1;
 		$order = "";
-		foreach($_SESSION['zoekresultaten'] as $key=>$value)
+		foreach($zoekresultaten as $key=>$value)
 		{
 			$order .= "WHEN ".$value." THEN ".$i." ";
 			$i++;
@@ -246,101 +263,21 @@ class relevantieModel extends model
                 
 		$result = $this->db->fetchQueryAll("SELECT * FROM Voorwerp WHERE Voorwerpnummer IN (".$voorwerpen.") ORDER BY CASE Voorwerpnummer ".$order." END");
 		
-                // Pagina vaststellen
-                $start_key = 0;
-		foreach($result as $key=>$value)
-		{
-			if($value['Voorwerpnummer']==$_SESSION['last_voorwerp']) $start_key = $key+1;
-		}
-                
-                if(!empty($_SESSION['last_voorwerp']) && empty($start_key))
-                {
-                        return array();
-                }
-                
                 // Nieuwe pagina vaststellen
-                $_SESSION['last_voorwerp'] = $_SESSION['zoekresultaten'][min($start_key+$perPage, count($_SESSION['zoekresultaten'])-1)];
+                $_SESSION['page']++;
                         
 //                echo $_SESSION['last_voorwerp'];
                 
 		// Data teruggeven
-                return array_slice($result, $start_key, $perPage);
+                return $result;
         }
 
-        public function getRelevantie($data, $page, $perPage, $start = 0)
+        public function getRelevantie($data, $max)
         {
-                // Waardering door gebruiker per product
-                $userrating = array();
-                
-                // Uiteindelijke waardering product als alle factoren worden meegenomen
-		$rating = array();
-                
-                // Geen zoekresultaat hoeft niet te worden gesorteerd.
-		if(empty($data)) return array();
-                
-                
-                // Verzekeren dat iedere index een waarde toegewezen krijgt
-		foreach($data as $key=>$value)
-		{
-			$userrating[$value['Voorwerpnummer']] = intval($value['Factor']);
-			$rating[$value['Voorwerpnummer']] = $userrating[$value['Voorwerpnummer']];
-		}
-		
-                // Van alle veilingen de waardering ophalen voor deze gebruiker
-		$result_all = $this->db->fetchQueryAll("SELECT *, Voorwerp.Voorwerpnummer AS Voorwerpnummer FROM Voorwerp INNER JOIN Suggesties ON Suggesties.Voorwerpnummer = Voorwerp.Voorwerpnummer WHERE Suggesties.Gebruikersnaam = '".$this->getCurrentUser()."' ORDER BY Suggesties.Factor");
-		foreach($result_all as $key=>$value)
-		{
-			if(!empty($userrating[$value['Voorwerpnummer']])) $userrating[$value['Voorwerpnummer']] += intval($value['Factor']/10);
-			else $userrating[$value['Voorwerpnummer']] = intval($value['Factor']/10);
-			$rating[$value['Voorwerpnummer']] = $userrating[$value['Voorwerpnummer']];
-		}
-
-                // Alle relaties ophalen
-		$result2 = $this->db->fetchQueryAll("SELECT * FROM Relaties");
-                
-                // De waardering van gerelateerde producten optellen bij de reeds vastgestelde waardering
-		foreach($result2 as $key=>$value)
-		{
-			$rating[$value['Voorwerpnummer']] += $value['Factor']*$userrating[$value['GerelateerdeVoorwerpnummer']];
-			$rating[$value['GerelateerdeVoorwerpnummer']] += $value['Factor']*$userrating[$value['Voorwerpnummer']];
-		}
-		
-                // Sorteren
-		arsort($rating);
-                
-                
-                // Order query vaststellen
-		$i = 1;
-		$order = "";
-		foreach($rating as $key=>$value)
-		{
-			$order .= "WHEN ".$key." THEN ".$i." ";
-			$i++;
-		}
-		
-                
-                // Voorwerpen die zoekresultaten vormen vaststellen
-                $voorwerpNummers = array();
-                
-                foreach($data as $key=>$value)
-                {
-                        $voorwerpNummers[$key] = $value['Voorwerpnummer'];
-                }
-                
-                // Query nogmaals uitvoeren maar nu met de juiste sorteringen, zelfde resultaten
-                $voorwerpen = implode(",", $voorwerpNummers);
-		$result = $this->db->fetchQueryAll("SELECT * FROM Voorwerp WHERE Voorwerpnummer IN (".$voorwerpen.") ORDER BY CASE Voorwerpnummer ".$order." END");
-		
-                // Pagina vaststellen
-                $start_key = 0;
-		foreach($result as $key=>$value)
-		{
-			if($value['Voorwerpnummer']==$start) $start_key = $key+1;
-		}
-                
-		// Data teruggeven
-                return array_slice($result, ($page-1)*$perPage, $perPage);
+                $data = $this->getZoekRelevantie($data, '', 0, 0, $max, 0, true);
+                return $data;
         }
+        
         
 }
 

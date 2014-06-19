@@ -11,6 +11,14 @@ class wachtwoordvergetenControl extends control
                 if(empty($gebruiker))
                 {
                         $this->loadView('wachtwoordvergeten/gebruikersnaam', 'content');
+                        if(!empty($this->get['username']))
+                        {
+                                $this->replaceView('error_username_wachtwoord', '<span class="form_error">De gebruikersnaam is niet herkend.</span>');
+                        }
+                        else
+                        {
+                                $this->replaceView('error_username_wachtwoord', '');
+                        }
                 }
                 else
                 {
@@ -51,11 +59,9 @@ class wachtwoordvergetenControl extends control
                                 {
                                         $seed = $this->getSeed();
                                         mail($gebruiker['Emailadres'], 'Herstellen account Eenmaalandermaal', "Klik op de volgende link om je account te herstellen:<br> <a href='wachtwoordvergeten?key=".$this->getKey($gebruiker, $seed)."&seed=".$seed."'>LINK</a>");
-                                        echo "Klik op de volgende link om je account te herstellen:<br> <a href='wachtwoordvergeten?key=".$this->getKey($gebruiker, $seed)."&seed=".$seed."&username=".$this->get['username']."'>LINK</a>";
                                 }
                                 else
                                 {
-                                        $seed = $this->getSeed();
                                         $this->loadView('wachtwoordvergeten/wachtwoordvergeten', 'content');
                                         $vraag = $this->wachtwoordvergetenModel->getVraag($gebruiker['Vraag']);
                                         

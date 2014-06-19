@@ -4,19 +4,19 @@ class dashboardModel extends model
 {
         public function getBiedingen()
         {
-                $data = $this->db->fetchQueryAll("SELECT TOP(3) Bestand.Filenaam, Voorwerp.Voorwerpnummer, Voorwerp.Startprijs, Voorwerp.Titel, Voorwerp.Looptijdbegintijdstip, Voorwerp.Looptijdeindedag FROM Voorwerp LEFT JOIN Bestand ON Bestand.Filenaam = (SELECT MIN(Bestand.Filenaam) FROM Bestand WHERE Bestand.Voorwerp = Voorwerp.Voorwerpnummer) INNER JOIN Bod ON Voorwerp.Voorwerpnummer = Bod.Voorwerp WHERE Bod.Gebruiker = '".$this->getCurrentUser()."' GROUP BY Voorwerp.Voorwerpnummer, Voorwerp.Startprijs, Voorwerp.Titel, Voorwerp.Looptijdbegintijdstip, Voorwerp.Looptijdeindedag, Bestand.Filenaam");
+                $data = $this->db->fetchQueryAll("SELECT Bestand.Filenaam, Voorwerp.Voorwerpnummer, Voorwerp.Startprijs, Voorwerp.Titel, Voorwerp.Looptijdbegintijdstip, Voorwerp.Looptijdeindedag FROM Voorwerp LEFT JOIN Bestand ON Bestand.Filenaam = (SELECT MIN(Bestand.Filenaam) FROM Bestand WHERE Bestand.Voorwerp = Voorwerp.Voorwerpnummer) INNER JOIN Bod ON Voorwerp.Voorwerpnummer = Bod.Voorwerp WHERE Bod.Gebruiker = '".$this->getCurrentUser()."' AND CONVERT(datetime, Looptijdeindedag, 103) + CONVERT(datetime, Looptijdeindetijdstip, 108) > GETDATE() GROUP BY Voorwerp.Voorwerpnummer, Voorwerp.Startprijs, Voorwerp.Titel, Voorwerp.Looptijdbegintijdstip, Voorwerp.Looptijdeindedag, Bestand.Filenaam");
                 return $data;
         }
         
         public function getVoorwerpen()
         {
-                $data = $this->db->fetchQueryAll("SELECT TOP(3) * FROM Voorwerp LEFT JOIN Bestand ON Bestand.Filenaam = (SELECT MIN(Bestand.Filenaam) FROM Bestand WHERE Bestand.Voorwerp = Voorwerp.Voorwerpnummer) WHERE Verkoper = '".$this->getCurrentUser()."'");
+                $data = $this->db->fetchQueryAll("SELECT * FROM Voorwerp LEFT JOIN Bestand ON Bestand.Filenaam = (SELECT MIN(Bestand.Filenaam) FROM Bestand WHERE Bestand.Voorwerp = Voorwerp.Voorwerpnummer) WHERE Verkoper = '".$this->getCurrentUser()."' AND CONVERT(datetime, Looptijdeindedag, 103) + CONVERT(datetime, Looptijdeindetijdstip, 108) > GETDATE()");
                 return $data;
         }
         
         public function getSuggesties()
         {
-                $data = $this->db->fetchQueryAll("SELECT TOP(5) * FROM Voorwerp LEFT JOIN Bestand ON Bestand.Filenaam = (SELECT MIN(Bestand.Filenaam) FROM Bestand WHERE Bestand.Voorwerp = Voorwerp.Voorwerpnummer)");
+                $data = $this->db->fetchQueryAll("SELECT TOP(100) * FROM Voorwerp LEFT JOIN Bestand ON Bestand.Filenaam = (SELECT MIN(Bestand.Filenaam) FROM Bestand WHERE Bestand.Voorwerp = Voorwerp.Voorwerpnummer) WHERE CONVERT(datetime, Looptijdeindedag, 103) + CONVERT(datetime, Looptijdeindetijdstip, 108) > GETDATE() ORDER BY NEWID()");
                 return $data;
         }
         

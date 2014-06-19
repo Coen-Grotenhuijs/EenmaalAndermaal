@@ -2,6 +2,13 @@
 						<h2>Voorwerpgegevens</h2>
 						<form method="POST" enctype="multipart/form-data"/>
 							<table>
+                                                                <tr>
+                                                                        <td>Rubriek</td><td>                                                                
+                                                                                <select name="rubriek">
+                                                                                        {NEXT_RUBRIEK_DROPDOWN}
+                                                                                </select>
+                                                                        </td>
+                                                                </tr>
 								<tr>
 									<td>Voorwerpnaam</td><td><input type="text" name="voorwerpnaam" placeholder="Voorwerpnaam" value="{POST_VOORWERPNAAM}" {CLASS_VOORWERPNAAM}> {ERROR_VOORWERPNAAM}</td>
 								</tr>
@@ -15,13 +22,25 @@
 									<td>Land</td><td><select name="land"><option value="NL">Nederland</option><option value="NL">België</option></select></td>
 								</tr>
 								<tr>
-									<td>Looptijd</td><td><input type="text" name="looptijd" placeholder="Aantal dagen..." value="{POST_LOOPTIJD}" {CLASS_LOOPTIJD}> {ERROR_LOOPTIJD}</td>
+									<td>Looptijd</td><td>
+                                                                                <select name="looptijd">
+                                                                                        <option value="3" {POST_LOOPTIJD_3}>3 dagen</option>
+                                                                                        <option value="5" {POST_LOOPTIJD_5}>5 dagen</option>
+                                                                                        <option value="7" {POST_LOOPTIJD_7}>7 dagen</option>
+                                                                                        <option value="10" {POST_LOOPTIJD_10}>10 dagen</option>
+                                                                                </select>
+                                                                                </td>
 								</tr>
 								<tr>
-									<td>Verzendinstructies</td><td><input type="text" name="verzendinstructies" placeholder="Ophalen of verzenden..." value="{POST_VERZENDINSTRUCTIES}" {CLASS_VERZENDINSTRUCTIES}> {ERROR_VERZENDINSTRUCTIES}</td>
+									<td>Verzendinstructies</td><td>
+                                                                                <select name="verzendinstructies">
+                                                                                        <option value="Ophalen">Ophalen</option>
+                                                                                        <option value="Verzenden">Verzenden</option>
+                                                                                </select>
+                                                                        </td>
 								</tr>
 								<tr>
-									<td>Verzendkosten</td><td><input type="text" name="verzendkosten" placeholder="Ophalen of verzenden..." value="{POST_VERZENDKOSTEN}" {CLASS_VERZENDKOSTEN}> {ERROR_VERZENDKOSTEN}</td>
+									<td>Verzendkosten</td><td><input type="text" name="verzendkosten" placeholder="6" value="{POST_VERZENDKOSTEN}" {CLASS_VERZENDKOSTEN}> {ERROR_VERZENDKOSTEN}</td>
 								</tr>
 								<tr>
 									<td>Startprijs</td><td><input type="text" name="startprijs" placeholder="299" value="{POST_STARTPRIJS}" {CLASS_STARTPRIJS}> {ERROR_STARTPRIJS}</td>
@@ -33,7 +52,7 @@
 									<td>Betalingsinstructies</td><td><input type="text" name="betalingsinstructies" placeholder="Maak het geld over naar deze rekening..." value="{POST_BETALINGSINSTRUCTIES}" {CLASS_BETALINGSINSTRUCTIES}> {ERROR_BETALINGSINSTRUCTIES}</td>
 								</tr>
 								<tr>
-									<td>Afbeelding</td><td><img class="preview" src="" alt="" /><input type="file" name="file[]" class="file" onchange="readURL(this);"/><img src="img/plus.png" class="fileSelector" /></td>
+									<td>Afbeelding</td><td>{FILE_ERRORS}<img class="preview" src="" alt="" /><input type="file" name="file[]" class="file" onchange="readURL(this);"/><img src="img/plus.png" class="fileSelector" /></td>
 								</tr>
 							</table>
 							<input type="submit" name="submit" value="Plaats voorwerp" />

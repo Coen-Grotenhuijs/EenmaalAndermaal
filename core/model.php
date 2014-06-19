@@ -11,7 +11,7 @@ class model
 	
 	public function encrypt($string)
 	{
-		return md5($string);
+		return sha1($string."konijn123");
 	}
 
 	public function getUser($user)

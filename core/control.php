@@ -44,6 +44,15 @@ class control extends session {
                         $this->loadView('header/loggedout', 'topbar');
                 }
                 
+                if($this->sessionModel->getVerkoper())
+                {
+                        $this->loadView('header/plaatsvoorwerp', 'plaatsvoorwerp');
+                }
+                else
+                {
+                        $this->replaceView('plaatsvoorwerp', '');
+                }
+                
                 // footer
                 $this->loadView('footer/footer', 'footer');
 

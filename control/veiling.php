@@ -8,6 +8,7 @@ class veilingControl extends control
                 
                 $veiling = $this->veilingModel->getVeiling(round($this->get['id']));
                 
+                
                 if(empty($veiling))
                 {
                         header('Location: zoek.php');
@@ -17,7 +18,31 @@ class veilingControl extends control
                 
                 if(!empty($this->post['submitbod']) && $this->logged_in && strtolower($this->user)!=strtolower($this->veilingModel->getUserLastBid($this->get['id'])) && strtolower($this->user)!=strtolower($this->veilingModel->getOwner($this->get['id'])))
                 {
-                        $min = $this->veilingModel->getMinBod($this->get['id']);
+                        $min = $this->veilingModel->getMinBod(round($this->get['id']));
+                        
+                        // Minimum bod bepalen aan de hand van ophogingsregels
+                        $add = 0;
+                        
+                        $settings = new settings();
+                        $values = $settings->getPart('opbod');
+                        foreach($values as $key=>$value)
+                        {
+                                $temp = explode("-",$key);
+                                if(empty($temp[0]) && !empty($temp[1]) && $min<$temp[1])
+                                {
+                                        $add = $value;
+                                }
+                                elseif(!empty($temp[0]) && empty($temp[1]) && $min>$temp[0])
+                                {
+                                        $add = $value;
+                                }
+                                elseif($min>$temp[0] && $min<$temp[1])
+                                {
+                                        $add = $value;
+                                }
+                        }
+                        
+                        $min += $add;
                         
                         $this->post['bod'] = str_replace(',','.',$this->post['bod']);
                         
@@ -72,9 +97,14 @@ class veilingControl extends control
                 $biedingen = $this->veilingModel->getBiedingen(round($this->get['id']));
                 foreach($biedingen as $key=>$value)
                 {
+                        $temp = explode("/",$value['Boddag']);
+                        if($temp[0]==date('d') && $temp[1]==date('n') && $temp[2]==date('Y')) $datum = 'vandaag';
+                        elseif($temp[0]==date('d', time()-3600*24) && $temp[1]==date('n', time()-3600*34) && $temp[2]==date('Y', time()-3600*24)) $datum = 'gisteren';
+                        else $datum = $temp[0].'/'.$temp[1];
                         $this->loadView('veiling/bod','next_bod');
                         $this->replaceView('bod_bodbedrag', $value['Bodbedrag']);
                         $this->replaceView('bod_gebruiker', $value['Gebruiker']);
+                        $this->replaceView('bod_tijdstip', $datum." ".$value['Bodtijdstip']);
                 }
                 if(empty($biedingen))
                 {

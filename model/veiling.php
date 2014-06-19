@@ -22,24 +22,20 @@ class veilingModel extends model
         
         public function getBreadcrumb($veiling)
         {
-                return '';
                 $string = '';
                 
                 // 1 Voorwerp kan in meerdere rubrieken zitten, hoe lossen we dit op?
                 $rubriek = $this->db->fetchQuery("SELECT * FROM VoorwerpInRubriek WHERE Voorwerp = ".$veiling);
                 
-                print_r($rubriek);
-                
-                echo "<BR><BR><BR>";
-                
                 $parent = $this->db->fetchQuery("SELECT * FROM Rubriek WHERE Rubrieknummer = ".$rubriek['RubriekOpLaagsteNiveau']);
-                do
+                while($parent['Rubriek']!=-1 && $parent['Rubriek']!=0)
                 {
-                        if(!empty($string)) $string = '<a href="zoek?rubriek='.$parent['Rubrieknummer'].'">'.$parent['Rubrieknaam'].'</a> > '.$string;
-                        else $string = '<a href="zoek?rubriek='.$parent['Rubrieknummer'].'">'.$parent['Rubrieknaam'].'</a>';
+                        if(!empty($string)) $string = '<a href="zoek.php?rubriek='.$parent['Rubrieknummer'].'">'.$parent['Rubrieknaam'].'</a> > '.$string;
+                        else $string = '<a href="zoek.php?rubriek='.$parent['Rubrieknummer'].'">'.$parent['Rubrieknaam'].'</a>';
                         $parent = $this->db->fetchQuery("SELECT * FROM Rubriek WHERE Rubrieknummer = ".$parent['Rubriek']);
-                } while($parent['Rubriek']!=-1);
-                $string = '<a href="zoek.php?rubriek='.$parent['Rubrieknummer'].'">'.$parent['Rubrieknaam'].'</a> > '.$string;
+                } 
+                if(empty($string)) $string = '<a href="zoek.php?rubriek='.$parent['Rubrieknummer'].'">'.$parent['Rubrieknaam'].'</a>';
+                else $string = '<a href="zoek.php?rubriek='.$parent['Rubrieknummer'].'">'.$parent['Rubrieknaam'].'</a> > '.$string;
                 return $string;
         }
         
@@ -68,6 +64,7 @@ class veilingModel extends model
         public function getUserLastBid($id)
         {
                 $data = $this->db->fetchQuery("SELECT * FROM Bod WHERE Voorwerp = ".$id." ORDER BY Bodbedrag DESC");
+                if(empty($data)) return '';
                 return $data['Gebruiker'];
         }
         

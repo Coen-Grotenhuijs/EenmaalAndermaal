@@ -20,8 +20,7 @@ class berichtControl extends control
                 
                 if(!empty($this->post['submit']) && !empty($this->post['bericht']))
                 {
-                        $mail = true;
-                        // mail functie
+                        $mail = mail($gebruiker['Emailadres'], 'Bericht op EenmaalAndermaal van '.$this->berichtModel->getCurrentUser(), "De gebruiker ".$this->berichtModel->getCurrentUser()." heeft u het volgende bericht gestuurd: \n".strip_tags($this->post['bericht'])."\n\n Klik op de volgende link om op dit bericht te reageren: <a href='http://iproject31.icasites.nl/bericht.php?gebruiker=".$this->berichtModel->getCurrentUser()."'>Reageren op dit bericht</a>");
                         if($mail)
                         {
                                 $this->loadView('bericht/succes', 'content');
